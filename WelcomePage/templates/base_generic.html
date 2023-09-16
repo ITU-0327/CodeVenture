@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CodeVenture</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">CodeVenture</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Welcome, {{ user.username }}</a>
+                    </li>
+                    {% if user.socialaccount_set.all %}
+                        <img src="{{ user.socialaccount_set.all.0.get_avatar_url }}" alt="Profile Picture" style="width: 30px; height: 30px; border-radius: 50%;">
+                    {% endif %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'account_logout' %}">Logout</a>
+                    </li>
+                    {% if user.is_staff %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'admin:index' %}">Admin Page</a>
+                        </li>
+                    {% endif %}
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'google_login' %}">Login with Google</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+
+    
+    <main class="container mt-4">
+        <!-- Hero Section -->
+        <section class="bg-primary text-white text-center py-5">
+            <h1>Welcome to CodeVenture!</h1>
+            <p>Learn Python the fun way.</p>
+        </section>
+        
+        <!-- Featured Courses Section -->
+        <section class="text-center my-5">
+            <h2>Featured Courses</h2>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card">
+                        <img src="course1.jpg" alt="Course 1" class="card-img-top">
+                        <div class="card-body">
+                            <h5 class="card-title">Beginner Python</h5>
+                            <p class="card-text">Learn the basics of Python programming.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card">
+                        <img src="course2.jpg" alt="Course 2" class="card-img-top">
+                        <div class="card-body">
+                            <h5 class="card-title">Intermediate Python</h5>
+                            <p class="card-text">Enhance your Python skills.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card">
+                        <img src="course3.jpg" alt="Course 3" class="card-img-top">
+                        <div class="card-body">
+                            <h5 class="card-title">Advanced Python</h5>
+                            <p class="card-text">Become a Python expert.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
