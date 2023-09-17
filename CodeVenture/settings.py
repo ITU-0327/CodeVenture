@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     # Our App
     'WelcomePage',
     'UserManagement',
+    'LearningResource'
 ]
 
 LOGIN_REDIRECT_URL = '/'
