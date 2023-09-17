@@ -20,6 +20,7 @@ class Quiz(models.Model):
 
 
 class Question(models.Model):
+    quiz = models.ForeignKey(Quiz, related_name='questions', on_delete=models.CASCADE)
     text = models.TextField()
     choices = models.JSONField()
     correct_answer = models.CharField(max_length=100)
