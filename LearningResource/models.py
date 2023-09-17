@@ -1,6 +1,30 @@
 from django.db import models
 
 
+class VideoTutorial(models.Model):
+    video_url = models.URLField()
+    duration = models.IntegerField()
+    subtitles = models.TextField()
+
+
+class Challenge(models.Model):
+    name = models.CharField(max_length=50)
+    description = models.TextField()
+    hints = models.JSONField()
+    solution_code = models.TextField()
+
+
+class Quiz(models.Model):
+    name = models.CharField(max_length=50)
+    deadline = models.DateTimeField(null=True, blank=True)
+
+
+class Question(models.Model):
+    text = models.TextField()
+    choices = models.JSONField()
+    correct_answer = models.CharField(max_length=100)
+
+
 class LearningModule(models.Model):
     name = models.CharField(max_length=50)
     description = models.TextField()
@@ -21,29 +45,6 @@ class SubModule(models.Model):
         default='Basic'
     )
     description = models.TextField()
-
-
-class VideoTutorial(models.Model):
-    video_url = models.URLField()
-    duration = models.IntegerField()
-    subtitles = models.TextField()
-
-
-class Challenge(models.Model):
-    name = models.CharField(max_length=50)
-    description = models.TextField()
-    hints = models.JSONField()
-    solution_code = models.TextField()
-
-
-class Quiz(models.Model):
-    name = models.CharField(max_length=50)
-
-
-class Question(models.Model):
-    text = models.TextField()
-    choices = models.JSONField()
-    correct_answer = models.CharField(max_length=100)
 
 
 class Badge(models.Model):
