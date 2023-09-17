@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-from LearningResource.models import Badge, LearningModule
+from LearningResource.models import Badge, SubModule
 
 
 class Student(models.Model):
@@ -21,24 +21,33 @@ class Student(models.Model):
     parent = models.ForeignKey('Parent', related_name='children', on_delete=models.SET_NULL, null=True, blank=True)
 
     teacher_email = models.EmailField()
-    completed_modules = models.ManyToManyField(LearningModule)
+    completed_modules = models.ManyToManyField(SubModule)
     progress_tracker = models.OneToOneField(ProgressTracker, null=True, blank=True, on_delete=models.SET_NULL)
     module_progress = models.ManyToManyField(ModuleProgress, related_name='students')
 
 
 class Teacher(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    course = models.ManyToManyField(LearningModule)
+    course = models.ManyToManyField(SubModule)
+
+    def get_enrolled_students(self):
+        teacher_modules = self.course.all()
+        enrolled_students = Student.objects.filter(completed_modules__in=teacher_modules).distinct()
+        return enrolled_students
 
 
 class Parent(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
+    def get_children(self):
+        return self.children.all()
+
 
 class ModuleProgress(models.Model):
     student = models.ForeignKey('Student', related_name='module_progress', on_delete=models.CASCADE)
-    module = models.ForeignKey(LearningModule, related_name='student_progress', on_delete=models.CASCADE)
+    module = models.ForeignKey(SubModule, related_name='student_progress', on_delete=models.CASCADE)
     progress_bar = models.FloatField(default=0.0)
+    is_completed = models.BooleanField(default=False)
 
 
 class ProgressTracker(models.Model):
