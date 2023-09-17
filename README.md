@@ -55,4 +55,4 @@ For more details, please refer to our [CONTRIBUTING.md](CONTRIBUTING.md) file.
 
 ## License 📝
 
-This project is licensed under the MIT License. For more information, see the [LICENSE.md](LICENSE.md) file in our GitHub repository.
+This project is licensed under the MIT License. For more information, see the [LICENSE](LICENSE) file in our GitHub repository.
