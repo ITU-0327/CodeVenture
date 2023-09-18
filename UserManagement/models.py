@@ -7,7 +7,9 @@ class ModuleProgress(models.Model):
     student = models.ForeignKey('Student', related_name='progress', on_delete=models.CASCADE)
     module = models.ForeignKey(SubModule, related_name='student_progress', on_delete=models.CASCADE)
     progress_bar = models.FloatField(default=0.0)
-    is_completed = models.BooleanField(default=False)
+
+    def is_completed(self):
+        return self.progress_bar == 1
 
 
 class ProgressTracker(models.Model):
