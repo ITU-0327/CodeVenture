@@ -17,11 +17,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from WelcomePage.views import home_view
-from LearningResource.views import create_view
+from LearningResource.views import create_view, lecture_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls')),
     path('', home_view, name="home"),
     path('create/<str:model_type>/', create_view, name='create_view'),
+    path('lecture/<int:submodule_id>/', lecture_view, name='lecture_view')
 ]
