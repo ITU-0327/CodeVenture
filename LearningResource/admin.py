@@ -1,3 +1,6 @@
 from django.contrib import admin
 
-# Register your models here.
+from .models import SubModule, LearningModule
+
+admin.site.register(SubModule)
+admin.site.register(LearningModule)
