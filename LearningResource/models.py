@@ -27,7 +27,8 @@ class Question(models.Model):
 
 
 class LearningModule(models.Model):
-    name = models.CharField(max_length=50, unique=True)
+    name = models.CharField(max_length=100, unique=True)
+    short_name = models.CharField(max_length=50, unique=True, null=True)
     description = models.TextField()
 
     def __str__(self):
@@ -41,8 +42,8 @@ class SubModule(models.Model):
         ('Advanced', 'Advanced'),
     ]
 
-    name = models.CharField(max_length=50, unique=True)
-    parent_module = models.ForeignKey(LearningModule, related_name='sub_modules', on_delete=models.CASCADE, null=True, blank=True)
+    name = models.CharField(max_length=50)
+    parent_module = models.ForeignKey(LearningModule, related_name='sub_modules', on_delete=models.CASCADE)
     difficulty_level = models.CharField(
         max_length=15,
         choices=DIFFICULTY_CHOICES,
@@ -51,7 +52,7 @@ class SubModule(models.Model):
     description = models.TextField()
 
     def __str__(self):
-        return self.name
+        return self.parent_module.short_name + ' - ' + self.name
 
 
 class Badge(models.Model):
