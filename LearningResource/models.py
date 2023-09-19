@@ -2,9 +2,12 @@ from django.db import models
 
 
 class VideoTutorial(models.Model):
-    video_url = models.URLField()
-    duration = models.IntegerField()
-    subtitles = models.TextField()
+    name = models.CharField(max_length=50, default='')
+    video_id = models.CharField(max_length=11, null=True)
+    # duration = models.IntegerField()
+
+    def __str__(self):
+        return self.name
 
 
 class Challenge(models.Model):
@@ -50,6 +53,7 @@ class SubModule(models.Model):
         default='Basic'
     )
     description = models.TextField()
+    video = models.OneToOneField(VideoTutorial, on_delete=models.SET_NULL, null=True)
 
     def __str__(self):
         return self.parent_module.short_name + ' - ' + self.name
