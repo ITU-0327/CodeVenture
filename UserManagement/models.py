@@ -15,6 +15,7 @@ class ModuleProgress(models.Model):
 class ProgressTracker(models.Model):
     student = models.OneToOneField('Student', on_delete=models.CASCADE)
     overall_progress_bar = models.FloatField(default=0.0)
+    completed_modules = models.ManyToManyField(SubModule)
     badges = models.ManyToManyField(Badge)
 
 
@@ -26,17 +27,15 @@ class Student(models.Model):
     ]
 
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    birthday = models.DateField()
+    birthday = models.DateField(null=True)
     coding_experience = models.CharField(
         max_length=20,
         choices=EXPERIENCE_CHOICES,
         default='No experience'
     )
-    parent_email = models.EmailField()
+    parent_email = models.EmailField(null=True)
     parent = models.ForeignKey('Parent', related_name='children', on_delete=models.SET_NULL, null=True, blank=True)
 
-    teacher_email = models.EmailField()
-    completed_modules = models.ManyToManyField(SubModule)
     progress_tracker = models.OneToOneField(ProgressTracker, null=True, blank=True, on_delete=models.SET_NULL, related_name='student_entry')
     module_progress = models.ManyToManyField(ModuleProgress, related_name='students')
 
@@ -45,7 +44,7 @@ class Teacher(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     course = models.ManyToManyField(SubModule)
 
-    def get_enrolled_students(self):
+    def get_students(self):
         teacher_modules = self.course.all()
         enrolled_students = Student.objects.filter(completed_modules__in=teacher_modules).distinct()
         return enrolled_students
