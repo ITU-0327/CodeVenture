@@ -4,9 +4,19 @@
     <meta charset="UTF-8">
     <title>CodeVenture</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .card-link {
+          color: inherit;
+          text-decoration: none;
+        }
+
+        .card-link:hover .card {
+          box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+          transition: box-shadow 0.3s ease-in-out;
+        }
+  </style>
 </head>
 <body>
-
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="#">CodeVenture</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -45,42 +55,47 @@
             <h1>Welcome to CodeVenture!</h1>
             <p>Learn Python the fun way.</p>
         </section>
-        
+
+        {% block content %}
         <!-- Featured Courses Section -->
         <section class="text-center my-5">
             <h2>Featured Courses</h2>
             <div class="row">
                 <div class="col-md-4">
-                    <div class="card">
-                        <img src="course1.jpg" alt="Course 1" class="card-img-top">
-                        <div class="card-body">
-                            <h5 class="card-title">Beginner Python</h5>
-                            <p class="card-text">Learn the basics of Python programming.</p>
+                    <a href="/page1/" class="card-link">
+                        <div class="card">
+                            <img src="https://prod-discovery.edx-cdn.org/media/course/image/2cc794d0-316d-42f7-bbfd-25c34e4cd5df-033e46d516c0.small.png" alt="Course thumbnail 1" class="card-img-top">
+                            <div class="card-body">
+                                <h5 class="card-title">Introduction to Programming with Python</h5>
+                                <p class="card-text">Learn the basics of Python programming.</p>
+                            </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
                 <div class="col-md-4">
-                    <div class="card">
-                        <img src="course2.jpg" alt="Course 2" class="card-img-top">
-                        <div class="card-body">
-                            <h5 class="card-title">Intermediate Python</h5>
-                            <p class="card-text">Enhance your Python skills.</p>
+                    <a href="/page2/" class="card-link">
+                        <div class="card">
+                            <img src="https://prod-discovery.edx-cdn.org/media/course/image/da1b2400-322b-459b-97b0-0c557f05d017-a3d1899c3344.small.png" alt="Course thumbnail 2" class="card-img-top">
+                            <div class="card-body">
+                                <h5 class="card-title">Introduction to Computer Science</h5>
+                                <p class="card-text">An introduction to the intellectual enterprises of computer science and the art of programming.</p>
+                            </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
                 <div class="col-md-4">
-                    <div class="card">
-                        <img src="course3.jpg" alt="Course 3" class="card-img-top">
-                        <div class="card-body">
-                            <h5 class="card-title">Advanced Python</h5>
-                            <p class="card-text">Become a Python expert.</p>
+                    <a href="/page3/" class="card-link">
+                        <div class="card">
+                            <img src="https://prod-discovery.edx-cdn.org/media/course/image/8f8e5124-1dab-47e6-8fa6-3fbdc0738f0a-4978ad93b1c3.small.png" alt="Course thumbnail 3" class="card-img-top">
+                            <div class="card-body">
+                                <h5 class="card-title">Web Programming with Python and JavaScript</h5>
+                                <p class="card-text">This course picks up where the last course leaves off, diving more deeply into the design and implementation of web apps with Python, JavaScript, and SQL using frameworks like Django, React, and Bootstrap.</p>
+                            </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
             </div>
         </section>
-    
-        {% block content %}
         {% endblock %}
     </main>
 
