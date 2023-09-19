@@ -1,0 +1,50 @@
+
+{% extends 'base_generic.html' %}
+
+{% block content %}
+    <style>
+        /* Custom Styles for the Lecture Page */
+        .course-title {
+            background-color: #f2f2f2;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 20px;
+            border-radius: 8px;
+        }
+        .video-section {
+            background-color: #ffffff;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 20px;
+            border-radius: 8px;
+        }
+        .lecture-description {
+            background-color: #f2f2f2;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+        }
+    </style>
+
+    <div class="container mt-5">
+        <!-- Course Title -->
+        <div class="course-title">
+            <h1>Course Title: Python for Beginners</h1>
+        </div>
+
+        <!-- YouTube Video Placeholder -->
+        <div class="video-section">
+            <div class="embed-responsive embed-responsive-16by9">
+                <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/VIDEO_ID" allowfullscreen></iframe>
+            </div>
+        </div>
+
+        <!-- Lecture Description -->
+        <div class="lecture-description">
+            <h2>Lecture Description</h2>
+            <p>
+                This lecture covers the basics of Python programming, including variables, data types, and control structures.
+            </p>
+        </div>
+    </div>
+{% endblock %}
