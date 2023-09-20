@@ -18,11 +18,17 @@ from django.contrib import admin
 from django.urls import path, include
 from WelcomePage.views import home_view
 from LearningResource.views import create_view, lecture_view
+from UserManagement.views import loginPage, logoutUser
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls')),
+
     path('', home_view, name="home"),
+
+    path('login/', loginPage, name='login'),
+    path('logout/', logoutUser, name='logout'),
+
     path('create/<str:model_type>/', create_view, name='create_view'),
     path('lecture/<int:submodule_id>/', lecture_view, name='lecture_view')
 ]

@@ -54,6 +54,8 @@ class SubModule(models.Model):
     )
     description = models.TextField()
     video = models.OneToOneField(VideoTutorial, on_delete=models.SET_NULL, null=True)
+    prev_submodule = models.OneToOneField('SubModule', on_delete=models.SET_NULL, null=True, blank=True, related_name='prev_lecture')
+    next_submodule = models.OneToOneField('SubModule', on_delete=models.SET_NULL, null=True, blank=True, related_name='next_lecture')
 
     def __str__(self):
         return self.parent_module.short_name + ' - ' + self.name

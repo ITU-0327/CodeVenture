@@ -32,7 +32,7 @@
                         <img src="{{ user.socialaccount_set.all.0.get_avatar_url }}" alt="Profile Picture" style="width: 30px; height: 30px; border-radius: 50%;">
                     {% endif %}
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'account_logout' %}">Logout</a>
+                        <a class="nav-link" href="{% url 'logout' %}">Logout</a>
                     </li>
                     {% if user.is_staff %}
                         <li class="nav-item">
@@ -41,7 +41,7 @@
                     {% endif %}
                 {% else %}
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'google_login' %}">Login with Google</a>
+                        <a class="nav-link" href="{% url 'login' %}">Login</a>
                     </li>
                 {% endif %}
             </ul>
