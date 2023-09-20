@@ -1,0 +1,28 @@
+{% extends 'base_generic.html' %}
+
+{% block content %}
+    <div>
+        <form method="POST" action="">
+            {% csrf_token %}
+            <label>Username: </label>
+            <input type="text" name="username" placeholder="Enter Username">
+
+            <label>Password: </label>
+            <input type="password" name="password" placeholder="Enter Password">
+
+            <input type="submit" value="Login">
+            {% if messages %}
+                <ul class="messages">
+                    {% for message in messages %}
+                        <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+
+            <li class="navbar-nav">
+                {% load socialaccount %}
+                <a class="nav-link" href="{% provider_login_url 'google' %}">Login with Google</a>
+            </li>
+        </form>
+    </div>
+{% endblock %}
