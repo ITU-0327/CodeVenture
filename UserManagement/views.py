@@ -1,15 +1,17 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
 
-def loginPage(request):
+def login_view(request):
+    page = 'login'
     if request.user.is_authenticated:
         return redirect('home')
 
     if request.method == 'POST':
-        username = request.POST.get('username')
+        username = request.POST.get('username').lower()
         password = request.POST.get('password')
 
         if not username or not password:
@@ -28,9 +30,7 @@ def loginPage(request):
             return redirect('home')
         else:
             messages.error(request, 'Username or Password wrong.')
-    context = {
-
-    }
+    context = {'page': page}
     return render(request, 'login_register.html', context)
 
 
@@ -41,3 +41,20 @@ def logoutUser(request):
     storage.used = True
     logout(request)
     return redirect('home')
+
+
+def register_user(request):
+    form = UserCreationForm()
+
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.username = user.username.lower()
+            user.save()
+            login(request, user)
+            return redirect('home')
+        else:
+            messages.error(request, 'An error occurred during registration')
+
+    return render(request, 'login_register.html', {'form': form})

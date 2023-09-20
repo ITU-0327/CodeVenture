@@ -1,16 +1,31 @@
 {% extends 'base_generic.html' %}
 
 {% block content %}
-    <div>
-        <form method="POST" action="">
+    <div class="login-container">
+        {% if page == 'login' %}
+        <h1 class="center-text">Sign In With</h1>
+        <form method="POST" action="" class="login-form">
             {% csrf_token %}
-            <label>Username: </label>
-            <input type="text" name="username" placeholder="Enter Username">
+            <div class="social-login center-text">
+                <a href="{% url 'google_login' %}" class="btn-google no-underline">
+                    <img src="https://cdn-icons-png.flaticon.com/512/2504/2504739.png" alt="GOOGLE">
+                    Google
+                </a>
+            </div>
 
-            <label>Password: </label>
-            <input type="password" name="password" placeholder="Enter Password">
+            <div class="input-group">
+                <label for="username" class="label">Username</label>
+                <input type="text" id="username" name="username" placeholder="Enter Username">
+            </div>
 
-            <input type="submit" value="Login">
+            <div class="input-group">
+                <label for="password" class="label">Password</label>
+                <input type="password" id="password" name="password" placeholder="Enter Password">
+                <a href="/" class="forgot-password">Forgot?</a>
+            </div>
+
+            <input type="submit" value="Sign In" class="submit-button">
+
             {% if messages %}
                 <ul class="messages">
                     {% for message in messages %}
@@ -19,10 +34,87 @@
                 </ul>
             {% endif %}
 
-            <li class="navbar-nav">
-                {% load socialaccount %}
-                <a class="nav-link" href="{% provider_login_url 'google' %}">Login with Google</a>
-            </li>
+            <div class="signup-link">
+                <span>Not a member?</span>
+                <a href="{% url 'register' %}">Sign up now</a>
+            </div>
         </form>
+        {% else %}
+        <form method="POST" action="" class="login-form">
+            {% csrf_token %}
+            {{form.as_p}}
+            <input type="submit" value="Sign Up" class="submit-button">
+        </form>
+        <div class="signup-link">
+            <span>Already have an account?</span>
+            <a href="{% url 'login' %}">Sign In</a>
+        </div>
+        {% endif %}
     </div>
+
+    <style>
+        .login-container {
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .center-text {
+            text-align: center;
+        }
+
+        .no-underline {
+            text-decoration: none;
+        }
+
+        .login-form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .social-login,
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .btn-google {
+            display: inline-block;
+            padding: 10px;
+            background: #4285F4;
+            color: white;
+            border-radius: 5px;
+            margin-top: 5px;
+        }
+
+        .btn-google img {
+            width: 20px;
+            margin-right: 5px;
+        }
+
+        .forgot-password {
+            display: block;
+            margin-top: 5px;
+            text-align: right;
+        }
+
+        .submit-button {
+            padding: 10px;
+            background: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+
+        .signup-link {
+            margin-top: 10px;
+        }
+    </style>
 {% endblock %}
