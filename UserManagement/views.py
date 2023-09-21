@@ -11,18 +11,20 @@ def login_view(request):
         return redirect('home')
 
     if request.method == 'POST':
-        username = request.POST.get('username').lower()
+        username = request.POST.get('username')
         password = request.POST.get('password')
 
         if not username or not password:
             messages.error(request, 'Both username and password must be provided.')
-            return render(request, 'login_register.html')
+            return render(request, 'login_register.html', {'page': page})
 
+        if username:
+            username = username.lower()
         try:
             User.objects.get(username=username)
         except User.DoesNotExist:
             messages.error(request, 'User does not exist')
-            return render(request, 'login_register.html')
+            return render(request, 'login_register.html', {'page': page})
 
         user = authenticate(request, username=username, password=password)
         if user:

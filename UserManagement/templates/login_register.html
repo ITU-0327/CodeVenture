@@ -42,7 +42,7 @@
         {% else %}
         <form method="POST" action="" class="login-form">
             {% csrf_token %}
-            {{form.as_p}}
+            {{ form.as_p }}
             <input type="submit" value="Sign Up" class="submit-button">
         </form>
         <div class="signup-link">
