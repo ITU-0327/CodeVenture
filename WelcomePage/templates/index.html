@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>CodeVenture</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'globals.css' %}" />
+    <link rel="stylesheet" href="{% static 'style.css' %}" />
+  </head>
+  <body>
+    <div class="welcome-page-main">
+      <div class="div">
+        <div class="overlap">
+          <div class="rectangle"></div>
+          <a href="/">
+            <img class="logo" src="{% static 'img/logo.svg' %}" />
+          </a>
+          <div class="rectangle-2"></div>
+          <div class="rectangle-3"></div>
+          {% if user.is_authenticated %}
+            <li class="nav-item">
+              <a class="nav-link" href="#">Welcome, {{ user.username }}</a>
+            </li>
+            {% if user.socialaccount_set.all %}
+              <img src="{{ user.socialaccount_set.all.0.get_avatar_url }}" alt="Profile Picture" style="width: 30px; height: 30px; border-radius: 50%;">
+            {% endif %}
+            <li class="nav-item">
+                <a class="text-wrapper" href="{% url 'logout' %}">Logout</a>
+            </li>
+            {% if user.is_staff %}
+              <li class="nav-item">
+                  <a class="nav-link" href="{% url 'admin:index' %}">Admin Page</a>
+              </li>
+            {% endif %}
+          {% else %}
+            <li class="nav-item">
+                <a class="text-wrapper" href="{% url 'register' %}">Sign up</a>
+            </li>
+            <li class="nav-item">
+                <a class="text-wrapper-2" href="{% url 'login' %}">Login</a>
+            </li>
+          {% endif %}
+          <img class="chevron-left-solid" src="{% static 'img/chevron-left-solid-1.svg' %}" />
+          <img class="img" src="{% static 'img/chevron-left-solid-2.svg' %}" />
+          <div class="ellipse"></div>
+          <div class="ellipse-2"></div>
+          <div class="ellipse-3"></div>
+          <p class="p">Learn Python in a fun way!</p>
+          <p class="codeventure-is-a-fun">
+            <span class="span">CodeVenture</span>
+            <span class="text-wrapper-3"
+              >, is a fun and engaging python learning program, which desires to engage young learners to learn Python,
+              a coding language.</span
+            >
+          </p>
+          <div class="text-wrapper-4">About Code Venture</div>
+          <p class="description">
+            <span class="text-wrapper-5">Description<br /><br /></span>
+            <span class="text-wrapper-6">
+              CodeVenture aims to bridge the gap by offering innovative solutions that combine game-like elements,
+              interactive tutorials, quizzes, and weekly progress tracking. It does not&nbsp;&nbsp;only focus on
+              learning the programming concepts but also enables the learners to apply them in practicals scenarios.
+              <br />
+            </span>
+          </p>
+          <div class="rectangle-4"></div>
+          <div class="text-wrapper-7">Read more</div>
+          <div class="text-wrapper-8">Leaderboard</div>
+          <div class="rectangle-5"></div>
+          <img class="line" src="{% static 'img/line-8.svg' %}" />
+          <img class="line-2" src="{% static 'img/line-8.svg' %}" />
+          <img class="line-3" src="{% static 'img/line-9.svg' %}" />
+          <img class="line-4" src="{% static 'img/line-13.svg' %}" />
+          <img class="line-5" src="{% static 'img/line-13.svg' %}" />
+          <img class="line-6" src="{% static 'img/line-13.svg' %}" />
+          <img class="line-7" src="{% static 'img/line-13.svg' %}" />
+          <img class="rectangle-6" src="{% static 'img/rectangle-65.svg' %}" />
+          <div class="rectangle-7"></div>
+          <img class="logo-2" src="{% static 'img/logo.svg' %}" />
+        </div>
+        <div class="overlap-group"><p class="text-wrapper-9">©Copyright 2023 All rights reserved CodeVenture</p></div>
+        <div class="overlap-2">
+          <div class="rectangle-8"></div>
+          <div class="rectangle-9"></div>
+          <div class="rectangle-10"></div>
+          <div class="text-wrapper-10">SiteMap</div>
+          <div class="rectangle-11"></div>
+          <div class="rectangle-12"></div>
+          <div class="rectangle-13"></div>
+          <div class="text-wrapper-11">Testimonials</div>
+          <div class="rectangle-14"></div>
+          <div class="text-wrapper-12">Contact Us</div>
+          <div class="text-wrapper-13">Send us a message</div>
+          <div class="text-wrapper-14">All our pages</div>
+          <img class="phone-solid" src="{% static 'img/phone-solid-1.svg' %}" />
+          <img class="envelope-regular" src="{% static 'img/envelope-regular-1.svgv" />
+          <div class="rectangle-15"></div>
+          <div class="text-wrapper-15">Fullname</div>
+          <div class="text-wrapper-16">Email</div>
+          <div class="rectangle-16"></div>
+          <div class="text-wrapper-17">Submit</div>
+          <div class="text-wrapper-18">Your message</div>
+          <div class="about-us-leaderboard">-About us<br />-Leaderboard<br />-Testimonials<br />-Contact us</div>
+          <p class="text-wrapper-19">What other people are saying</p>
+          <img class="logo-3" src="{% static 'img/logo.svg' %}" />
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
