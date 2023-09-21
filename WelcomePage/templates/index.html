@@ -6,6 +6,29 @@
     {% load static %}
     <link rel="stylesheet" href="{% static 'globals.css' %}" />
     <link rel="stylesheet" href="{% static 'style.css' %}" />
+    <style>
+      .fullname-textbox,
+      .subject-textbox,
+      .message-textbook {
+        width: 100%;
+        padding: 10px;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+        font-size: 16px;
+      }
+      .submit-btn {
+        padding: 12px 20px;
+        background-color: #007BFF;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+      }
+      .submit-btn:hover {
+        background-color: #0056b3;
+      }
+    </style>
   </head>
   <body>
     <div class="welcome-page-main">
@@ -93,13 +116,39 @@
           <div class="text-wrapper-13">Send us a message</div>
           <div class="text-wrapper-14">All our pages</div>
           <img class="phone-solid" src="{% static 'img/phone-solid-1.svg' %}" />
-          <img class="envelope-regular" src="{% static 'img/envelope-regular-1.svgv" />
+          <img class="envelope-regular" src="{% static 'img/envelope-regular-1.svg' %}" />
           <div class="rectangle-15"></div>
-          <div class="text-wrapper-15">Fullname</div>
-          <div class="text-wrapper-16">Email</div>
+          <div class="text-wrapper-15">
+            <input
+              class="fullname-textbox"
+              name="name"
+              placeholder="Fullname"
+              type="text"
+            />
+          </div>
+          <div class="text-wrapper-16">
+            <input
+              class="subject-textbox"
+              name="subject"
+              placeholder="Subject"
+              type="text"
+            />
+          </div>
           <div class="rectangle-16"></div>
-          <div class="text-wrapper-17">Submit</div>
-          <div class="text-wrapper-18">Your message</div>
+          <div class="text-wrapper-18">
+            <input
+              class="message-textbook"
+              placeholder="Your message"
+              type="text"
+            />
+          </div>
+          <div class="text-wrapper-17">
+            <a>
+              <button class="submit-btn">
+                Submit
+              </button>
+            </a>
+          </div>
           <div class="about-us-leaderboard">-About us<br />-Leaderboard<br />-Testimonials<br />-Contact us</div>
           <p class="text-wrapper-19">What other people are saying</p>
           <img class="logo-3" src="{% static 'img/logo.svg' %}" />

@@ -34,3 +34,24 @@ def lecture_view(request, submodule_id):
 
     except SubModule.DoesNotExist:
         raise Http404("Submodule not found")
+
+
+@login_required(login_url='/login/')
+def lecture_view(request, submodule_id):
+    try:
+        submodule = SubModule.objects.get(pk=submodule_id)
+        context = {
+            'submodule': submodule
+        }
+        return render(request, 'lecture_page.html', context)
+
+    except SubModule.DoesNotExist:
+        raise Http404("Submodule not found")
+
+
+def challenge_quiz_view(request):
+    return render(request, 'challenge_and_quiz.html')
+
+
+def module_view(request):
+    return render(request, 'module_home.html')

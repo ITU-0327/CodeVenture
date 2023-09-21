@@ -1,0 +1,11 @@
+{% extends 'base_generic.html' %}
+
+{% block buttons %}
+    <a href="{% url 'home' %}"><button class="btn btn-outline-primary mx-1">Basic Modules</button></a>
+    <a href="{% url 'home' %}"><button class="btn btn-outline-primary mx-1">Concept Modules</button></a>
+    <a href="/lecture/23/"><button class="btn btn-outline-primary mx-1">Video Tutorials</button></a>
+    <a href="{% url 'home' %}"><button class="btn btn-outline-primary mx-1">Python Playground</button></a>
+    <a href="{% url 'home' %}"><button class="btn btn-outline-primary mx-1">Progress Tracker</button></a>
+    <a href="{% url 'challenges_quizzes' %}"><button class="btn btn-outline-primary mx-1">Challenges and Quizzes</button></a>
+    <a href="{% url 'home' %}"><button class="btn btn-outline-primary mx-1">Return to Main Menu</button></a>
+{% endblock %}

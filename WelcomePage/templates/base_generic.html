@@ -18,45 +18,58 @@
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="/">CodeVenture</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ml-auto">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">CodeVenture</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
                 {% if user.is_authenticated %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Welcome, {{ user.username }}</a>
-                    </li>
-                    {% if user.socialaccount_set.all %}
-                        <img src="{{ user.socialaccount_set.all.0.get_avatar_url }}" alt="Profile Picture" style="width: 30px; height: 30px; border-radius: 50%;">
-                    {% endif %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'logout' %}">Logout</a>
-                    </li>
-                    {% if user.is_staff %}
+                    <div class="navbar-nav ml-auto">
+                        {% block buttons %}
+                        <a href="{% url 'learning_modules' %}"><button class="btn btn-outline-primary mx-1">Learning Modules</button></a>
+                        <a href="{% url 'home' %}"><button class="btn btn-outline-primary mx-1">Progress Tracker</button></a>
+                        <a href="{% url 'challenges_quizzes' %}"><button class="btn btn-outline-primary mx-1">Challenges and Quizzes</button></a>
+                        <a href="{% url 'home' %}"><button class="btn btn-outline-primary mx-1">Python Playground</button></a>
+                        <a href="{% url 'home' %}"><button class="btn btn-outline-primary mx-1">Settings</button></a>
+                        <a href="{% url 'home' %}"><button class="btn btn-outline-primary mx-1">Feedback</button></a>
+                        {% endblock %}
+                    </div>
+                {% endif %}
+                <ul class="navbar-nav ml-4">
+                    {% if user.is_authenticated %}
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'admin:index' %}">Admin Page</a>
+                            <a class="nav-link" href="#">Welcome, {{ user.username }}</a>
+                        </li>
+                        {% if user.socialaccount_set.all %}
+                            <img src="{{ user.socialaccount_set.all.0.get_avatar_url }}" alt="Profile Picture" style="width: 30px; height: 30px; border-radius: 50%;">
+                        {% endif %}
+                        <li class="nav-item">
+                            <a class="nav-link btn btn-outline-danger mx-1" href="{% url 'logout' %}">Logout</a>
+                        </li>
+                        {% if user.is_staff %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'admin:index' %}">Admin Page</a>
+                            </li>
+                        {% endif %}
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="btn btn-outline-primary mx-1" href="{% url 'login' %}">Login</a>
                         </li>
                     {% endif %}
-                {% else %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'login' %}">Login</a>
-                    </li>
-                {% endif %}
-            </ul>
+                </ul>
+            </div>
         </div>
     </nav>
 
-    
     <main class="container mt-4">
+        {% block content %}
         <!-- Hero Section -->
         <section class="bg-primary text-white text-center py-5">
             <h1>Welcome to CodeVenture!</h1>
             <p>Learn Python the fun way.</p>
         </section>
 
-        {% block content %}
         <!-- Featured Courses Section -->
         <section class="text-center my-5">
             <h2>Featured Courses</h2>
@@ -103,3 +116,44 @@
 
 </body>
 </html>
+
+<!-- Contact Us Form and Footer -->
+{% if user.is_authenticated %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-6">
+            <h4>Feedback</h4>
+            <form method="POST" action="{% url 'home' %}">
+                {% csrf_token %}
+                <div class="mb-3">
+                    {{ form.fullname.errors }}
+                    <input type="text" class="form-control" placeholder="First and Last Name" name="{{ form.fullname.name }}" value="{{ form.fullname.value|default:'' }}">
+                </div>
+                <div class="mb-3">
+                    {{ form.subject.errors }}
+                    <input type="text" class="form-control" placeholder="Subject" name="{{ form.subject.name }}" value="{{ form.subject.value|default:'' }}">
+                </div>
+                <div class="mb-3">
+                    {{ form.message.errors }}
+                    <textarea class="form-control" rows="5" placeholder="Your message" name="{{ form.message.name }}">{{ form.message.value|default:'' }}</textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+        <div class="col-md-6">
+            <h4>Quick Links</h4>
+            <ul>
+                <li>About us</li>
+                <li>Leaderboard</li>
+                <li>Testimonials</li>
+                <li>Contact us</li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<!-- Footer -->
+<footer class="bg-dark text-white text-center py-3 mt-5">
+    <p>© Copyright 2023 All rights reserved CodeVenture</p>
+</footer>

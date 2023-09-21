@@ -1,0 +1,11 @@
+{% extends 'base_generic.html' %}
+
+{% block buttons %}
+<div class="navbar-nav ml-auto">
+    <a href="{% url 'home' %}"><button class="btn btn-outline-primary mx-1">Scores and Results</button></a>
+    <a href="{% url 'home' %}"><button class="btn btn-outline-primary mx-1">Challenges</button></a>
+    <a href="{% url 'home' %}"><button class="btn btn-outline-primary mx-1">Quizzes</button></a>
+    <a href="{% url 'home' %}"><button class="btn btn-outline-primary mx-1">Feedback</button></a>
+    <a href="{% url 'home' %}"><button class="btn btn-outline-primary mx-1">Return to Main Menu</button></a>
+</div>
+{% endblock %}
