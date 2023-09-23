@@ -2,9 +2,6 @@ from django.contrib.auth.admin import UserAdmin as DefaultUserAdmin
 from django.contrib.auth.models import User
 from django.contrib import admin
 from .models import Student, Teacher, Parent
-from django.db import models
-
-from django.contrib.admin import SimpleListFilter
 
 
 class StudentAdmin(admin.ModelAdmin):
