@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.urls import path, include
 from WelcomePage.views import home_view
 from LearningResource.views import create_view, lecture_view, challenge_quiz_view, module_view
-from UserManagement.views import login_view, logoutUser, register_user
+from UserManagement.views import login_view, logoutUser, register_user, choose_user_type, complete_profile
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -28,8 +28,9 @@ urlpatterns = [
 
     path('login/', login_view, name='login'),
     path('logout/', logoutUser, name='logout'),
-    path('register/', register_user, name='register'),
-
+    path('register_user/<str:user_type>', register_user, name='register_user'),
+    path('choose_user_type/', choose_user_type, name='choose_user_type'),
+    path('complete_profile/', complete_profile, name='complete_profile'),
 
     path('create/<str:model_type>/', create_view, name='create_view'),
     path('lecture/<int:submodule_id>/', lecture_view, name='lecture_view'),

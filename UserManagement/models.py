@@ -11,12 +11,18 @@ class ModuleProgress(models.Model):
     def is_completed(self):
         return self.progress_bar == 1
 
+    def __str__(self):
+        return self.student.user.username + ' - ' + self.module.name
+
 
 class ProgressTracker(models.Model):
     student = models.OneToOneField('Student', on_delete=models.CASCADE)
     overall_progress_bar = models.FloatField(default=0.0)
     completed_modules = models.ManyToManyField(SubModule)
     badges = models.ManyToManyField(Badge)
+
+    def __str__(self):
+        return self.student.user.username + ' - ' + self.overall_progress_bar * 100 + '%'
 
 
 class Student(models.Model):
@@ -39,6 +45,11 @@ class Student(models.Model):
     progress_tracker = models.OneToOneField(ProgressTracker, null=True, blank=True, on_delete=models.SET_NULL, related_name='student_entry')
     module_progress = models.ManyToManyField(ModuleProgress, related_name='students')
 
+    profile_completed = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.user.username
+
 
 class Teacher(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -49,9 +60,17 @@ class Teacher(models.Model):
         enrolled_students = Student.objects.filter(completed_modules__in=teacher_modules).distinct()
         return enrolled_students
 
+    def __str__(self):
+        return self.user.username
+
 
 class Parent(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
+    profile_completed = models.BooleanField(default=False)
+
     def get_children(self):
         return self.children.all()
+
+    def __str__(self):
+        return self.user.username
