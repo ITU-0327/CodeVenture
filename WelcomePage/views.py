@@ -36,4 +36,4 @@ def home_view(request):
     else:
         form = TicketForm()
 
-    return render(request, 'base_generic.html', {'form': form})
+    return render(request, 'welcome_page.html', {'form': form})
