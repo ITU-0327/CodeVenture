@@ -158,4 +158,4 @@ def choose_user_type(request):
         else:
             print("User is not authenticated")  # Debug line
             return redirect('register_user', user_type=selected_role)
-    return render(request, 'choose_user_type.html')
+    return render(request, 'SelectRoleForm.html')
