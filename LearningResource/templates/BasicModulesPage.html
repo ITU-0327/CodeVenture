@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {% load static %}
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1, width=device-width" />
+    <title>Learning Modules</title>
+
+    <meta property="og:image" content="{% static 'public/thumbnail.png' %}" />
+
+    <link rel="icon" href="{% static 'public/favicon.ico' %}" />
+    <link rel="stylesheet" href="{% static 'css/global.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/BasicModulesPage.css' %}" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Mitr:wght@700&display=swap"
+    />
+  </head>
+  <body>
+    <div class="learning-modules-page">
+      <nav class="student-home-nav2" id="student nav">
+        <a class="logo6" href="/">
+          <img class="logo-icon4" alt="" src="{% static 'public/logo@2x.png' %}" />
+        </a>
+        <div class="btn7">
+          <div class="links2">
+            <a class="learning-modules4" href="{% url 'learning_modules' %}">
+              <b class="learning-modules5">Learning Modules</b>
+            </a>
+            <a class="learning-modules4">
+              <b class="learning-modules5">Quizzes</b>
+            </a>
+            <a class="learning-modules4">
+              <b class="learning-modules5">Challenges</b>
+            </a>
+            <a class="learning-modules4">
+              <b class="learning-modules5">Python Playground</b>
+            </a>
+          </div>
+          <button class="menu2">
+            <img class="vector-icon8" alt="" src="{% static 'public/vector1.svg' %}" />
+          </button>
+          <button class="profile-pic3">
+            {% if user.socialaccount_set.all %}
+                <img class="profile-pic-icon3"
+                     alt="Profile Picture"
+                     src="{{ user.socialaccount_set.all.0.get_avatar_url }}"
+                >
+            {% else %}
+                <img
+                  class="profile-pic-icon3"
+                  alt=""
+                  src="{% static 'public/profilepic@2x.png' %}"
+                />
+            {% endif %}
+          </button>
+        </div>
+      </nav>
+      <div class="links3">
+        <div class="basic-modules-parent">
+          <b class="basic-modules">Basic modules</b>
+          <div class="modules">
+            <div class="module">
+              <a class="creat-file-2-parent">
+                <img
+                  class="creat-file-2"
+                  alt=""
+                  src="{% static 'public/creat-file-2@2x.png' %}"
+                />
+
+                <b class="basic-modules">Creating new files</b>
+              </a>
+              <div class="round">
+                <div class="round-child"></div>
+                <img class="bicheck-icon" alt="" src="{% static 'public/bicheck.svg' %}" />
+              </div>
+            </div>
+            <div class="module">
+              <a class="creat-file-2-parent">
+                <img
+                  class="creat-file-2"
+                  alt=""
+                  src="{% static 'public/creat-file-21@2x.png' %}"
+                />
+
+                <b class="basic-modules">Variables and Printing</b>
+              </a>
+              <div class="round">
+                <div class="round-child"></div>
+                <img class="bicheck-icon" alt="" src="{% static 'public/bicheck1.svg' %}" />
+              </div>
+            </div>
+            <div class="module">
+              <a class="creat-file-2-parent">
+                <img
+                  class="creat-file-2"
+                  alt=""
+                  src="{% static 'public/creat-file-22@2x.png' %}"
+                />
+
+                <b class="basic-modules">Arithmetic</b>
+              </a>
+              <div class="round">
+                <div class="round-child"></div>
+                <img class="bicheck-icon" alt="" src="{% static 'public/bicheck2.svg' %}" />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="access-to-concept">
+          <b class="basic-modules">Access to concept modules :</b>
+          <a class="concept-modules-button" href="{% url 'concept_modules' %}">
+            <b class="concept-modules1">Concept modules</b>
+          </a>
+        </div>
+      </div>
+      <div class="feedback6">
+        <form class="contact-form3" method="POST">
+          {% csrf_token %}
+          <div class="text7">
+            <b class="feedback7">Feedback</b>
+            <div class="send-us-a3">Send us a message</div>
+          </div>
+          <div class="text-box3">
+            {{ form.fullname.errors }}
+            <input
+              class="fullname-textbox3"
+              name="{{ form.fullname.name }}"
+              value="{{ form.fullname.value|default:'' }}"
+              placeholder="Fullname"
+              type="text"
+            />
+
+            {{ form.subject.errors }}
+            <input
+              class="fullname-textbox3"
+              name="{{ form.subject.name }}"
+              value="{{ form.subject.value|default:'' }}"
+              placeholder="Subject"
+              type="text"
+            />
+
+            {{ form.message.errors }}
+            <input
+              class="message-textbook3"
+              name="{{ form.message.name }}"
+              value="{{ form.message.value|default:'' }}"
+              placeholder="Your message"
+              type="text"
+            />
+          </div>
+          <button type="submit" class="submit-btn3">
+            <div class="submit3">Submit</div>
+          </button>
+        </form>
+        <div class="site-map6">
+          <b class="site-map7">Site Map</b>
+          <div class="text8">
+            <div class="all-our-pages3">All our pages</div>
+          </div>
+          <div class="link3">
+            <button class="about-us3">- About us</button>
+            <button class="about-us3">- Leaderboard</button>
+            <button class="about-us3">- Contact us</button>
+          </div>
+        </div>
+        <div class="contact-info3">
+          <img
+            class="logo-feedback-icon3"
+            alt=""
+            src="{% static 'public/logo-feedback@2x.png' %}"
+          />
+
+          <div class="info3">
+            <div class="phone3">
+              <img class="vector-icon9" alt="" src="{% static 'public/vector11.svg' %}" />
+
+              <b class="basic-modules">+61 984 588 580</b>
+            </div>
+            <div class="email3">
+              <img class="vector-icon10" alt="" src="{% static 'public/vector2.svg' %}" />
+
+              <b class="basic-modules">hello@codeventure.com</b>
+            </div>
+          </div>
+        </div>
+      </div>
+      <footer class="footer4">
+        <p class="copyright-2023-all4">
+          ©Copyright 2023 All rights reserved CodeVenture
+        </p>
+      </footer>
+    </div>
+  </body>
+</html>

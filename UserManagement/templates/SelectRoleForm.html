@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {% load static %}
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1, width=device-width" />
+    <title>Choose User Type</title>
+
+    <meta property="og:image" content="public/thumbnail.png" />
+
+    <link rel="icon" href="{% static 'public/favicon.ico' %}" />
+    <link rel="stylesheet" href="{% static 'css/global.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/SelectRoleForm.css' %}" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Mitr:wght@700&display=swap"
+    />
+  </head>
+  <body>
+    <div class="select-role-form">
+      {% if user.is_authenticated %}
+      <nav class="login-nav" id="parent nav">
+        <a class="logo3" href="/">
+          <img class="logo-icon3" alt="" src="{% static 'public/logo@2x.png' %}" />
+        </a>
+        <div class="btn4">
+          <button class="profile-pic2">
+              {% if user.socialaccount_set.all %}
+                <img class="profile-pic-icon2"
+                     alt="Profile Picture"
+                     src="{{ user.socialaccount_set.all.0.get_avatar_url }}"
+                >
+            {% else %}
+                <img
+                  class="profile-pic-icon2"
+                  alt=""
+                  src="{% static 'public/profilepic@2x.png' %}"
+                />
+            {% endif %}
+          </button>
+        </div>
+      </nav>
+      {% else %}
+      <nav class="welcome-nav1">
+        <a class="logo3" href="/">
+          <img class="logo5" alt="" src="{% static 'public/logo@2x.png' %}" />
+        </a>
+        <div class="btns1">
+          <a class="btn5" href="{% url 'login' %}">
+            <div class="login1">Login</div>
+          </a>
+          <a class="btn5" href="{% url 'choose_user_type' %}">
+            <div class="login1">Sign Up</div>
+          </a>
+        </div>
+      </nav>
+      {% endif %}
+      <div class="sign-up-form">
+        <b class="select-your-role">Select Your Role</b>
+        <form class="role-btn" method="post" action="{% url 'choose_user_type' %}">
+          {% csrf_token %}
+          <button type="submit" name="role" value="student" class="image-13-parent">
+            <img class="image-13-icon" alt="Student Icon" src="{% static 'public/image-13@2x.png' %}" />
+
+            <b class="student">Student</b>
+          </button>
+          <button type="submit" name="role" value="parent" class="image-13-parent">
+            <img class="image-13-icon" alt="Parent Icon" src="{% static 'public/image-131@2x.png' %}" />
+
+            <b class="student">Parents</b>
+          </button>
+          <button type="submit" name="role" value="teacher" class="image-13-parent">
+            <img class="image-13-icon" alt="Teacher Icon" src="{% static 'public/image-132@2x.png' %}" />
+
+            <b class="student">Teacher</b>
+          </button>
+        </form>
+      </div>
+      <footer class="footer3">
+        <p class="copyright-2023-all3">
+          ©Copyright 2023 All rights reserved CodeVenture
+        </p>
+      </footer>
+    </div>
+  </body>
+</html>

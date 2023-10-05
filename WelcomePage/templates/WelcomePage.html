@@ -10,7 +10,7 @@
 
     <link rel="icon" href="{% static 'public/favicon.ico' %}" />
     <link rel="stylesheet" href="{% static 'css/global.css' %}" />
-    <link rel="stylesheet" href="{% static 'css/index.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/WelcomePage.css' %}" />
     <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
@@ -22,22 +22,22 @@
   </head>
   <body>
     <div class="welcomepage">
-      <section class="welcome-nav">
-        <a href="/">
+      <nav class="welcome-nav">
+        <a class="logo" href="/">
           <img class="logo-icon" alt="" src="{% static 'public/logo@2x.png' %}" />
         </a>
         <div class="btns">
-          <div class="btn">
-            <a class="login" href="{% url 'login' %}">Login</a>
-          </div>
-          <div class="btn">
-            <a class="login" href="{% url 'choose_user_type' %}">Sign Up</a>
-          </div>
+          <a class="btn" href="{% url 'login' %}">
+            <div class="login">Login</div>
+          </a>
+          <a class="btn" href="{% url 'choose_user_type' %}">
+            <div class="login">Sign Up</div>
+          </a>
         </div>
-      </section>
+      </nav>
       <div class="home">
         <div class="hero-section">
-          <div class="text-wrapper">
+          <div class="hero-section1">
             <div class="text">
               <b class="learn-python-in">Learn Python in a fun way!</b>
               <div class="codeventure-is-a-container">
@@ -111,7 +111,7 @@
                       <b class="b">3</b>
                     </div>
                   </div>
-                  <b class="sean">Matthew</b>
+                  <b class="sean">Yi Xin</b>
                   <b class="b1">3967</b>
                 </div>
               </div>
@@ -136,34 +136,38 @@
             </div>
             <div class="parent">
               <b class="b6">4</b>
-              <div class="ellipse-parent3">
+              <div class="vector-parent">
                 <img
                   class="frame-child3"
                   alt=""
                   src="{% static 'public/ellipse-4@2x.png' %}"
                 />
 
-                <b class="devon-lane">Devon Lane</b>
+                <b class="louisa">Louisa</b>
               </div>
               <div class="group">
-                <b class="devon-lane">3768</b>
+                <b class="louisa">3768</b>
                 <img class="polygon-icon" alt="" src="{% static 'public/polygon-1.svg' %}" />
               </div>
             </div>
             <div class="parent">
               <b class="b6">5</b>
-              <div class="ellipse-parent3">
+              <div class="vector-parent">
                 <img
-                  class="frame-child3"
+                  class="frame-child4"
                   alt=""
-                  src="{% static 'public/ellipse-4@2x.png' %}"
+                  src="{% static 'public/ellipse-41@2x.png' %}"
                 />
 
-                <b class="devon-lane">Devon Lane</b>
+                <b class="louisa">Lara</b>
               </div>
               <div class="group">
-                <b class="devon-lane">3768</b>
-                <img class="polygon-icon" alt="" src="{% static 'public/polygon-1.svg' %}" />
+                <b class="louisa">3768</b>
+                <img
+                  class="frame-child5"
+                  alt=""
+                  src="{% static 'public/polygon-11.svg' %}"
+                />
               </div>
             </div>
           </div>
@@ -181,7 +185,7 @@
               />
 
               <div class="matthew-parent">
-                <b class="devon-lane">Matthew</b>
+                <b class="louisa">Matthew</b>
                 <div class="project-manager">Project Manager</div>
               </div>
             </div>
@@ -189,11 +193,11 @@
               <img
                 class="member-child"
                 alt=""
-                src="{% static 'public/rectangle-67@2x.png' %}"
+                src="{% static 'public/rectangle-671@2x.png' %}"
               />
 
               <div class="matthew-parent">
-                <b class="devon-lane">Danish</b>
+                <b class="louisa">Danish</b>
                 <div class="project-manager">Project Manager</div>
               </div>
             </div>
@@ -203,11 +207,11 @@
               <img
                 class="member-child"
                 alt=""
-                src="{% static 'public/rectangle-67@2x.png' %}"
+                src="{% static 'public/rectangle-672@2x.png' %}"
               />
 
               <div class="matthew-parent">
-                <b class="devon-lane">Mahissh</b>
+                <b class="louisa">Mahissh</b>
                 <div class="project-manager">Project Manager</div>
               </div>
             </div>
@@ -215,11 +219,11 @@
               <img
                 class="member-child"
                 alt=""
-                src="{% static 'public/rectangle-67@2x.png' %}"
+                src="{% static 'public/rectangle-673@2x.png' %}"
               />
 
               <div class="matthew-parent">
-                <b class="devon-lane">Azmina</b>
+                <b class="louisa">Azmina</b>
                 <div class="project-manager">Project Manager</div>
               </div>
             </div>
@@ -227,42 +231,41 @@
         </div>
       </div>
       <div class="feedback">
-        <form method="POST" class="contact-form" action="{% url 'home' %}">
+        <form class="contact-form" method="POST" action="{% url 'home' %}">
           {% csrf_token %}
           <div class="text1">
-            <b class="devon-lane">Feedback</b>
+            <b class="feedback1">Feedback</b>
             <div class="send-us-a">Send us a message</div>
           </div>
-
           <div class="text-box">
             {{ form.fullname.errors }}
             <input
               class="fullname-textbox"
               name="{{ form.fullname.name }}"
+              value="{{ form.fullname.value|default:'' }}"
               placeholder="Fullname"
               type="text"
-              value="{{ form.fullname.value|default:'' }}"
             />
 
             {{ form.subject.errors }}
             <input
               class="fullname-textbox"
               name="{{ form.subject.name }}"
+              value="{{ form.subject.value|default:'' }}"
               placeholder="Subject"
               type="text"
-              value="{{ form.subject.value|default:'' }}"
             />
 
             {{ form.message.errors }}
             <input
               class="message-textbook"
               name="{{ form.message.name }}"
+              value="{{ form.message.value|default:'' }}"
               placeholder="Your message"
               type="text"
-              value="{{ form.message.value|default:'' }}"
             />
           </div>
-          <button class="submit-btn">
+          <button type="submit" class="submit-btn">
             <div class="submit">Submit</div>
           </button>
         </form>
@@ -274,7 +277,6 @@
           <div class="link">
             <button class="about-us">- About us</button>
             <button class="about-us">- Leaderboard</button>
-            <button class="about-us">- Testimonials</button>
             <button class="about-us">- Contact us</button>
           </div>
         </div>
@@ -282,28 +284,28 @@
           <img
             class="logo-feedback-icon"
             alt=""
-            src="{% static 'public/logo-feedback@2x.png' %}"
+            src="{% static 'public/logo-feedback1@2x.png' %}"
           />
 
           <div class="info">
             <div class="phone">
               <img class="vector-icon" alt="" src="{% static 'public/vector.svg' %}" />
 
-              <b class="devon-lane">+61 984 588 580</b>
+              <b class="louisa">+61 984 588 580</b>
             </div>
             <div class="email">
               <img class="vector-icon1" alt="" src="{% static 'public/vector82.svg' %}" />
 
-              <b class="devon-lane">hello@codeventure.com</b>
+              <b class="louisa">hello@codeventure.com</b>
             </div>
           </div>
         </div>
       </div>
-      <div class="footer">
-        <div class="learn-python-in">
+      <footer class="footer">
+        <p class="copyright-2023-all">
           ©Copyright 2023 All rights reserved CodeVenture
-        </div>
-      </div>
+        </p>
+      </footer>
     </div>
   </body>
 </html>
