@@ -10,25 +10,6 @@ class VideoTutorial(models.Model):
         return self.name
 
 
-class Challenge(models.Model):
-    name = models.CharField(max_length=50)
-    description = models.TextField()
-    hints = models.JSONField()
-    solution_code = models.TextField()
-
-
-class Quiz(models.Model):
-    name = models.CharField(max_length=50)
-    deadline = models.DateTimeField(null=True, blank=True)
-
-
-class Question(models.Model):
-    quiz = models.ForeignKey(Quiz, related_name='questions', on_delete=models.CASCADE)
-    text = models.TextField()
-    choices = models.JSONField()
-    correct_answer = models.CharField(max_length=100)
-
-
 class LearningModule(models.Model):
     name = models.CharField(max_length=100, unique=True)
     short_name = models.CharField(max_length=50, unique=True, null=True)

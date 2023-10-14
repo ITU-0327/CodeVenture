@@ -46,7 +46,8 @@ INSTALLED_APPS = [
     # Our App
     'WelcomePage',
     'UserManagement',
-    'LearningResource'
+    'LearningResource',
+    'QuizChallengeSystem',
 ]
 
 SOCIALACCOUNT_LOGIN_ON_GET = True

@@ -19,6 +19,7 @@ from django.urls import path, include
 from WelcomePage.views import home_view
 from LearningResource.views import create_view, lecture_view, challenge_quiz_view, module_view, concept_module_view
 from UserManagement.views import login_view, logoutUser, register_user, choose_user_type, complete_profile
+from QuizChallengeSystem.views import quiz_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -38,4 +39,6 @@ urlpatterns = [
     path('challenge_quiz/', challenge_quiz_view, name='challenges_quizzes'),
     path('module/', module_view, name='learning_modules'),
     path('concept_module/', concept_module_view, name='concept_modules'),
+
+    path('quiz/<int:quiz_id>/', quiz_view, name='quiz_view'),
 ]
