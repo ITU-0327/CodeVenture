@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Quiz Results</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <style>
+        .bg-success {
+            background-color: rgba(40, 167, 69, 0.7) !important; /* 0.7 is the opacity/transparency level */
+        }
+        .bg-danger {
+            background-color: rgba(220, 53, 69, 0.7) !important; /* 0.7 is the opacity/transparency level */
+        }
+        .form-check-label {
+            font-size: 1.1em;
+        }
+        .form-check-input[disabled] ~ .form-check-label,
+        .form-check-input:disabled ~ .form-check-label {
+            color: #212529;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Quiz Results</h1>
+        <p>Score: {{ score }}/{{ total_questions }}</p>
+
+        {% for result in results %}
+        <div class="card mb-4 {% if result.is_correct %}bg-success{% else %}bg-danger{% endif %}">
+            <div class="card-body">
+                <h5 class="card-title">{{ forloop.counter }}. {{ result.question }}</h5>
+
+                {% for choice in result.choices %}
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" disabled {% if choice.text == result.answer %}checked{% endif %}>
+                    <label class="form-check-label">
+                        {{ choice.text }}
+                        {% if choice.text == result.answer and result.is_correct %}
+                            <i class="fa fa-check"></i>
+                        {% elif choice.text == result.answer %}
+                            <i class="fa fa-times"></i>
+                        {% endif %}
+                    </label>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+</html>

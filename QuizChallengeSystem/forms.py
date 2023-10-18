@@ -9,7 +9,9 @@ class QuizForm(forms.Form):
 
         if questions:
             for question in questions:
-                choice_list = [(choice.id, choice.text) for choice in question.choices.all()]
+                choice_list = [(choice.id, f"({chr(65 + index)}) {choice.text}")
+                               for index, choice in enumerate(question.choices.all())]
+
                 self.fields[f"question_{question.id}"] = forms.ChoiceField(
                     choices=choice_list,
                     widget=forms.RadioSelect,

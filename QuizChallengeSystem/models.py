@@ -1,5 +1,6 @@
 from django.db import models
 from UserManagement.models import Student
+import uuid
 
 
 class Challenge(models.Model):
@@ -12,13 +13,18 @@ class Challenge(models.Model):
 class Quiz(models.Model):
     name = models.CharField(max_length=50)
     deadline = models.DateTimeField(null=True, blank=True)
-    # is_active = models.BooleanField(default=True)  # Is this quiz currently active?
+
+    def __str__(self):
+        return self.name
 
 
 class Question(models.Model):
     quiz = models.ForeignKey(Quiz, related_name='questions', on_delete=models.CASCADE)
     text = models.TextField()
     points = models.IntegerField(default=1)
+
+    def __str__(self):
+        return str(self.quiz) + ' - ' + self.text
 
 
 class Choice(models.Model):
@@ -27,9 +33,17 @@ class Choice(models.Model):
     is_correct = models.BooleanField(default=False)
 
 
-class UserAnswer(models.Model):
+class QuizResult(models.Model):
+    session_id = models.UUIDField(default=uuid.uuid4, editable=False)
+    quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE)
     user = models.ForeignKey(Student, on_delete=models.CASCADE)
+    score = models.IntegerField()
+    total_questions = models.IntegerField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+
+class UserAnswer(models.Model):
+    quiz_result = models.ForeignKey(QuizResult, related_name='user_answers', null=True, on_delete=models.SET_NULL)
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     selected_answer = models.CharField(max_length=100)
     is_correct = models.BooleanField(default=False)
-    timestamp = models.DateTimeField(auto_now_add=True)
