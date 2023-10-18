@@ -5,28 +5,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Python Playground</title>
     {% load static %}
+
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
     <link rel="stylesheet" href="{% static 'package/min/vs/editor/editor.main.css' %}">
 </head>
-<body>
-<div id="container" style="height:500px;"></div>
+<body class="bg-light">
 
+<div class="container py-5">
+    <h2 class="text-center mb-4">Python Playground</h2>
+    <div id="container" class="bg-dark rounded p-3" style="height:500px;"></div>
+
+    <div class="text-center mt-3">
+        <button class="btn btn-primary" onclick="runCode()">Run Code</button>
+    </div>
+
+    <div class="mt-4">
+        <h4>Output:</h4>
+        <pre class="p-3 bg-white border" id="output"></pre>
+    </div>
+</div>
+
+<!-- Monaco Editor Scripts -->
 <script src="{% static 'package/min/vs/loader.js' %}"></script>
 <script>
     require.config({ paths: { 'vs': '{% static 'package/min/vs' %}' } });
 </script>
 <script src="{% static 'package/min/vs/editor/editor.main.js' %}"></script>
-<script>
-    require(['vs/editor/editor.main'], function() {
-        window.editor = monaco.editor.create(document.getElementById('container'), {
-            value: "# Write your Python code here\nprint('Hello, World!')",
-            language: 'python',
-            theme: 'vs-dark',
-            automaticLayout: true
-        });
-    });
-</script>
-
-<button onclick="runCode()">Run Code</button>
 
 <!-- Dummy form to hold the CSRF token -->
 <form id="dummy_form" style="display:none;">
@@ -51,15 +57,22 @@
         })
         .then(response => response.json())
         .then(data => {
-            document.getElementById("output").innerText = data.result;
+            document.getElementById("output").innerText = data.result || "No Output";
         })
         .catch(error => {
             console.error("Error executing code:", error);
         });
     }
-</script>
 
-<div id="output"></div>
+    require(['vs/editor/editor.main'], function() {
+        window.editor = monaco.editor.create(document.getElementById('container'), {
+            value: "# Write your Python code here\nprint('Hello, World!')",
+            language: 'python',
+            theme: 'vs-dark',
+            automaticLayout: true
+        });
+    });
+</script>
 
 </body>
 </html>

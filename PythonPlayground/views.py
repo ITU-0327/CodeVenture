@@ -56,7 +56,7 @@ def run_code(request):
         retry_count = 0
 
         while status_id != 3 and retry_count < max_retries:
-            time.sleep(2)
+            time.sleep(0.1)
             response = requests.get(url, headers=headers, params=querystring)
             response_data = response.json()
             status_id = response_data.get('status_id')
