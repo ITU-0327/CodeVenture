@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'UserManagement',
     'LearningResource',
     'QuizChallengeSystem',
+    'PythonPlayground',
 ]
 
 SOCIALACCOUNT_LOGIN_ON_GET = True

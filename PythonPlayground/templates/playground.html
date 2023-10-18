@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python Playground</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'package/min/vs/editor/editor.main.css' %}">
+</head>
+<body>
+<div id="container" style="height:500px;"></div>
+
+<script src="{% static 'package/min/vs/loader.js' %}"></script>
+<script>
+    require.config({ paths: { 'vs': '{% static 'package/min/vs' %}' } });
+</script>
+<script src="{% static 'package/min/vs/editor/editor.main.js' %}"></script>
+<script>
+    require(['vs/editor/editor.main'], function() {
+        window.editor = monaco.editor.create(document.getElementById('container'), {
+            value: "# Write your Python code here\nprint('Hello, World!')",
+            language: 'python',
+            theme: 'vs-dark',
+            automaticLayout: true
+        });
+    });
+</script>
+
+<button onclick="runCode()">Run Code</button>
+
+<!-- Dummy form to hold the CSRF token -->
+<form id="dummy_form" style="display:none;">
+    {% csrf_token %}
+</form>
+
+<script>
+    function getCsrfToken() {
+        return document.querySelector('#dummy_form [name="csrfmiddlewaretoken"]').value;
+    }
+
+    function runCode() {
+        var code = window.editor.getValue();
+
+        fetch("{% url 'run_code' %}", {
+            method: "POST",
+            headers: {
+                'X-CSRFToken': getCsrfToken(),
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({code: code})
+        })
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById("output").innerText = data.result;
+        })
+        .catch(error => {
+            console.error("Error executing code:", error);
+        });
+    }
+</script>
+
+<div id="output"></div>
+
+</body>
+</html>

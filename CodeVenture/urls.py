@@ -19,7 +19,8 @@ from django.urls import path, include
 from WelcomePage.views import home_view
 from LearningResource.views import create_view, lecture_view, challenge_quiz_view, module_view, concept_module_view
 from UserManagement.views import login_view, logoutUser, register_user, choose_user_type, complete_profile
-from QuizChallengeSystem.views import quiz_view
+from QuizChallengeSystem.views import quiz_view, quiz_results
+from PythonPlayground.views import playground_view, run_code
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -41,4 +42,8 @@ urlpatterns = [
     path('concept_module/', concept_module_view, name='concept_modules'),
 
     path('quiz/<int:quiz_id>/', quiz_view, name='quiz_view'),
+    path('quiz_results/<int:quiz_id>/', quiz_results, name='quiz_results'),
+
+    path('playground/', playground_view, name='playground'),
+    path('playground/run_code/', run_code, name='run_code'),
 ]
