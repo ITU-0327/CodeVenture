@@ -1,28 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-from LearningResource.models import Badge, SubModule
-
-
-class ModuleProgress(models.Model):
-    student = models.ForeignKey('Student', related_name='progress', on_delete=models.CASCADE)
-    module = models.ForeignKey(SubModule, related_name='student_progress', on_delete=models.CASCADE)
-    progress_bar = models.FloatField(default=0.0)
-
-    def is_completed(self):
-        return self.progress_bar == 1
-
-    def __str__(self):
-        return self.student.user.username + ' - ' + self.module.name
-
-
-class ProgressTracker(models.Model):
-    student = models.OneToOneField('Student', on_delete=models.CASCADE)
-    overall_progress_bar = models.FloatField(default=0.0)
-    completed_modules = models.ManyToManyField(SubModule)
-    badges = models.ManyToManyField(Badge)
-
-    def __str__(self):
-        return self.student.user.username + ' - ' + self.overall_progress_bar * 100 + '%'
+from LearningResource.models import SubModule
 
 
 class Student(models.Model):
@@ -41,9 +19,6 @@ class Student(models.Model):
     )
     parent_email = models.EmailField(null=True)
     parent = models.ForeignKey('Parent', related_name='children', on_delete=models.SET_NULL, null=True, blank=True)
-
-    progress_tracker = models.OneToOneField(ProgressTracker, null=True, blank=True, on_delete=models.SET_NULL, related_name='student_entry')
-    module_progress = models.ManyToManyField(ModuleProgress, related_name='students')
 
     profile_completed = models.BooleanField(default=False)
 

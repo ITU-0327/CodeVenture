@@ -70,6 +70,21 @@ def quiz_results(request, quiz_id):
 
     results = []
     for answer in user_answers:
+        choices = [
+            {
+                'text': f"{chr(65 + index)}) {choice.text}",
+                'is_correct': choice.is_correct
+            }
+            for index, choice in enumerate(answer.question.choices.all())
+        ]
+
+        # Identify the selected answer's index and prefix it
+        selected_answer_index = next(
+            (index for index, choice in enumerate(answer.question.choices.all()) if
+             choice.text == answer.selected_answer),
+            None)
+        selected_answer = f"{chr(65 + selected_answer_index)}) {answer.selected_answer}" if selected_answer_index is not None else answer.selected_answer
+
         results.append({
             'question': answer.question.text,
             'answer': selected_answer,

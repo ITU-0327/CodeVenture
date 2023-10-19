@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-5w%^ylnn0$_(!bj5wtn86700&rdc=$$bj#+p*rf*37pzogl9)7
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['118.139.52.10', '118.138.196.78', 'localhost', '127.0.0.1', '6bad-118-139-52-10.ngrok-free.app']
 
 # Application definition
 
@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'LearningResource',
     'QuizChallengeSystem',
     'PythonPlayground',
+    'ProgressTracker',
 ]
 
 SOCIALACCOUNT_LOGIN_ON_GET = True
@@ -152,3 +153,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
+
+CSRF_TRUSTED_ORIGINS = []
