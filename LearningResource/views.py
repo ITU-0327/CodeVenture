@@ -6,6 +6,7 @@ from .forms import SubModuleForm, LearningModuleForm
 from .models import SubModule
 
 from ProgressTracker.models import ProgressTracker, ModuleProgress
+from UserManagement.models import Student
 
 
 @login_required(login_url='/login/')
@@ -30,14 +31,21 @@ def lecture_view(request, submodule_id):
     try:
         submodule = SubModule.objects.get(pk=submodule_id)
 
-        if request.GET.get('complete_current'):
-            progress_tracker = ProgressTracker.objects.get(student__user=request.user)
-            module_progress, created = ModuleProgress.objects.get_or_create(
-                progress_tracker=progress_tracker,
-                module=submodule.parent_module
-            )
+        complete_submodule_id = request.GET.get('complete_current')
+        if complete_submodule_id:
+            try:
+                completed_submodule = SubModule.objects.get(pk=complete_submodule_id)
 
-            module_progress.add_completed_submodule(submodule)
+                progress_tracker = ProgressTracker.objects.get(student__user=request.user)
+                module_progress, created = ModuleProgress.objects.get_or_create(
+                    progress_tracker=progress_tracker,
+                    module=completed_submodule.parent_module
+                )
+
+                module_progress.add_completed_submodule(completed_submodule)
+
+            except SubModule.DoesNotExist:
+                pass
 
         context = {
             'submodule': submodule
@@ -52,5 +60,13 @@ def module_view(request):
     return render(request, 'BasicModulesPage.html')
 
 
+@login_required(login_url='/login/')
 def concept_module_view(request):
-    return render(request, 'ConceptModulesPage.html')
+    student = Student.objects.get(user=request.user)
+    progress_tracker = ProgressTracker.objects.get(student=student)
+    module_progresses = progress_tracker.module_progress.all()
+
+    context = {
+        'module_progresses': module_progresses
+    }
+    return render(request, 'ConceptModulesPage.html', context)

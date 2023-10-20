@@ -47,3 +47,14 @@ class ModuleProgress(models.Model):
     def add_completed_submodule(self, submodule):
         if submodule.parent_module == self.module:
             self.completed_submodules.add(submodule)
+
+    def current_submodule(self):
+        all_submodules = self.module.sub_modules.all().order_by('id')
+        completed_submodules = self.completed_submodules.all()
+
+        for submodule in all_submodules:
+            if submodule not in completed_submodules:
+                print(submodule.id)
+                return submodule
+
+        return None

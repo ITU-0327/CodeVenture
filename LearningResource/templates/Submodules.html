@@ -19,6 +19,12 @@
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Mitr:wght@700&display=swap"
     />
+    <style>
+        .dynamic-video {
+            width: 80vw;
+            height: 45vw;
+        }
+    </style>
   </head>
   <body>
     <div class="submodules">
@@ -71,21 +77,24 @@
               {{ submodule.parent_module.short_name }} - {{ submodule.name }}
           </b>
           {% if submodule.next_submodule %}
-            <a href="{% url 'lecture_view' submodule.next_submodule.id %}?complete_current=true" class="previous-wrapper">
+            <a href="{% url 'lecture_view' submodule.next_submodule.id %}?complete_current={{ submodule.id }}" class="previous-wrapper">
                 <b class="previous">Next</b>
             </a>
           {% endif %}
         </div>
         <iframe
-          class="image-14"
-          src="https://www.youtube.com/embed/WbzNRTTrX0g?rel=0"
+          class="dynamic-video"
+          src="https://www.youtube.com/embed/{{ submodule.video.video_id }}"
           frameborder="0"
           allowfullscreen
         >
         </iframe>
-        <div class="description-wrapper">
-          <b class="description1">Description:</b>
-        </div>
+        {% if submodule.description %}
+            <div class="description-wrapper">
+                <b class="description1">Description:</b>
+                <div class="description-text">{{ submodule.description }}</div>
+            </div>
+        {% endif %}
       </div>
       <div class="feedback4">
         <form class="contact-form2" method="POST">

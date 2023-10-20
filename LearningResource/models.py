@@ -14,6 +14,7 @@ class LearningModule(models.Model):
     name = models.CharField(max_length=100, unique=True)
     short_name = models.CharField(max_length=50, unique=True, null=True)
     description = models.TextField()
+    thumbnail = models.URLField(default='', null=True)
 
     def __str__(self):
         return self.name

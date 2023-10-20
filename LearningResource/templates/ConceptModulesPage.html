@@ -64,38 +64,28 @@
         <b class="concept-modules">Concept modules</b>
         <div class="frame-parent1">
           <div class="component-parent">
+            {% for module_progress in module_progresses %}
             <div class="frame-parent2">
-              <a class="image-10-parent">
-                <img
-                  class="image-10-icon"
-                  alt=""
-                  src="{% static 'public/image-10@2x.png' %}"
-                />
+                <a class="image-10-parent"
+                    {% if module_progress.current_submodule %}
+                        href="{% url 'lecture_view' module_progress.current_submodule.id %}"
+                    {% endif %}>
+                    <img
+                        class="image-10-icon"
+                        alt=""
+                        src="{{ module_progress.module.thumbnail }}"
+                    />
 
-                <b class="unit-functions">Unit functions</b>
-              </a>
-              <div class="progress-bar">
-                <div class="bar">
-                  <b class="concept-modules">75%</b>
+                    <b class="unit-functions">{{ module_progress.module.short_name }}</b>
+                </a>
+                {% load custom_filters %}
+                <div class="progress-bar">
+                    <div class="bar" style="width: {{ module_progress.progress|multiply:100 }}%;">
+                        <b class="concept-modules">{{ module_progress.progress|multiply:100 }}%</b>
+                    </div>
                 </div>
-              </div>
             </div>
-            <div class="frame-parent2">
-              <a class="image-10-parent">
-                <img
-                  class="image-10-icon1"
-                  alt=""
-                  src="{% static 'public/image-101@2x.png' %}"
-                />
-
-                <b class="unit-functions">Exception handling</b>
-              </a>
-              <div class="progress-bar">
-                <div class="bar">
-                  <b class="concept-modules">75%</b>
-                </div>
-              </div>
-            </div>
+            {% endfor %}
             <div class="frame-parent2">
               <a class="image-10-parent">
                 <img
