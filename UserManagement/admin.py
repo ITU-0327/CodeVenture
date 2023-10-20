@@ -7,7 +7,7 @@ from .models import Student, Teacher, Parent
 class StudentAdmin(admin.ModelAdmin):
     list_display = ('user', 'email', 'fullname')
     readonly_fields = ('fullname', 'email')
-    fields = ('user', 'fullname', 'email', 'birthday', 'coding_experience', 'parent', 'progress_tracker', 'module_progress')
+    fields = ('user', 'fullname', 'email', 'birthday', 'coding_experience', 'parent')
 
     def fullname(self, obj):
         return obj.user.first_name + ' ' + obj.user.last_name

@@ -71,7 +71,7 @@
               {{ submodule.parent_module.short_name }} - {{ submodule.name }}
           </b>
           {% if submodule.next_submodule %}
-            <a href="{% url 'lecture_view' submodule.next_submodule.id %}" class="previous-wrapper">
+            <a href="{% url 'lecture_view' submodule.next_submodule.id %}?complete_current=true" class="previous-wrapper">
                 <b class="previous">Next</b>
             </a>
           {% endif %}

@@ -5,6 +5,8 @@ from django.contrib.auth.decorators import login_required
 from .forms import SubModuleForm, LearningModuleForm
 from .models import SubModule
 
+from ProgressTracker.models import ProgressTracker, ModuleProgress
+
 
 @login_required(login_url='/login/')
 def create_view(request, model_type):
@@ -27,31 +29,23 @@ def create_view(request, model_type):
 def lecture_view(request, submodule_id):
     try:
         submodule = SubModule.objects.get(pk=submodule_id)
+
+        if request.GET.get('complete_current'):
+            progress_tracker = ProgressTracker.objects.get(student__user=request.user)
+            module_progress, created = ModuleProgress.objects.get_or_create(
+                progress_tracker=progress_tracker,
+                module=submodule.parent_module
+            )
+
+            module_progress.add_completed_submodule(submodule)
+
         context = {
             'submodule': submodule
         }
-        return render(request, 'lecture_page.html', context)
-
-    except SubModule.DoesNotExist:
-        raise Http404("Submodule not found")
-
-
-@login_required(login_url='/login/')
-def lecture_view(request, submodule_id):
-    try:
-        submodule = SubModule.objects.get(pk=submodule_id)
-        context = {
-            'submodule': submodule
-        }
-        # return render(request, 'lecture_page.html', context)
         return render(request, 'Submodules.html', context)
 
     except SubModule.DoesNotExist:
         raise Http404("Submodule not found")
-
-
-def challenge_quiz_view(request):
-    return render(request, 'challenge_and_quiz.html')
 
 
 def module_view(request):

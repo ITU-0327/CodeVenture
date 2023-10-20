@@ -9,7 +9,7 @@ class ProgressTracker(models.Model):
     badges = models.ManyToManyField(Badge)
 
     def __str__(self):
-        return f"{self.student.user.username} - {self.overall_progress * 100:.2f}%"
+        return f"{self.student.user.username} - {self.overall_progress * 100:.1f}%"
 
     def update_overall_progress(self):
         total_modules = self.module_progress.count()
@@ -32,7 +32,7 @@ class ModuleProgress(models.Model):
         return self.progress == 1
 
     def __str__(self):
-        return f"{self.progress_tracker.student.user.username} - {self.module.name}"
+        return f"{self.progress_tracker.student.user.username} - {self.module.name} - {self.progress * 100:.1f}%"
 
     def update_progress(self):
         total_submodules = self.module.sub_modules.count()
@@ -43,3 +43,7 @@ class ModuleProgress(models.Model):
         else:
             self.progress = 0
         self.save()
+
+    def add_completed_submodule(self, submodule):
+        if submodule.parent_module == self.module:
+            self.completed_submodules.add(submodule)
