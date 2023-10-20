@@ -49,7 +49,7 @@ INSTALLED_APPS = [
     'LearningResource',
     'QuizChallengeSystem',
     'PythonPlayground',
-    'ProgressTracker',
+    'ProgressTracker.apps.ProgresstrackingConfig',
 ]
 
 SOCIALACCOUNT_LOGIN_ON_GET = True
