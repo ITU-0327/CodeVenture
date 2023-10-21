@@ -3,6 +3,7 @@ from LearningResource.models import VideoTutorial, LearningModule, SubModule, Ba
 from django.db import IntegrityError
 
 
+# Fixtures
 @pytest.fixture
 def video_tutorial():
     return VideoTutorial.objects.create(name="Sample Video", video_id="rHux0gMZ3Eg")

@@ -119,7 +119,7 @@ def test_concept_module_view_unauthenticated(user):
     response = c.get(reverse('concept_modules'))
 
     assert response.status_code == 302
-    assert "/login/" in response.url
+    assert reverse('login') in response.url
 
 
 @pytest.mark.django_db
@@ -151,7 +151,7 @@ def test_module_view_unauthenticated(user):
     response = c.get(reverse('learning_modules'))
 
     assert response.status_code == 302
-    assert "/login/" in response.url
+    assert reverse('login') in response.url
 
 
 @pytest.mark.django_db

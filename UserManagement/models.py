@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
-from LearningResource.models import SubModule
+
+from LearningResource.models import LearningModule
 
 
 class Student(models.Model):
@@ -28,11 +29,16 @@ class Student(models.Model):
 
 class Teacher(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    course = models.ManyToManyField(SubModule)
+    course = models.ManyToManyField(LearningModule)
 
     def get_students(self):
+        from ProgressTracker.models import ModuleProgress
         teacher_modules = self.course.all()
-        enrolled_students = Student.objects.filter(completed_modules__in=teacher_modules).distinct()
+        enrolled_module_progresses = ModuleProgress.objects.filter(module__in=teacher_modules)
+
+        enrolled_students = Student.objects.filter(
+            progresstracker__module_progress__in=enrolled_module_progresses).distinct()
+
         return enrolled_students
 
     def __str__(self):
