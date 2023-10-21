@@ -128,34 +128,26 @@ def complete_profile(request):
 
 
 def choose_user_type(request):
-    print("Entered choose_user_type function")  # Debug line
     if request.method == 'POST':
         selected_role = request.POST.get('role')
-        print(f"Selected role: {selected_role}")  # Debug line
         if request.user.is_authenticated:
-            print("User is authenticated")  # Debug line
             if hasattr(request.user, 'student'):
                 request.user.student.delete()
             if hasattr(request.user, 'parent'):
                 request.user.parent.delete()
             if hasattr(request.user, 'teacher'):
                 request.user.teacher.delete()
-            print("Deleted old roles if any")  # Debug line
 
             if selected_role == 'student':
                 Student.objects.get_or_create(user=request.user)
-                print("Redirecting to complete profile for student")  # Debug line
                 return redirect('complete_profile')
             elif selected_role == 'parent':
                 Parent.objects.get_or_create(user=request.user)
-                print("Redirecting to complete profile for parent")  # Debug line
                 return redirect('complete_profile')
             elif selected_role == 'teacher':
                 Teacher.objects.get_or_create(user=request.user)
-                print("Redirecting to home for teacher")  # Debug line
                 return redirect('home')
 
         else:
-            print("User is not authenticated")  # Debug line
             return redirect('register_user', user_type=selected_role)
     return render(request, 'SelectRoleForm.html')
