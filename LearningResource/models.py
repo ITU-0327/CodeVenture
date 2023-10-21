@@ -4,7 +4,6 @@ from django.db import models
 class VideoTutorial(models.Model):
     name = models.CharField(max_length=50, default='')
     video_id = models.CharField(max_length=11, null=True)
-    # duration = models.IntegerField()
 
     def __str__(self):
         return self.name

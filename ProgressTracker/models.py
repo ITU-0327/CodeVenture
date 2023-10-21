@@ -23,7 +23,7 @@ class ProgressTracker(models.Model):
 
 
 class ModuleProgress(models.Model):
-    progress_tracker =  models.ForeignKey(ProgressTracker, related_name='module_progress', on_delete=models.CASCADE)
+    progress_tracker = models.ForeignKey(ProgressTracker, related_name='module_progress', on_delete=models.CASCADE)
     module = models.ForeignKey(LearningModule, related_name='student_progress', on_delete=models.CASCADE)
     completed_submodules = models.ManyToManyField(SubModule)
     progress = models.FloatField(default=0.0)
