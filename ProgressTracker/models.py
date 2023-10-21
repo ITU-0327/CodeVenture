@@ -54,7 +54,6 @@ class ModuleProgress(models.Model):
 
         for submodule in all_submodules:
             if submodule not in completed_submodules:
-                print(submodule.id)
                 return submodule
 
         return None
