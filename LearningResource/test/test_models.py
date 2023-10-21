@@ -86,3 +86,18 @@ def test_sub_module_difficulty_choices(sub_module):
 def test_badge_creation(badge):
     assert Badge.objects.count() == 1
     assert badge.name == "Django Novice"
+
+
+@pytest.mark.django_db
+def test_video_tutorial_str(video_tutorial):
+    assert str(video_tutorial) == "Sample Video"
+
+
+@pytest.mark.django_db
+def test_learning_module_str(learning_module):
+    assert str(learning_module) == "Django Basics"
+
+
+@pytest.mark.django_db
+def test_sub_module_str(sub_module):
+    assert str(sub_module) == "DJ-Basics - Setup"

@@ -9,21 +9,21 @@ from ProgressTracker.models import ProgressTracker, ModuleProgress
 from UserManagement.models import Student
 
 
-@login_required(login_url='/login/')
-def create_view(request, model_type):
-    if not (hasattr(request.user, 'teacher') or request.user.is_staff):
-        return HttpResponse("You are not allowed here!!")
-
-    form_class = SubModuleForm if model_type == 'submodule' else LearningModuleForm
-    form = form_class(request.POST or None)
-
-    if form.is_valid():
-        form.save()
-
-    context = {
-        'form': form
-    }
-    return render(request, 'create.html', context)
+# @login_required(login_url='/login/')
+# def create_view(request, model_type):
+#     if not (hasattr(request.user, 'teacher') or request.user.is_staff):
+#         return HttpResponse("You are not allowed here!!")
+#
+#     form_class = SubModuleForm if model_type == 'submodule' else LearningModuleForm
+#     form = form_class(request.POST or None)
+#
+#     if form.is_valid():
+#         form.save()
+#
+#     context = {
+#         'form': form
+#     }
+#     return render(request, 'create.html', context)
 
 
 @login_required(login_url='/login/')
@@ -45,7 +45,7 @@ def lecture_view(request, submodule_id):
                 module_progress.add_completed_submodule(completed_submodule)
 
             except SubModule.DoesNotExist:
-                pass
+                raise Http404("Completed submodule not found")
 
         context = {
             'submodule': submodule
@@ -56,7 +56,8 @@ def lecture_view(request, submodule_id):
         raise Http404("Submodule not found")
 
 
-def module_view(request):
+@login_required(login_url='/login/')
+def basic_module_view(request):
     return render(request, 'BasicModulesPage.html')
 
 

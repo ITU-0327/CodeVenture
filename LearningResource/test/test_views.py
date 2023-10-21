@@ -75,6 +75,16 @@ def test_lecture_view_with_invalid_submodule_id(request_factory, user):
 
 
 @pytest.mark.django_db
+def test_lecture_view_with_invalid_completed_submodule_id(request_factory, user, sub_module):
+    # Set the submodule_id to a valid submodule but the complete_current value to an invalid ID (9999 in this case).
+    request = request_factory.get(reverse('lecture_view', args=[sub_module.id]) + '?complete_current=9999')
+    request.user = user
+
+    with pytest.raises(Http404, match="Completed submodule not found"):
+        lecture_view(request, sub_module.id)
+
+
+@pytest.mark.django_db
 def test_lecture_view_without_authentication(request_factory, sub_module):
     request = request_factory.get(reverse('lecture_view', args=[sub_module.id]))
     request.user = AnonymousUser()
@@ -127,3 +137,24 @@ def test_concept_module_view_context_data(client, student, progress_tracker, lea
 def test_concept_module_view_template(client, student, progress_tracker):
     response = client.get(reverse('concept_modules'))
     assert 'ConceptModulesPage.html' in [template.name for template in response.templates]
+
+
+# Test module_view
+def test_module_view_response(client, student, progress_tracker):
+    response = client.get(reverse('learning_modules'))
+    assert response.status_code == 200
+
+
+@pytest.mark.django_db
+def test_module_view_unauthenticated(user):
+    c = Client()
+    response = c.get(reverse('learning_modules'))
+
+    assert response.status_code == 302
+    assert "/login/" in response.url
+
+
+@pytest.mark.django_db
+def test_module_view_template(client, student, progress_tracker):
+    response = client.get(reverse('learning_modules'))
+    assert 'BasicModulesPage.html' in [template.name for template in response.templates]

@@ -17,7 +17,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from WelcomePage.views import home_view
-from LearningResource.views import create_view, lecture_view, module_view, concept_module_view
+from LearningResource.views import lecture_view, basic_module_view, concept_module_view
+# from LearningResource.views import create_view
 from UserManagement.views import login_view, logoutUser, register_user, choose_user_type, complete_profile
 from QuizChallengeSystem.views import quiz_view, quiz_results
 from PythonPlayground.views import playground_view, run_code
@@ -34,10 +35,10 @@ urlpatterns = [
     path('choose_user_type/', choose_user_type, name='choose_user_type'),
     path('complete_profile/', complete_profile, name='complete_profile'),
 
-    path('create/<str:model_type>/', create_view, name='create_view'),
+    # path('create/<str:model_type>/', create_view, name='create_view'),
     path('lecture/<int:submodule_id>/', lecture_view, name='lecture_view'),
 
-    path('module/', module_view, name='learning_modules'),
+    path('module/', basic_module_view, name='learning_modules'),
     path('concept_module/', concept_module_view, name='concept_modules'),
 
     path('quiz/<int:quiz_id>/', quiz_view, name='quiz_view'),
