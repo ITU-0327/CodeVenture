@@ -17,21 +17,16 @@ def home_view(request):
 
     if request.user.is_authenticated:
         profile_completed = False
-        try:
-            if hasattr(request.user, 'student'):
-                profile = request.user.student
-                profile_completed = profile.profile_completed
-            elif hasattr(request.user, 'parent'):
-                profile = request.user.parent
-                profile_completed = profile.profile_completed
-            elif hasattr(request.user, 'teacher'):
-                profile_completed = True
+        if hasattr(request.user, 'student'):
+            profile = request.user.student
+            profile_completed = profile.profile_completed
+        elif hasattr(request.user, 'parent'):
+            profile = request.user.parent
+            profile_completed = profile.profile_completed
+        elif hasattr(request.user, 'teacher'):
+            profile_completed = True
 
-            if not request.user.is_staff and not profile_completed:
-                return redirect('choose_user_type')
-
-        except Exception as e:
-            print("An error occurred:", e)
+        if not request.user.is_staff and not profile_completed:
             return redirect('choose_user_type')
 
         return render(request, 'MenuPage.html', {'form': form})
