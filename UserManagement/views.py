@@ -128,26 +128,26 @@ def complete_profile(request):
 
 
 def choose_user_type(request):
-    if request.method == 'POST':
-        selected_role = request.POST.get('role')
-        if request.user.is_authenticated:
-            if hasattr(request.user, 'student'):
-                request.user.student.delete()
-            if hasattr(request.user, 'parent'):
-                request.user.parent.delete()
-            if hasattr(request.user, 'teacher'):
-                request.user.teacher.delete()
+    if request.method != 'POST':
+        return render(request, 'SelectRoleForm.html')
 
-            if selected_role == 'student':
-                Student.objects.get_or_create(user=request.user)
-                return redirect('complete_profile')
-            elif selected_role == 'parent':
-                Parent.objects.get_or_create(user=request.user)
-                return redirect('complete_profile')
-            elif selected_role == 'teacher':
-                Teacher.objects.get_or_create(user=request.user)
-                return redirect('home')
+    selected_role = request.POST.get('role')
+    if not request.user.is_authenticated:
+        return redirect('register_user', user_type=selected_role)
 
-        else:
-            return redirect('register_user', user_type=selected_role)
-    return render(request, 'SelectRoleForm.html')
+    if hasattr(request.user, 'student'):
+        request.user.student.delete()
+    if hasattr(request.user, 'parent'):
+        request.user.parent.delete()
+    if hasattr(request.user, 'teacher'):
+        request.user.teacher.delete()
+
+    if selected_role == 'student':
+        Student.objects.get_or_create(user=request.user)
+        return redirect('complete_profile')
+    elif selected_role == 'parent':
+        Parent.objects.get_or_create(user=request.user)
+        return redirect('complete_profile')
+    elif selected_role == 'teacher':
+        Teacher.objects.get_or_create(user=request.user)
+        return redirect('home')
