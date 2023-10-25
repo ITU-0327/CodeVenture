@@ -10,7 +10,7 @@
 
 - **Welcome Page**: Simple and secure login and sign-up features.
   
-- **Personalized Learning**: Tailored assignments and tutorials based on user data.
+- **Personalized Learning**: Tailored tutorials, quizzes and challenges based on user data.
   
 - **Database Access**: Progress tracking for parents, schools, and organizations.
   
