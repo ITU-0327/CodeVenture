@@ -1,0 +1,44 @@
+{% extends 'base_generic.html' %}
+{% load static %}
+
+{% block title %}
+    Quiz Results
+{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/quiz_result.css' %}"/>
+{% endblock %}
+
+{% block css-container %}
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h1>Quiz Results</h1>
+        <p>Score: {{ score }}/{{ total_questions }}</p>
+
+        {% for result in results %}
+        <div class="card mb-4 {% if result.is_correct %}bg-success{% else %}bg-danger{% endif %}">
+            <div class="card-body">
+                <h5 class="card-title">{{ forloop.counter }}. {{ result.question }}</h5>
+
+                {% for choice in result.choices %}
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" disabled {% if choice.text == result.answer %}checked{% endif %}>
+                    <label class="form-check-label">
+                        {{ choice.text }}
+                        {% if choice.text == result.answer and result.is_correct %}
+                            <i class="fa fa-check"></i>
+                        {% elif choice.text == result.answer %}
+                            <i class="fa fa-times"></i>
+                        {% endif %}
+                    </label>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% endblock %}

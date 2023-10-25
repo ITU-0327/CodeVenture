@@ -1,0 +1,29 @@
+body {
+    background-color: #f4f1de;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+.container {
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+.bg-success {
+    background-color: rgba(40, 167, 69, 0.7) !important;
+}
+
+.bg-danger {
+    background-color: rgba(220, 53, 69, 0.7) !important;
+}
+
+.form-check-label {
+    font-size: 1.1em;
+}
+
+.form-check-input[disabled] ~ .form-check-label,
+.form-check-input:disabled ~ .form-check-label {
+    color: #212529;
+}

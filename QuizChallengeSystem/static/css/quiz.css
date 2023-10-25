@@ -1,0 +1,20 @@
+body {
+    background-color: #f4f1de;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+.quiz-info {
+    background-color: #3292da;
+}
+
+.card-color {
+    background-color: #e2e2e2;
+}
+
+.quiz {
+    padding-top: 10px;
+    padding-bottom: 50px;
+}

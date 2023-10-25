@@ -46,7 +46,7 @@ def quiz_view(request, quiz_id):
             quiz_result.score = score
             quiz_result.save()
 
-            return redirect('quiz_results', quiz_id=quiz_id)
+            return redirect('quiz_result', quiz_id=quiz_id)
 
     else:
         form = QuizForm(questions=questions)
@@ -55,13 +55,13 @@ def quiz_view(request, quiz_id):
 
 
 @login_required
-def quiz_results(request, quiz_id):
+def quiz_result_view(request, quiz_id):
     quiz = get_object_or_404(Quiz, id=quiz_id)
     student = Student.objects.get(user=request.user)
 
     latest_quiz_result = QuizResult.objects.filter(user=student, quiz=quiz).latest('created_at')
     if latest_quiz_result is None:
-        return render(request, 'quiz_results.html', {'error': 'No quiz results found'})
+        return render(request, 'quiz_result.html', {'error': 'No quiz results found'})
 
     user_answers = latest_quiz_result.user_answers.all()
 
@@ -92,7 +92,7 @@ def quiz_results(request, quiz_id):
             'choices': choices
         })
 
-    return render(request, 'quiz_results.html', {
+    return render(request, 'quiz_result.html', {
         'score': score,
         'total_questions': total_questions,
         'results': results
