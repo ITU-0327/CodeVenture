@@ -1,49 +1,18 @@
-"""
-URL configuration for CodeVenture project.
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/4.2/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
 from django.contrib import admin
 from django.urls import path, include
 from WelcomePage.views import home_view
-from LearningResource.views import lecture_view, basic_module_view, concept_module_view
-# from LearningResource.views import create_view
-from UserManagement.views import login_view, logoutUser, register_user, choose_user_type, complete_profile
-from QuizChallengeSystem.views import quiz_view, quiz_results
-from PythonPlayground.views import playground_view, run_code
+from UserManagement.views import login_view, logoutUser
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('accounts/', include('allauth.urls')),
+    path('admin/',      admin.site.urls),
+    path('accounts/',   include('allauth.urls')),
 
-    path('', home_view, name="home"),
+    path('',            home_view, name="home"),
+    path('login/',      login_view, name='login'),
+    path('logout/',     logoutUser, name='logout'),
 
-    path('login/', login_view, name='login'),
-    path('logout/', logoutUser, name='logout'),
-    path('register_user/<str:user_type>', register_user, name='register_user'),
-    path('choose_user_type/', choose_user_type, name='choose_user_type'),
-    path('complete_profile/', complete_profile, name='complete_profile'),
-
-    # path('create/<str:model_type>/', create_view, name='create_view'),
-    path('lecture/<int:submodule_id>/', lecture_view, name='lecture_view'),
-
-    path('module/', basic_module_view, name='learning_modules'),
-    path('concept_module/', concept_module_view, name='concept_modules'),
-
-    path('quiz/<int:quiz_id>/', quiz_view, name='quiz_view'),
-    path('quiz_results/<int:quiz_id>/', quiz_results, name='quiz_results'),
-
-    path('playground/', playground_view, name='playground'),
-    path('playground/run_code/', run_code, name='run_code'),
+    path('register/',   include('UserManagement.urls')),
+    path('learning/',   include('LearningResource.urls')),
+    path('quiz/',       include('QuizChallengeSystem.urls')),
+    path('playground/', include('PythonPlayground.urls')),
 ]
