@@ -1,29 +1,12 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import Http404, HttpResponse
 from django.contrib.auth.decorators import login_required
 
 from .forms import SubModuleForm, LearningModuleForm
-from .models import SubModule
+from .models import SubModule, LearningModule
 
 from ProgressTracker.models import ProgressTracker, ModuleProgress
 from UserManagement.models import Student
-
-
-# @login_required(login_url='/login/')
-# def create_view(request, model_type):
-#     if not (hasattr(request.user, 'teacher') or request.user.is_staff):
-#         return HttpResponse("You are not allowed here!!")
-#
-#     form_class = SubModuleForm if model_type == 'submodule' else LearningModuleForm
-#     form = form_class(request.POST or None)
-#
-#     if form.is_valid():
-#         form.save()
-#
-#     context = {
-#         'form': form
-#     }
-#     return render(request, 'create.html', context)
 
 
 @login_required(login_url='/login/')
@@ -57,12 +40,12 @@ def lecture_view(request, submodule_id):
 
 
 @login_required(login_url='/login/')
-def basic_module_view(request):
+def basic_module_menu_view(request):
     return render(request, 'BasicModulesPage.html')
 
 
 @login_required(login_url='/login/')
-def concept_module_view(request):
+def concept_module_menu_view(request):
     student = Student.objects.get(user=request.user)
     progress_tracker = ProgressTracker.objects.get(student=student)
     module_progresses = progress_tracker.module_progress.all()
@@ -71,3 +54,19 @@ def concept_module_view(request):
         'module_progresses': module_progresses
     }
     return render(request, 'ConceptModulesPage.html', context)
+
+
+@login_required(login_url='/login/')
+def concept_module_view(request, module_id):
+    module = get_object_or_404(LearningModule, id=module_id)
+    student = Student.objects.get(user=request.user)
+    progress_tracker = ProgressTracker.objects.get(student=student)
+    module_progress = ModuleProgress.objects.get(progress_tracker=progress_tracker, module=module)
+    sub_modules = module.sub_modules.all()
+
+    context = {
+        'module': module,
+        'module_progress': module_progress,
+        'sub_modules': sub_modules,
+    }
+    return render(request, 'ConceptModule.html', context)

@@ -100,8 +100,8 @@
 .image-9-icon {
   position: relative;
   border-radius: 5.57px;
-  width: 295.27px;
-  height: 197.15px;
+  width: 295.3px;
+  height: 197.2px;
   object-fit: cover;
 }
 .about-codeventure1 {
@@ -149,7 +149,7 @@
   font-weight: 600;
   color: var(--color-steelblue-100);
   display: inline-block;
-  width: 377.27px;
+  width: 377.3px;
 }
 .description {
   align-self: stretch;
@@ -171,8 +171,8 @@
   border-radius: 50%;
 }
 .frame-item {
-  width: 101.91px;
-  height: 115.84px;
+  width: 101.9px;
+  height: 115.8px;
   object-fit: cover;
 }
 .frame-inner {
@@ -201,8 +201,8 @@
   margin-left: -30px;
 }
 .ellipse-parent {
-  width: 101.91px;
-  height: 99.84px;
+  width: 101.9px;
+  height: 99.8px;
   display: flex;
   flex-direction: row;
   align-items: flex-start;
@@ -211,10 +211,10 @@
   box-sizing: border-box;
 }
 .b1,
-.sean {
+.danish {
   position: relative;
 }
-.sean {
+.danish {
   font-size: var(--font-size-5xl);
   color: var(--color-darkslategray-100);
 }
@@ -223,7 +223,7 @@
 }
 .frame-parent,
 .frame1 {
-  width: 101.91px;
+  width: 101.9px;
   height: 166px;
   display: flex;
   flex-direction: column;
@@ -362,7 +362,7 @@
   object-fit: cover;
 }
 .frame-child3,
-.louisa {
+.mahissh {
   position: relative;
 }
 .vector-parent {
@@ -408,12 +408,12 @@
 }
 .frame-child5 {
   position: relative;
-  width: 12.99px;
-  height: 11.25px;
+  width: 13px;
+  height: 11.3px;
 }
 .leader-board1 {
   border-radius: var(--br-11xl);
-  background-color: #a4cfef;
+  background-color: #a4d0ef;
   box-shadow: 8px 8px 20px rgba(0, 0, 0, 0.25);
   width: 430px;
   overflow: hidden;
@@ -572,7 +572,7 @@
   cursor: pointer;
   border: 0;
   padding: var(--padding-3xs) var(--padding-11xl);
-  background-color: var(--color-gray-300);
+  background-color: var(--color-gray-600);
   border-radius: var(--br-mini);
   box-shadow: 4px 4px 20px rgba(140, 120, 120, 0.6);
   height: 59px;

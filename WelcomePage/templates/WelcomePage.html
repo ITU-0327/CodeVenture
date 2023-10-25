@@ -1,27 +1,7 @@
-<!DOCTYPE html>
-<html>
-<head>
-    {% load static %}
-    <meta charset="utf-8"/>
-    <meta name="viewport" content="initial-scale=1, width=device-width"/>
-    <title>CodeVenture</title>
+{% extends 'base_generic.html' %}
+{% load static %}
 
-    <meta property="og:image" content="{% static 'public/thumbnail.png' %}"/>
-
-    <link rel="icon" href="{% static 'public/favicon.ico' %}"/>
-    <link rel="stylesheet" href="{% static 'css/global.css' %}"/>
-    <link rel="stylesheet" href="{% static 'css/WelcomePage.css' %}"/>
-    <link
-            rel="stylesheet"
-            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
-    />
-    <link
-            rel="stylesheet"
-            href="https://fonts.googleapis.com/css2?family=Mitr:wght@700&display=swap"
-    />
-</head>
-<body>
-<div class="welcomepage">
+{% block nav-bar %}
     <nav class="welcome-nav">
         <a class="logo" href="{% url 'home' %}">
             <img class="logo-icon" alt="" src="{% static 'public/logo@2x.png' %}"/>
@@ -35,6 +15,9 @@
             </a>
         </div>
     </nav>
+{% endblock %}
+
+{% block content %}
     <div class="home">
         <div class="hero-section">
             <div class="hero-section1">
@@ -230,82 +213,4 @@
             </div>
         </div>
     </div>
-    <div class="feedback">
-        <form class="contact-form" method="POST" action="{% url 'home' %}">
-            {% csrf_token %}
-            <div class="text1">
-                <b class="feedback1">Feedback</b>
-                <div class="send-us-a">Send us a message</div>
-            </div>
-            <div class="text-box">
-                <input
-                        class="fullname-textbox"
-                        name="{{ form.fullname.name }}"
-                        value="{{ form.fullname.value|default:'' }}"
-                        placeholder="Fullname"
-                        type="text"
-                />
-                {{ form.fullname.errors }}
-
-                <input
-                        class="fullname-textbox"
-                        name="{{ form.subject.name }}"
-                        value="{{ form.subject.value|default:'' }}"
-                        placeholder="Subject"
-                        type="text"
-                />
-                {{ form.subject.errors }}
-
-                <input
-                        class="message-textbook"
-                        name="{{ form.message.name }}"
-                        value="{{ form.message.value|default:'' }}"
-                        placeholder="Your message"
-                        type="text"
-                />
-                {{ form.message.errors }}
-            </div>
-            <button class="submit-btn">
-                <div class="submit">Submit</div>
-            </button>
-        </form>
-        <div class="site-map">
-            <b class="site-map1">Site Map</b>
-            <div class="text2">
-                <div class="all-our-pages">All our pages</div>
-            </div>
-            <div class="link">
-                <button class="about-us">- About us</button>
-                <button class="about-us">- Leaderboard</button>
-                <button class="about-us">- Contact us</button>
-            </div>
-        </div>
-        <div class="contact-info">
-            <img
-                    class="logo-feedback-icon"
-                    alt=""
-                    src="{% static 'public/logo-feedback@2x.png' %}"
-            />
-
-            <div class="info">
-                <div class="phone">
-                    <img class="vector-icon" alt="" src="{% static 'public/vector.svg' %}"/>
-
-                    <b class="mahissh">+61 984 588 580</b>
-                </div>
-                <div class="email">
-                    <img class="vector-icon1" alt="" src="{% static 'public/vector1.svg' %}"/>
-
-                    <b class="mahissh">hello@codeventure.com</b>
-                </div>
-            </div>
-        </div>
-    </div>
-    <footer class="footer">
-        <p class="copyright-2023-all">
-            ©Copyright 2023 All rights reserved CodeVenture
-        </p>
-    </footer>
-</div>
-</body>
-</html>
+{% endblock %}

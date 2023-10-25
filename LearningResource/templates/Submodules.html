@@ -1,0 +1,54 @@
+{% extends 'base_generic.html' %}
+{% load static %}
+
+{% block title %}
+    Basic Modules
+{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/Submodules.css' %}"/>
+    <style>
+        .dynamic-video {
+            width: 64vw;
+            height: 36vw;
+        }
+    </style>
+{% endblock %}
+
+{% block css-container %}
+    submodules
+{% endblock %}
+
+{% block content %}
+    <div class="frame-parent1">
+        <div class="component-parent">
+            {% if submodule.prev_submodule %}
+                <a href="{% url 'lecture_view' submodule.prev_submodule.id %}" class="previous-wrapper">
+                    <b class="previous">Previous</b>
+                </a>
+            {% endif %}
+            <b class="artificial-intelligence-">
+                {{ submodule.parent_module.short_name }} - {{ submodule.name }}
+            </b>
+            {% if submodule.next_submodule %}
+                <a href="{% url 'lecture_view' submodule.next_submodule.id %}?complete_current={{ submodule.id }}"
+                   class="previous-wrapper">
+                    <b class="previous">Next</b>
+                </a>
+            {% endif %}
+        </div>
+        <iframe
+                class="dynamic-video"
+                src="https://www.youtube.com/embed/{{ submodule.video.video_id }}"
+                frameborder="0"
+                allowfullscreen
+        >
+        </iframe>
+        {% if submodule.description %}
+            <div class="description-wrapper">
+                <b class="description2">Description:</b>
+                <div class="description-text">{{ submodule.description }}</div>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

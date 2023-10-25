@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="initial-scale=1, width=device-width"/>
+    <title>{% block title %}CodeVenture{% endblock %}</title>
+
+    <meta property="og:image" content="{% static 'public/thumbnail.png' %}"/>
+
+    <link rel="icon" href="{% static 'public/favicon.ico' %}"/>
+    <link rel="stylesheet" href="{% static 'css/global.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/MenuPage.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/WelcomePage.css' %}"/>
+    {% block css %}
+    {% endblock %}
+    <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
+    />
+    <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Mitr:wght@700&display=swap"
+    />
+</head>
+<body>
+<div class="{% block css-container %}welcomepage{% endblock %}">
+    {% block nav-bar %}
+        <nav class="student-home-nav4" id="student nav">
+            <a class="logo7" href="{% url 'home' %}">
+                <img class="logo-icon7" alt="" src="{% static 'public/logo@2x.png' %}"/>
+            </a>
+            <div class="btn9">
+                <div class="links5">
+                    <a class="learning-modules8" href="{% url 'learning_modules' %}">
+                        <b class="learning-modules9">Learning Modules</b>
+                    </a>
+                    <a class="learning-modules8" href="/quiz/1/">
+                        <b class="learning-modules9">Quizzes</b>
+                    </a>
+                    <a class="learning-modules8">
+                        <b class="learning-modules9">Challenges</b>
+                    </a>
+                    <a class="learning-modules8" href="{% url 'playground' %}">
+                        <b class="learning-modules9">Python Playground</b>
+                    </a>
+                </div>
+                <button class="menu4">
+                    <img class="vector-icon14" alt="" src="{% static 'public/vector2.svg' %}"/>
+                </button>
+                <button class="profile-pic5" id="profilePic">
+                    {% if user.socialaccount_set.all %}
+                        <img class="profile-pic-icon5"
+                             alt="Profile Picture"
+                             src="{{ user.socialaccount_set.all.0.get_avatar_url }}"
+                        >
+                    {% else %}
+                        <img
+                                class="profile-pic-icon5"
+                                alt="Default Picture"
+                                src="{% static 'public/profile-pic@2x.png' %}"
+                        />
+                    {% endif %}
+                </button>
+            </div>
+        </nav>
+    {% endblock %}
+
+    {% block content %}
+    {% endblock %}
+
+    {% block feedback-form %}
+    <div class="feedback">
+        <form class="contact-form" method="POST" action="{% url 'home' %}">
+            {% csrf_token %}
+            <div class="text1">
+                <b class="feedback1">Feedback</b>
+                <div class="send-us-a">Send us a message</div>
+            </div>
+            <div class="text-box">
+                <input
+                        class="fullname-textbox"
+                        name="{{ form.fullname.name }}"
+                        value="{{ form.fullname.value|default:'' }}"
+                        placeholder="Fullname"
+                        type="text"
+                />
+                {{ form.fullname.errors }}
+
+                <input
+                        class="fullname-textbox"
+                        name="{{ form.subject.name }}"
+                        value="{{ form.subject.value|default:'' }}"
+                        placeholder="Subject"
+                        type="text"
+                />
+                {{ form.subject.errors }}
+
+                <input
+                        class="message-textbook"
+                        name="{{ form.message.name }}"
+                        value="{{ form.message.value|default:'' }}"
+                        placeholder="Your message"
+                        type="text"
+                />
+                {{ form.message.errors }}
+            </div>
+            <button class="submit-btn">
+                <div class="submit">Submit</div>
+            </button>
+        </form>
+        <div class="site-map">
+            <b class="site-map1">Site Map</b>
+            <div class="text2">
+                <div class="all-our-pages">All our pages</div>
+            </div>
+            <div class="link">
+                <button class="about-us">- About us</button>
+                <button class="about-us">- Leaderboard</button>
+                <button class="about-us">- Contact us</button>
+            </div>
+        </div>
+        <div class="contact-info">
+            <img
+                    class="logo-feedback-icon"
+                    alt=""
+                    src="{% static 'public/logo-feedback@2x.png' %}"
+            />
+
+            <div class="info">
+                <div class="phone">
+                    <img class="vector-icon" alt="" src="{% static 'public/vector.svg' %}"/>
+
+                    <b class="mahissh">+61 984 588 580</b>
+                </div>
+                <div class="email">
+                    <img class="vector-icon1" alt="" src="{% static 'public/vector1.svg' %}"/>
+
+                    <b class="mahissh">hello@codeventure.com</b>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endblock %}
+    <footer class="footer">
+        <p class="copyright-2023-all">
+            ©Copyright 2023 All rights reserved CodeVenture
+        </p>
+    </footer>
+</div>
+
+<div id="dropView" class="popup-overlay" style="display: none">
+    <div class="drop-view" data-animate-on-scroll>
+        <div class="drop-view-inner">
+            <div class="profile-pic-parent">
+                {% if user.socialaccount_set.all %}
+                    <img class="profile-pic-icon6"
+                         alt="Profile Picture"
+                         src="{{ user.socialaccount_set.all.0.get_avatar_url }}"
+                    >
+                {% else %}
+                    <img
+                            class="profile-pic-icon6"
+                            alt="Default Picture"
+                            src="{% static 'public/profile-pic@2x.png' %}"
+                    />
+                {% endif %}
+
+                <div class="hello-user-parent">
+                    <b class="hello-user">Hello, {{ user.username }}</b>
+                    <a class="edit-your-profile">Edit your profile</a>
+                </div>
+            </div>
+        </div>
+        <a class="btn10" href="{% url 'logout' %}">
+            <img class="vector-icon17" alt="" src="{% static 'public/vector3.svg' %}"/>
+
+            <b class="hello-user">Sign out</b>
+        </a>
+        {% if user.is_staff %}
+        <a class="btn10" href="{% url 'admin:index' %}">
+            <img class="vector-icon17" alt="" src="{% static 'public/vector4.svg' %}"/>
+
+            <b class="hello-user">Admin</b>
+        </a>
+        {% endif %}
+    </div>
+</div>
+
+<script>
+    var scrollAnimElements = document.querySelectorAll("[data-animate-on-scroll]");
+    var observer = new IntersectionObserver(
+        (entries) => {
+            for (const entry of entries) {
+                if (entry.isIntersecting || entry.intersectionRatio > 0) {
+                    const targetElement = entry.target;
+                    targetElement.classList.add("animate");
+                    observer.unobserve(targetElement);
+                }
+            }
+        },
+        {
+            threshold: 0.15,
+        }
+    );
+
+    for (let i = 0; i < scrollAnimElements.length; i++) {
+        observer.observe(scrollAnimElements[i]);
+    }
+
+    var profilePic = document.getElementById("profilePic");
+    if (profilePic) {
+        profilePic.addEventListener("click", function () {
+            var drawerOverlay = document.getElementById("dropView");
+            if (!drawerOverlay) return;
+            var drawerOverlayStyle = drawerOverlay.style;
+            if (drawerOverlayStyle) {
+                drawerOverlayStyle.display = "flex";
+                drawerOverlayStyle.zIndex = 99;
+                drawerOverlayStyle.backgroundColor = "rgba(113, 113, 113, 0.3)";
+                drawerOverlayStyle.alignItems = "flex-end";
+                drawerOverlayStyle.justifyContent = "";
+            }
+            drawerOverlay.setAttribute("closable", "");
+
+            var onClick =
+                drawerOverlay.onClick ||
+                function (e) {
+                    if (
+                        e.target === drawerOverlay &&
+                        drawerOverlay.hasAttribute("closable")
+                    ) {
+                        drawerOverlayStyle.display = "none";
+                    }
+                };
+            drawerOverlay.addEventListener("click", onClick);
+        });
+    }
+</script>
+</body>
+</html>

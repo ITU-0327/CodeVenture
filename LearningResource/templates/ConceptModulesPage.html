@@ -1,222 +1,97 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    {% load static %}
-    <meta charset="utf-8" />
-    <meta name="viewport" content="initial-scale=1, width=device-width" />
-    <title>Concept modules</title>
+{% extends 'base_generic.html' %}
+{% load static %}
+{% load custom_filters %}
 
-    <meta property="og:image" content="{% static 'public/thumbnail.png' %}" />
+{% block title %}
+    Concept modules
+{% endblock %}
 
-    <link rel="icon" href="{% static 'public/favicon.ico' %}" />
-    <link rel="stylesheet" href="{% static 'css/global.css' %}" />
-    <link rel="stylesheet" href="{% static 'css/ConceptModulesPage.css' %}" />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
-    />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Mitr:wght@700&display=swap"
-    />
-  </head>
-  <body>
-    <div class="concept-modules-page">
-      <nav class="student-home-nav" id="student nav">
-        <a class="logo1" href="/">
-          <img class="logo-icon1" alt="" src="{% static 'public/logo@2x.png' %}" />
-        </a>
-        <div class="btn2">
-          <div class="links">
-            <a class="learning-modules" href="{% url 'learning_modules' %}">
-              <b class="learning-modules1">Learning Modules</b>
-            </a>
-            <a class="learning-modules">
-              <b class="learning-modules1">Quizzes</b>
-            </a>
-            <a class="learning-modules">
-              <b class="learning-modules1">Challenges</b>
-            </a>
-            <a class="learning-modules" href="{% url 'playground' %}">
-              <b class="learning-modules1">Python Playground</b>
-            </a>
-          </div>
-          <button class="menu">
-            <img class="vector-icon2" alt="" src="{% static 'public/vector1.svg' %}" />
-          </button>
-          <button class="profile-pic">
-            {% if user.socialaccount_set.all %}
-                <img class="profile-pic-icon"
-                     alt="Profile Picture"
-                     src="{{ user.socialaccount_set.all.0.get_avatar_url }}"
-                >
-            {% else %}
-                <img
-                  class="profile-pic-icon"
-                  alt=""
-                  src="{% static 'public/profilepic@2x.png' %}"
-                />
-            {% endif %}
-          </button>
-        </div>
-      </nav>
-      <div class="concept-modules-parent">
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/ConceptModulesPage.css' %}"/>
+{% endblock %}
+
+{% block css-container %}
+    concept-modules-page
+{% endblock %}
+
+{% block content %}
+    <div class="concept-modules-parent">
         <b class="concept-modules">Concept modules</b>
-        <div class="frame-parent1">
-          <div class="component-parent">
-            {% for module_progress in module_progresses %}
-            <div class="frame-parent2">
-                <a class="image-10-parent"
-                    {% if module_progress.current_submodule %}
-                        href="{% url 'lecture_view' module_progress.current_submodule.id %}"
-                    {% endif %}>
-                    <img
-                        class="image-10-icon"
-                        alt=""
-                        src="{{ module_progress.module.thumbnail }}"
-                    />
+        <div class="frame-parent2">
+            <div class="component-group">
+                {% for module_progress in module_progresses %}
+                    <div class="frame-parent3">
+                        <a class="image-10-parent"
+                           href="{% url 'concept_module' module_progress.module.id %}">
+                            <img
+                                    class="image-10-icon"
+                                    alt="Thumbnail"
+                                    src="{{ module_progress.module.thumbnail }}"
+                            />
 
-                    <b class="unit-functions">{{ module_progress.module.short_name }}</b>
-                </a>
-                {% load custom_filters %}
-                <div class="progress-bar">
-                    <div class="bar" style="width: {{ module_progress.progress|multiply:100 }}%;">
-                        <b class="concept-modules">{{ module_progress.progress|multiply:100 }}%</b>
+                            <b class="unit-functions">{{ module_progress.module.short_name }}</b>
+                        </a>
+                        <div class="progress-bar">
+                            <div class="bar" style="width: {{ module_progress.progress|multiply:100 }}%;">
+                                <b class="concept-modules">{{ module_progress.progress|multiply:100 }}%</b>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="component-group">
+                <div class="frame-parent3">
+                    <a class="image-10-parent" href="/lecture/1/">
+                        <img
+                                class="image-10-icon1"
+                                alt=""
+                                src="{% static 'public/image-103@2x.png' %}"
+                        />
+
+                        <b class="unit-functions">Web application</b>
+                    </a>
+                    <div class="progress-bar">
+                        <div class="bar">
+                            <b class="concept-modules">75%</b>
+                        </div>
+                    </div>
+                </div>
+                <div class="frame-parent3">
+                    <a class="image-10-parent">
+                        <img
+                                class="image-10-icon1"
+                                alt=""
+                                src="{% static 'public/image-104@2x.png' %}"
+                        />
+
+                        <b class="unit-functions">SQL database</b>
+                    </a>
+                    <div class="progress-bar">
+                        <div class="bar">
+                            <b class="concept-modules">75%</b>
+                        </div>
+                    </div>
+                </div>
+                <div class="frame-parent3">
+                    <a class="image-10-parent" href="/lecture/15/">
+                        <img
+                                class="image-10-icon1"
+                                alt=""
+                                src="{% static 'public/image-105@2x.png' %}"
+                        />
+
+                        <b class="unit-functions">Artificial Intelligence</b>
+                    </a>
+                    <div class="progress-bar">
+                        <div class="bar">
+                            <b class="concept-modules">75%</b>
+                        </div>
                     </div>
                 </div>
             </div>
-            {% endfor %}
-          </div>
-          <div class="component-parent">
-            <div class="frame-parent2">
-              <a class="image-10-parent" href="/lecture/1/">
-                <img
-                  class="image-10-icon1"
-                  alt=""
-                  src="{% static 'public/image-103@2x.png' %}"
-                />
-
-                <b class="unit-functions">Web application</b>
-              </a>
-              <div class="progress-bar">
-                <div class="bar">
-                  <b class="concept-modules">75%</b>
-                </div>
-              </div>
-            </div>
-            <div class="frame-parent2">
-              <a class="image-10-parent">
-                <img
-                  class="image-10-icon1"
-                  alt=""
-                  src="{% static 'public/image-104@2x.png' %}"
-                />
-
-                <b class="unit-functions">SQL database</b>
-              </a>
-              <div class="progress-bar">
-                <div class="bar">
-                  <b class="concept-modules">75%</b>
-                </div>
-              </div>
-            </div>
-            <div class="frame-parent2">
-              <a class="image-10-parent" href="/lecture/15/">
-                <img
-                  class="image-10-icon1"
-                  alt=""
-                  src="{% static 'public/image-105@2x.png' %}"
-                />
-
-                <b class="unit-functions">Artificial Intelligence</b>
-              </a>
-              <div class="progress-bar">
-                <div class="bar">
-                  <b class="concept-modules">75%</b>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
-        <b class="you-have-completed"
-          >You have completed x/ 6 of the concepts modules!</b
-        >
-      </div>
-      <div class="feedback2">
-        <form class="contact-form1" method="POST">
-          <div class="text3">
-            <b class="feedback3">Feedback</b>
-            <div class="send-us-a1">Send us a message</div>
-          </div>
-          <div class="text-box1">
-              {{ form.fullname.errors }}
-            <input
-              class="fullname-textbox1"
-              name="{{ form.fullname.name }}"
-              value="{{ form.fullname.value|default:'' }}"
-              placeholder="Fullname"
-              type="text"
-            />
-
-            {{ form.subject.errors }}
-            <input
-              class="fullname-textbox1"
-              name="{{ form.subject.name }}"
-              value="{{ form.subject.value|default:'' }}"
-              placeholder="Subject"
-              type="text"
-            />
-
-            {{ form.message.errors }}
-            <input
-              class="message-textbook1"
-              name="{{ form.message.name }}"
-              value="{{ form.message.value|default:'' }}"
-              placeholder="Your message"
-              type="text"
-            />
-          </div>
-          <button type="submit" class="submit-btn1">
-            <div class="submit1">Submit</div>
-          </button>
-        </form>
-        <div class="site-map2">
-          <b class="site-map3">Site Map</b>
-          <div class="text4">
-            <div class="all-our-pages1">All our pages</div>
-          </div>
-          <div class="link1">
-            <button class="about-us1">- About us</button>
-            <button class="about-us1">- Leaderboard</button>
-            <button class="about-us1">- Contact us</button>
-          </div>
-        </div>
-        <div class="contact-info1">
-          <img
-            class="logo-feedback-icon1"
-            alt=""
-            src="{% static 'public/logo-feedback@2x.png' %}"
-          />
-
-          <div class="info1">
-            <div class="phone1">
-              <img class="vector-icon3" alt="" src="{% static 'public/vector11.svg' %}" />
-
-              <b class="concept-modules">+61 984 588 580</b>
-            </div>
-            <div class="email1">
-              <img class="vector-icon4" alt="" src="{% static 'public/vector2.svg' %}" />
-
-              <b class="concept-modules">hello@codeventure.com</b>
-            </div>
-          </div>
-        </div>
-      </div>
-      <footer class="footer1">
-        <p class="copyright-2023-all1">
-          ©Copyright 2023 All rights reserved CodeVenture
-        </p>
-      </footer>
+        <b class="you-have-completed">
+            You have completed x/ 6 of the concepts modules!
+        </b>
     </div>
-  </body>
-</html>
+{% endblock %}

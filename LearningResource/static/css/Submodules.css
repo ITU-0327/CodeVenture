@@ -1,3 +1,13 @@
+@keyframes slide-in-right {
+  0% {
+    transform: translateX(200px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
 .logo-icon2 {
   position: relative;
   width: 165px;
@@ -118,13 +128,11 @@
   cursor: pointer;
 }
 .artificial-intelligence- {
-  margin: auto;
-  text-align: center;
   position: relative;
   font-size: var(--font-size-xl);
   color: var(--color-black);
 }
-.component-group {
+.component-parent {
   align-self: stretch;
   background-color: var(--color-gainsboro-100);
   overflow: hidden;
@@ -134,13 +142,18 @@
   justify-content: space-between;
   padding: 13px var(--padding-11xl);
 }
-.description1 {
+.description2 {
   font-size: 26px;
   flex: 1;
   position: relative;
 }
+.description-text {
+  flex: 1;
+  padding-top: 10px;
+  padding-left: 10px;
+}
 .description-wrapper,
-.frame-parent8 {
+.frame-parent1 {
   align-self: stretch;
   overflow: hidden;
   display: flex;
@@ -155,19 +168,11 @@
   color: var(--color-black);
   align-items: flex-start;
 }
-.description-text {
-  flex: 1;
-  padding-top: 10px;
-  padding-left: 10px;
-}
-.frame-parent8 {
+.frame-parent1 {
   background-color: var(--color-oldlace);
-  height: 1046px;
-  flex-shrink: 0;
   flex-direction: column;
   justify-content: center;
   padding: var(--padding-61xl) var(--padding-81xl);
-  box-sizing: border-box;
   gap: 52px;
 }
 .feedback5,
@@ -236,7 +241,7 @@
   cursor: pointer;
   border: 0;
   padding: var(--padding-3xs) var(--padding-11xl);
-  background-color: var(--color-gray-300);
+  background-color: var(--color-gray-600);
   border-radius: var(--br-mini);
   box-shadow: 4px 4px 20px rgba(140, 120, 120, 0.6);
   height: 59px;
@@ -453,4 +458,90 @@
   .btn3 {
     gap: var(--gap-11xl);
   }
+}
+.profile-pic-icon6 {
+  position: relative;
+  border-radius: var(--br-26xl);
+  width: 75px;
+  height: 75px;
+  object-fit: cover;
+}
+.profile-pic-icon6:hover {
+  box-shadow: 1px 3px 6px 2px rgba(0, 0, 0, 0.2);
+}
+.hello-itunghsieh {
+  position: relative;
+}
+.edit-your-profile {
+  text-decoration: none;
+  position: relative;
+  font-size: var(--font-size-xl);
+  color: #065fd4;
+}
+.btn10:hover,
+.edit-your-profile:hover {
+  cursor: pointer;
+}
+.hello-itunghsieh-parent {
+  flex-direction: column;
+  gap: var(--gap-mini);
+}
+.drop-view-inner,
+.hello-itunghsieh-parent,
+.profile-pic-parent {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+.profile-pic-parent {
+  flex-direction: row;
+  gap: var(--gap-31xl);
+}
+.drop-view-inner {
+  align-self: stretch;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.5);
+  flex-direction: column;
+  padding: var(--padding-mini) 26px;
+  font-size: var(--font-size-5xl);
+}
+.vector-icon17,
+.vector-icon18 {
+  position: relative;
+  width: 48px;
+  height: 48px;
+}
+.vector-icon18 {
+  display: none;
+}
+.btn10,
+.drop-view {
+  display: flex;
+  justify-content: flex-start;
+}
+.btn10 {
+  text-decoration: none;
+  flex-direction: row;
+  align-items: center;
+  padding: var(--padding-xl) var(--padding-11xl);
+  gap: var(--gap-21xl);
+  color: inherit;
+}
+.drop-view {
+  position: relative;
+  border-radius: var(--br-xl);
+  background-color: var(--color-white);
+  width: 391px;
+  overflow: hidden;
+  flex-direction: column;
+  align-items: flex-start;
+  opacity: 0;
+  height: 100%;
+  max-width: 90%;
+  text-align: center;
+  font-size: var(--font-size-xl);
+  color: var(--color-black);
+  font-family: var(--font-inter);
+}
+.drop-view.animate {
+  animation: 0.25s ease 0s 1 normal forwards slide-in-right;
 }

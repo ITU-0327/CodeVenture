@@ -1,0 +1,49 @@
+{% extends 'base_generic.html' %}
+{% load static %}
+
+{% block title %}
+    {{ module.short_name }}
+{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/ConceptModule.css' %}"/>
+{% endblock %}
+
+{% block css-container %}
+    concept-module
+{% endblock %}
+
+{% block content %}
+    <div class="sub-modules-overview-parent">
+        <div class="sub-modules-overview">
+            <b class="artificial-intelligence">{{ module.name }}</b>
+            <b class="description1">Description</b>
+            <div class="description-frame">
+                <div class="artificial-intelligence-ai-container">
+                    <p class="artificial-intelligence-ai">
+                        {{ module.description }}
+                    </p>
+                </div>
+                <img class="image-15-icon" alt="Thumbnail" src="{{ module.thumbnail }}"/>
+            </div>
+        </div>
+        <div class="progress-in-module">
+            <ol class="progress-in-module1">
+                {% for sub_module in sub_modules %}
+                    <div class="progress">
+                        <div class="round">
+                            <div class="round-child"></div>
+                            {% if sub_module in module_progress.completed_submodules.all %}
+                                <img class="bicheck-icon" alt="Finished" src="{% static 'public/bicheck.svg' %}"/>
+                            {% else %}
+                                <img class="bicheck-icon" alt="Not Finished" src="{% static 'public/bicheck1.svg' %}"/>
+                            {% endif %}
+                        </div>
+                        <a class="ai-knowledge"
+                           href="{% url 'lecture_view' sub_module.id %}">{{ forloop.counter }}. {{ sub_module.name }}</a>
+                    </div>
+                {% endfor %}
+            </ol>
+        </div>
+    </div>
+{% endblock %}
