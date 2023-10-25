@@ -20,7 +20,7 @@ def run_code(request):
 
         encoded_code = base64.b64encode(code.encode()).decode('utf-8')
 
-        url = "https://judge0-ce.p.rapidapi.com/submissions"
+        url = "https://judge0-ce.p.rapidapi.com/submissions/"
 
         querystring = {"base64_encoded": "true", "wait": "false", "fields": "*"}
 
@@ -38,6 +38,8 @@ def run_code(request):
         response = requests.post(url, json=payload, headers=headers, params=querystring)
 
         token = response.json().get('token')
+
+        time.sleep(2)
 
         url = f"https://judge0-ce.p.rapidapi.com/submissions/{token}"
 

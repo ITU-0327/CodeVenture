@@ -1,0 +1,8 @@
+body {
+    background-color: #f4f1de;
+}
+
+a:hover {
+    text-decoration: none;
+    color: inherit;
+}

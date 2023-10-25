@@ -1,78 +1,79 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Python Playground</title>
-    {% load static %}
+{% extends 'base_generic.html' %}
+{% load static %}
 
-    <!-- Bootstrap CSS -->
+{% block title %}
+    Python Playground
+{% endblock %}
+
+{% block css %}
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 
     <link rel="stylesheet" href="{% static 'package/min/vs/editor/editor.main.css' %}">
-</head>
-<body class="bg-light">
+    <link rel="stylesheet" href="{% static 'css/nav-bar.css' %}"/>
+{% endblock %}
 
-<div class="container py-5">
-    <h2 class="text-center mb-4">Python Playground</h2>
-    <div id="container" class="bg-dark rounded p-3" style="height:500px;"></div>
+{% block css-container %}
+{% endblock %}
 
-    <div class="text-center mt-3">
-        <button class="btn btn-primary" onclick="runCode()">Run Code</button>
+{% block content %}
+    <div class="container py-5">
+        <h2 class="text-center mb-4">Python Playground</h2>
+        <div id="container" class="bg-dark rounded p-3" style="height:500px;"></div>
+
+        <div class="text-center mt-3">
+            <button class="btn btn-primary" onclick="runCode()">Run Code</button>
+        </div>
+
+        <div class="mt-4">
+            <h4>Output:</h4>
+            <pre class="p-3 bg-white border" id="output"></pre>
+        </div>
     </div>
 
-    <div class="mt-4">
-        <h4>Output:</h4>
-        <pre class="p-3 bg-white border" id="output"></pre>
-    </div>
-</div>
+    <!-- Monaco Editor Scripts -->
+    <script src="{% static 'package/min/vs/loader.js' %}"></script>
+    <script>
+        require.config({paths: {'vs': '{% static 'package/min/vs' %}'}});
+    </script>
+    <script src="{% static 'package/min/vs/editor/editor.main.js' %}"></script>
 
-<!-- Monaco Editor Scripts -->
-<script src="{% static 'package/min/vs/loader.js' %}"></script>
-<script>
-    require.config({ paths: { 'vs': '{% static 'package/min/vs' %}' } });
-</script>
-<script src="{% static 'package/min/vs/editor/editor.main.js' %}"></script>
+    <!-- Dummy form to hold the CSRF token -->
+    <form id="dummy_form" style="display:none;">
+        {% csrf_token %}
+    </form>
 
-<!-- Dummy form to hold the CSRF token -->
-<form id="dummy_form" style="display:none;">
-    {% csrf_token %}
-</form>
+    <script>
+        function getCsrfToken() {
+            return document.querySelector('#dummy_form [name="csrfmiddlewaretoken"]').value;
+        }
 
-<script>
-    function getCsrfToken() {
-        return document.querySelector('#dummy_form [name="csrfmiddlewaretoken"]').value;
-    }
+        function runCode() {
+            var code = window.editor.getValue();
 
-    function runCode() {
-        var code = window.editor.getValue();
+            fetch("{% url 'run_code' %}", {
+                method: "POST",
+                headers: {
+                    'X-CSRFToken': getCsrfToken(),
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({code: code})
+            })
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById("output").innerText = data.result || "No Output";
+                })
+                .catch(error => {
+                    console.error("Error executing code:", error);
+                });
+        }
 
-        fetch("{% url 'run_code' %}", {
-            method: "POST",
-            headers: {
-                'X-CSRFToken': getCsrfToken(),
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({code: code})
-        })
-        .then(response => response.json())
-        .then(data => {
-            document.getElementById("output").innerText = data.result || "No Output";
-        })
-        .catch(error => {
-            console.error("Error executing code:", error);
+        require(['vs/editor/editor.main'], function () {
+            window.editor = monaco.editor.create(document.getElementById('container'), {
+                value: "# Write your Python code here\nprint('Hello, World!')",
+                language: 'python',
+                theme: 'vs-dark',
+                automaticLayout: true
+            });
         });
-    }
-
-    require(['vs/editor/editor.main'], function() {
-        window.editor = monaco.editor.create(document.getElementById('container'), {
-            value: "# Write your Python code here\nprint('Hello, World!')",
-            language: 'python',
-            theme: 'vs-dark',
-            automaticLayout: true
-        });
-    });
-</script>
-
-</body>
-</html>
+    </script>
+{% endblock %}
