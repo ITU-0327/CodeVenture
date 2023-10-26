@@ -1,4 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
+
+from LearningResource.models import LearningModule, SubModule
 from .models import Quiz, Question, UserAnswer, Choice, QuizResult
 from .forms import QuizForm
 from django.contrib.auth.decorators import login_required
@@ -97,3 +99,13 @@ def quiz_result_view(request, quiz_id):
         'total_questions': total_questions,
         'results': results
     })
+
+
+def modules_list(request):
+    concept_modules = LearningModule.objects.all()
+    submodules = SubModule.objects.all()
+    context = {
+        'concept_modules': concept_modules,
+        'submodules': submodules
+    }
+    return render(request, 'modules_list.html', context)
