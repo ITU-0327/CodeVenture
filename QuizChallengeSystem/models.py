@@ -1,5 +1,6 @@
 from django.db import models
 from UserManagement.models import Student
+from LearningResource.models import SubModule
 import uuid
 
 
@@ -13,6 +14,8 @@ class Challenge(models.Model):
 class Quiz(models.Model):
     name = models.CharField(max_length=50)
     deadline = models.DateTimeField(null=True, blank=True)
+
+    sub_module = models.OneToOneField(SubModule, null=True, on_delete=models.CASCADE, related_name='quiz')
 
     def __str__(self):
         return self.name

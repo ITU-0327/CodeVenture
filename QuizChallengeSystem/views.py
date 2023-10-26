@@ -114,8 +114,12 @@ def modules_list(request):
 def concept_module_detail(request, concept_module_id):
     module = get_object_or_404(LearningModule, id=concept_module_id)
     sub_modules = module.sub_modules.all()
+    quizzes = get_object_or_404(Quiz, id=concept_module_id)
+
     context = {
         'module': module,
         'sub_modules': sub_modules,
+        ''
     }
     return render(request, 'submodules_list.html', context)
+
