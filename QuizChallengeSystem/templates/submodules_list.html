@@ -1,0 +1,27 @@
+{% extends 'base_generic.html' %}
+{% load static %}
+{% load custom_filters %}
+
+{% block title %}
+    Concept modules
+{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/ConceptModulesPage.css' %}"/>
+{% endblock %}
+
+{% block css-container %}
+    concept-modules-page
+{% endblock %}
+
+{% block content %}
+    <h1>"HI"</h1>
+    <h2>{{ module.name }}</h2>
+    <ul>
+        {% for submodule in sub_modules %}
+            <li>
+                <a href="{% url 'quiz_view' quiz_id %}">{{ submodule.name }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+{%  endblock %}

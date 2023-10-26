@@ -103,9 +103,19 @@ def quiz_result_view(request, quiz_id):
 
 def modules_list(request):
     concept_modules = LearningModule.objects.all()
-    submodules = SubModule.objects.all()
+    # submodules = SubModule.objects.all()
     context = {
         'concept_modules': concept_modules,
-        'submodules': submodules
+        # 'submodules': submodules
     }
     return render(request, 'modules_list.html', context)
+
+
+def concept_module_detail(request, concept_module_id):
+    module = get_object_or_404(LearningModule, id=concept_module_id)
+    sub_modules = module.sub_modules.all()
+    context = {
+        'module': module,
+        'sub_modules': sub_modules,
+    }
+    return render(request, 'submodules_list.html', context)

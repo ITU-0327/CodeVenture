@@ -16,9 +16,11 @@
 
 {% block content %}
     <style>
+        .container{
+            background-color: #F4F1DE;
+        }
         body {
             font-family: Arial, sans-serif;
-            background-color: #F4F1DE;
             margin: 0;
             padding: 0;
         }
@@ -52,22 +54,19 @@
             text-decoration: underline;
         }
 
-        .container {
-            background: #F4F1DE;
-            padding: 20px;
-        }
     </style>
     <body>
+    <div class="container">
         <header>
             <h1>Quiz Page</h1>
         </header>
-        <div class="container">
+
             <h2>Concept Modules</h2>
-            <ul>
+             <ul>
                 {% for concept_module in concept_modules %}
                     <li>
                         <span>{{ forloop.counter }}. </span>
-                        <a href="{% url 'quiz_view' concept_module.id %}">{{ concept_module.name }}</a>
+                        <a href="{% url 'concept_module_detail' concept_module.id %}">{{ concept_module.name }}</a>
                     </li>
                 {% endfor %}
             </ul>
