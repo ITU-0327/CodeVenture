@@ -18,11 +18,12 @@
     <h2>{{ module.name }}</h2>
     <ul>
         {% for sub_module in sub_modules %}
-            <li>
-                <span>{{ forloop.counter }}. </span>
-                <a{% if sub_module.quiz %}
-                    href="{% url 'quiz_view' sub_module.quiz.id %}"{% endif %}>{{ sub_module.name }}</a>
-            </li>
+            {% if sub_module.quiz %}
+                <li>
+
+                    <a href="{% url 'quiz_view' sub_module.quiz.id %}">Quiz{{ forloop.counter }}({{ sub_module.quiz.name }})</a>
+                </li>
+            {% endif %}
         {% endfor %}
     </ul>
 {% endblock %}
