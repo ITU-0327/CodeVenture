@@ -20,8 +20,7 @@
         {% for sub_module in sub_modules %}
             {% if sub_module.quiz %}
                 <li>
-
-                    <a href="{% url 'quiz_view' sub_module.quiz.id %}">Quiz{{ forloop.counter }}({{ sub_module.quiz.name }})</a>
+{#                    <a href="{% url 'quiz_summary' sub_module.quiz.id %}">Quiz {{ forloop.counter }} ({{ sub_module.quiz.name }})</a>#}
                 </li>
             {% endif %}
         {% endfor %}

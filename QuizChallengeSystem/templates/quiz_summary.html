@@ -1,0 +1,38 @@
+{% extends 'base_generic.html' %}
+{% load static %}
+{% load custom_filters %}
+
+{% block title %}
+    Concept modules
+{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/ConceptModulesPage.css' %}"/>
+{% endblock %}
+
+{% block css-container %}
+    concept-modules-page
+{% endblock %}
+
+{% block content %}
+    <h1>QUIZ GRADES</h1>
+    <p>{{ attempts.first.quiz.name }}</p>
+    <p>Number of Attempts : {{ attempts.count }}</p>
+
+    <ul>
+        {% for attempt in attempts %}
+            <li>
+                <a href="{% url 'quiz_result' attempt.id %}">
+                    Attempt {{ forloop.counter }}
+
+                    Completed on {{ attempt.created_at }}
+                    Score: {{ attempt.score }}/{{ attempt.total_questions }}
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+    <div class="d-flex justify-content-center mt-3">
+     Start New Attempt
+    </div>
+
+{% endblock %}

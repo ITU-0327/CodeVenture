@@ -57,18 +57,17 @@ def quiz_view(request, quiz_id):
 
 
 @login_required
-def quiz_result_view(request, quiz_id):
-    quiz = get_object_or_404(Quiz, id=quiz_id)
+def quiz_result_view(request, result_id):
+    quiz_result = get_object_or_404(QuizResult, id=result_id)
     student = Student.objects.get(user=request.user)
 
-    latest_quiz_result = QuizResult.objects.filter(user=student, quiz=quiz).latest('created_at')
-    if latest_quiz_result is None:
-        return render(request, 'quiz_result.html', {'error': 'No quiz results found'})
+    if quiz_result.user != student:
+        return render(request, 'quiz_result.html', {'error': 'Quiz result does not belong to the current user'})
 
-    user_answers = latest_quiz_result.user_answers.all()
+    user_answers = quiz_result.user_answers.all()
 
-    total_questions = quiz.questions.count()
-    score = latest_quiz_result.score
+    total_questions = quiz_result.total_questions
+    score = quiz_result.score
 
     results = []
     for answer in user_answers:
@@ -110,12 +109,33 @@ def modules_list(request):
 
 
 def concept_module_detail(request, concept_module_id):
-    module = get_object_or_404(LearningModule, id=concept_module_id)
-    sub_modules = module.sub_modules.all()
+    concept_modules = get_object_or_404(LearningModule, id=concept_module_id)
+    sub_modules = concept_modules.sub_modules.all()
 
     context = {
-        'module': module,
+        'concept_modules': concept_modules,
         'sub_modules': sub_modules,
     }
     return render(request, 'submodules_list.html', context)
 
+
+def quiz_summary_view(request, quiz_id):
+    quiz = get_object_or_404(Quiz, id=quiz_id)
+    student = Student.objects.get(user=request.user)
+    attempts = QuizResult.objects.filter(user=student, quiz=quiz)
+
+    context = {
+        'attempts': attempts,
+    }
+
+    return render(request, 'quiz_summary.html', context)
+
+
+def start_new_attempt(request, quiz_id):
+
+    quiz = get_object_or_404(Quiz, id=quiz_id)
+    context = {
+        'quiz': quiz,
+    }
+    # Redirect the user to the quiz page to begin the new attempt
+    return redirect('quiz_view', quiz_id=quiz.id)
