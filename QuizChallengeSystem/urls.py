@@ -8,5 +8,5 @@ urlpatterns = [
     path('modules/', modules_list, name='modules_list'),
     path('concept_modules/<int:concept_module_id>/', concept_module_detail, name='concept_module_detail'),
     path('quiz_summary/<int:quiz_id>/', quiz_summary_view, name='quiz_summary'),
-    path('start_new_attempt/<int:quiz_id>/', start_new_attempt, name='start_new_attempt'),
+    path('<int:sub_module_id>/', start_new_attempt, name='start_new_attempt'),
 ]

@@ -126,16 +126,19 @@ def quiz_summary_view(request, quiz_id):
 
     context = {
         'attempts': attempts,
+        'quiz': quiz
     }
 
     return render(request, 'quiz_summary.html', context)
 
 
-def start_new_attempt(request, quiz_id):
+def start_new_attempt(request, sub_module_id):
+    sub_modules = get_object_or_404(SubModule, id=sub_module_id)
+    quiz = get_object_or_404(Quiz, id=sub_module_id)
 
-    quiz = get_object_or_404(Quiz, id=quiz_id)
     context = {
-        'quiz': quiz,
+        'sub_modules': sub_modules,
+        'quiz': quiz
     }
     # Redirect the user to the quiz page to begin the new attempt
-    return redirect('quiz_view', quiz_id=quiz.id)
+    return render(request, 'quiz.html', context)
