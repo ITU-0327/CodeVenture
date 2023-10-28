@@ -48,7 +48,7 @@ def quiz_view(request, quiz_id):
             quiz_result.score = score
             quiz_result.save()
 
-            return redirect('quiz_result', quiz_id=quiz_id)
+            return redirect('quiz_result', result_id=quiz_result.id)
 
     else:
         form = QuizForm(questions=questions)
