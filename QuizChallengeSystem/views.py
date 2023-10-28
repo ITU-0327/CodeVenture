@@ -70,6 +70,10 @@ def quiz_result_view(request, result_id):
     score = quiz_result.score
 
     results = []
+    less_than_40 = 0
+    between_40_and_80 = 0
+    more_than_80 = 0
+
     for answer in user_answers:
         choices = [
             {
@@ -93,10 +97,19 @@ def quiz_result_view(request, result_id):
             'choices': choices
         })
 
+    if score < (total_questions * 0.4):
+        less_than_40 = (total_questions * 0.4)
+    elif score < (total_questions * 0.8):
+        between_40_and_80 = (total_questions * 0.8)
+    else:
+        more_than_80 = score
+
     return render(request, 'quiz_result.html', {
         'score': score,
         'total_questions': total_questions,
-        'results': results
+        'results': results,
+        'less_than_40': less_than_40,
+        'between_40_and_80': between_40_and_80,
     })
 
 

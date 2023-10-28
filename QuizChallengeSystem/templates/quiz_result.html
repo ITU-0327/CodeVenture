@@ -41,5 +41,14 @@
             </div>
         </div>
         {% endfor %}
+
+
+    {% if score <= less_than_40 %}
+    <p>Your score is less than 40%. You may want to review the material and retake the quiz.</p>
+    {% elif score >= less_than_40 and score < between_40_and_80 %}
+    <p>Your score is between 40% and 80%. You're making progress, but there is room for improvement.</p>
+    {% else %}
+    <p>Congratulations! Your score is greater than 80%. You've done a great job!</p>
+    {% endif %}
     </div>
 {% endblock %}
