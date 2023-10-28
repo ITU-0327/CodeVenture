@@ -18,62 +18,44 @@
         <div class="basic-modules-parent">
             <b class="basic-modules">Basic modules</b>
             <div class="modules">
-                <div class="module">
-                    <a class="creat-file-2-parent">
-                        <img
-                                class="creat-file-2"
-                                alt=""
-                                src="{% static 'public/creat-file-2@2x.png' %}"
-                        />
-
-                        <b class="basic-modules">Creating new files</b>
-                    </a>
-                    <div class="round10">
-                        <div class="round-child8"></div>
-                        <img class="bicheck-icon10" alt="" src="{% static 'public/bicheck.svg' %}"/>
+                {% for sub_module in module_progress.module.sub_modules.all %}
+                    <div class="module">
+                        <a class="creat-file-2-parent" href="{% url 'lecture_view' sub_module.id %}">
+                            <img
+                                    class="creat-file-2"
+                                    alt="Thumbnail"
+                                    src="
+                                            {% if forloop.counter == 1 %}
+                                                {% static 'public/creat-file-2@2x.png' %}
+                                            {% elif forloop.counter == 2 %}
+                                                {% static 'public/creat-file-21@2x.png' %}
+                                            {% elif forloop.counter == 3 %}
+                                                {% static 'public/creat-file-22@2x.png' %}
+                                            {% endif %}"
+                            />
+                            <b class="basic-modules">{{ sub_module.name }}</b>
+                        </a>
+                        <div class="round10">
+                            <div class="round-child8"></div>
+                            {% if sub_module in module_progress.completed_submodules.all %}
+                                <img class="bicheck-icon10" alt="" src="{% static 'public/bicheck.svg' %}"/>
+                            {% else %}
+                                <img class="bicheck-icon10" alt="" src="{% static 'public/bicheck1.svg' %}"/>
+                            {% endif %}
+                        </div>
                     </div>
-                </div>
-                <div class="module">
-                    <a class="creat-file-2-parent">
-                        <img
-                                class="creat-file-2"
-                                alt=""
-                                src="{% static 'public/creat-file-21@2x.png' %}"
-                        />
-
-                        <b class="basic-modules">Variables and Printing</b>
-                    </a>
-                    <div class="round10">
-                        <div class="round-child8"></div>
-                        <img class="bicheck-icon10" alt="" src="{% static 'public/bicheck.svg' %}"/>
-                    </div>
-                </div>
-                <div class="module">
-                    <a class="creat-file-2-parent">
-                        <img
-                                class="creat-file-2"
-                                alt=""
-                                src="{% static 'public/creat-file-22@2x.png' %}"
-                        />
-
-                        <b class="basic-modules">Arithmetic</b>
-                    </a>
-                    <div class="round10">
-                        <div class="round-child8"></div>
-                        <img
-                                class="bicheck-icon10"
-                                alt=""
-                                src="{% static 'public/bicheck1.svg' %}"
-                        />
-                    </div>
-                </div>
+                {% endfor %}
             </div>
         </div>
         <div class="access-to-concept">
-            <b class="basic-modules">Access to concept modules :</b>
-            <a class="concept-modules-button" href="{% url 'concept_modules' %}">
-                <b class="concept-modules1">Concept modules</b>
-            </a>
+            {% if module_progress.is_completed %}
+                <b class="basic-modules">Access to concept modules :</b>
+                <a class="concept-modules-button" href="{% url 'concept_modules' %}">
+                    <b class="concept-modules1">Concept modules</b>
+                </a>
+            {% else %}
+                <b class="basic-modules">Finish basic modules to access concept modules.</b>
+            {% endif %}
         </div>
     </div>
 {% endblock %}

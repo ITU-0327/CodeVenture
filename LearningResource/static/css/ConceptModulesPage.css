@@ -599,3 +599,38 @@
 .drop-view.animate {
   animation: 0.25s ease 0s 1 normal forwards slide-in-right;
 }
+
+.access-to-concept {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--gap-mini);
+  text-align: center;
+  font-size: var(--font-size-9xl);
+  color: var(--color-black);
+  flex-direction: column;
+}
+
+.basic-modules {
+  position: relative;
+}
+
+.concept-modules-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: 0;
+  padding: 24px 108px;
+  background-color: var(--color-darkseagreen);
+  border-radius: var(--br-xl);
+  flex-direction: row;
+  text-decoration: none;
+}
+.concept-modules1 {
+  position: relative;
+  font-size: var(--font-size-9xl);
+  font-family: var(--font-inter);
+  color: var(--color-white);
+  text-align: left;
+}

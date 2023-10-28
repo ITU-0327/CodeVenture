@@ -18,80 +18,39 @@
     <div class="concept-modules-parent">
         <b class="concept-modules">Concept modules</b>
         <div class="frame-parent2">
-            <div class="component-group">
-                {% for module_progress in module_progresses %}
-                    <div class="frame-parent3">
-                        <a class="image-10-parent"
-                           href="{% url 'concept_module' module_progress.module.id %}">
-                            <img
-                                    class="image-10-icon"
-                                    alt="Thumbnail"
-                                    src="{{ module_progress.module.thumbnail }}"
-                            />
-
-                            <b class="unit-functions">{{ module_progress.module.short_name }}</b>
-                        </a>
-                        <div class="progress-bar">
-                            <div class="bar" style="width: {{ module_progress.progress|multiply:100 }}%;">
-                                <b class="concept-modules">{{ module_progress.progress|multiply:100 }}%</b>
+            {% for group in grouped_module_progresses %}
+                <div class="component-group">
+                    {% for module_progress in group %}
+                        {% if module_progress %}
+                            <div class="frame-parent3">
+                                <a class="image-10-parent" href="{% url 'concept_module' module_progress.module.id %}">
+                                    <img class="image-10-icon" alt="Thumbnail"
+                                         src="{{ module_progress.module.thumbnail }}"/>
+                                    <b class="unit-functions">{{ module_progress.module.short_name }}</b>
+                                </a>
+                                <div class="progress-bar"
+                                     {% if module_progress.progress == 0 %}style="background-color: #00000000"{% endif %}
+                                >
+                                    {% if module_progress.progress > 0 %}
+                                        <div class="bar" style="width: {{ module_progress.progress|multiply:100 }}%;">
+                                            <b class="concept-modules">{{ module_progress.progress|multiply:100 }}%</b>
+                                        </div>
+                                    {% endif %}
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                {% endfor %}
-            </div>
-            <div class="component-group">
-                <div class="frame-parent3">
-                    <a class="image-10-parent" href="/lecture/1/">
-                        <img
-                                class="image-10-icon1"
-                                alt=""
-                                src="{% static 'public/image-103@2x.png' %}"
-                        />
-
-                        <b class="unit-functions">Web application</b>
-                    </a>
-                    <div class="progress-bar">
-                        <div class="bar">
-                            <b class="concept-modules">75%</b>
-                        </div>
-                    </div>
+                        {% endif %}
+                    {% endfor %}
                 </div>
-                <div class="frame-parent3">
-                    <a class="image-10-parent">
-                        <img
-                                class="image-10-icon1"
-                                alt=""
-                                src="{% static 'public/image-104@2x.png' %}"
-                        />
-
-                        <b class="unit-functions">SQL database</b>
-                    </a>
-                    <div class="progress-bar">
-                        <div class="bar">
-                            <b class="concept-modules">75%</b>
-                        </div>
-                    </div>
-                </div>
-                <div class="frame-parent3">
-                    <a class="image-10-parent" href="/lecture/15/">
-                        <img
-                                class="image-10-icon1"
-                                alt=""
-                                src="{% static 'public/image-105@2x.png' %}"
-                        />
-
-                        <b class="unit-functions">Artificial Intelligence</b>
-                    </a>
-                    <div class="progress-bar">
-                        <div class="bar">
-                            <b class="concept-modules">75%</b>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            {% endfor %}
         </div>
         <b class="you-have-completed">
-            You have completed x/ 6 of the concepts modules!
+            You have completed {{ finished_count }} / {{ module_count }} of the concepts modules!
         </b>
+        <div class="access-to-concept">
+                <b class="basic-modules">Access to basic modules :</b>
+                <a class="concept-modules-button" href="{% url 'learning_modules' %}">
+                    <b class="concept-modules1">Basic modules</b>
+                </a>
+        </div>
     </div>
 {% endblock %}
