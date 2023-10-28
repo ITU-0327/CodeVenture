@@ -1,0 +1,36 @@
+{% extends 'base_generic.html' %}
+{% load static %}
+
+{% block title %}
+    Quiz
+{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/ConceptModulesPage.css' %}"/>
+{% endblock %}
+
+{% block css-container %}
+    concept-modules-page
+{% endblock %}
+
+{% block content %}
+    <div class="concept-modules-parent">
+        <b class="concept-modules">Quizzes</b>
+        <div class="frame-parent2">
+            {% for group in grouped_module %}
+                <div class="component-group">
+                    {% for module in group %}
+                        {% if module %}
+                            <div class="frame-parent3">
+                                <a class="image-10-parent" href="{% url 'quiz_list' module.id %}">
+                                    <img class="image-10-icon" alt="Thumbnail" src="{{ module.thumbnail }}"/>
+                                    <b class="unit-functions">{{ module.short_name }}</b>
+                                </a>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

@@ -1,4 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.db.models import Max
+from django.utils import timezone
 
 from LearningResource.models import LearningModule, SubModule
 from .models import Quiz, Question, UserAnswer, Choice, QuizResult
@@ -73,7 +75,6 @@ def quiz_result_view(request, result_id):
     results = []
     less_than_40 = 0
     between_40_and_80 = 0
-    more_than_80 = 0
 
     for answer in user_answers:
         choices = [
@@ -102,20 +103,21 @@ def quiz_result_view(request, result_id):
         less_than_40 = (total_questions * 0.4)
     elif score < (total_questions * 0.8):
         between_40_and_80 = (total_questions * 0.8)
-    else:
-        more_than_80 = score
 
-    return render(request, 'quiz_result.html', {
+    context = {
         'score': score,
         'total_questions': total_questions,
         'results': results,
         'less_than_40': less_than_40,
         'between_40_and_80': between_40_and_80,
-    })
+        'quiz': quiz_result.quiz
+    }
+
+    return render(request, 'quiz_result.html', context)
 
 
-def modules_list(request):
-    concept_modules = LearningModule.objects.all()
+def modules_list_quiz(request):
+    concept_modules = LearningModule.objects.exclude(name="Basic Modules").all()
 
     grouped_module = list(zip_longest(*[iter(concept_modules)] * 3))
 
@@ -141,11 +143,18 @@ def quiz_summary_view(request, quiz_id):
     quiz = get_object_or_404(Quiz, id=quiz_id)
     student = Student.objects.get(user=request.user)
     attempts = QuizResult.objects.filter(user=student, quiz=quiz)
+    now = timezone.now()
+    if not attempts.exists() and quiz.deadline > now:
+        return redirect('start_new_attempt', quiz_id)
+
     module = quiz.sub_module.parent_module
+    best_score = attempts.aggregate(Max('score'))['score__max']
     context = {
         'attempts': attempts,
         'quiz': quiz,
-        'module': module
+        'module': module,
+        'best_score': best_score,
+        'now': now
     }
 
     return render(request, 'quiz_summary.html', context)

@@ -19,3 +19,13 @@
 .form-check-input:disabled ~ .form-check-label {
     color: #212529;
 }
+
+.breadcrumb {
+    margin-bottom: 0;
+    align-items: flex-start;
+}
+
+.breadcrumb a:hover {
+    color: #007BFF;
+    text-decoration: underline;
+}

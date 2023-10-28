@@ -545,3 +545,8 @@
 .drop-view.animate {
   animation: 0.25s ease 0s 1 normal forwards slide-in-right;
 }
+.frame-parent1 .breadcrumb {
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
+}

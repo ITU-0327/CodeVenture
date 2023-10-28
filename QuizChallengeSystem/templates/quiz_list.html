@@ -1,29 +1,38 @@
 {% extends 'base_generic.html' %}
 {% load static %}
-{% load custom_filters %}
 
 {% block title %}
-    Concept modules
+    {{ module.short_name }} - Quiz
 {% endblock %}
 
 {% block css %}
-    <link rel="stylesheet" href="{% static 'css/ConceptModulesPage.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/ConceptModule.css' %}"/>
 {% endblock %}
 
 {% block css-container %}
-    concept-modules-page
+    concept-module
 {% endblock %}
 
 {% block content %}
-    <h2>{{ module.name }}</h2>
-    <ul>
-        <h3>Attempt quiz?</h3>
-        {% for sub_module in sub_modules %}
-            {% if sub_module.quiz %}
-                <li>
-                    <a href="{% url 'quiz_summary' sub_module.quiz.id %}">Quiz {{ forloop.counter }} ({{ sub_module.quiz.name }})</a>
-                </li>
-            {% endif %}
-        {% endfor %}
-    </ul>
+    <div class="sub-modules-overview-parent">
+        <div class="sub-modules-overview">
+            <b class="artificial-intelligence">{{ module.name }}</b>
+        </div>
+        <div class="progress-in-module">
+            <ol class="progress-in-module1">
+                {% for sub_module in sub_modules %}
+                    <div class="progress">
+                        {% if sub_module.quiz %}
+                            <li>
+                                <a class="ai-knowledge"
+                                   href="{% url 'quiz_summary' sub_module.quiz.id %}">
+                                    Quiz {{ forloop.counter }} - ({{ sub_module.quiz.name }})
+                                </a>
+                            </li>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </ol>
+        </div>
+    </div>
 {% endblock %}

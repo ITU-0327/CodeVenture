@@ -21,30 +21,38 @@
 
 {% block content %}
     <div class="frame-parent1">
-        <div class="component-parent">
-            {% if submodule.prev_submodule %}
-                <a href="{% url 'lecture_view' submodule.prev_submodule.id %}" class="previous-wrapper">
-                    <b class="previous">Previous</b>
-                </a>
-            {% else %}
-                <a href="{% url 'concept_module' submodule.parent_module.id %}" class="previous-wrapper">
-                    <b class="previous">Menu</b>
-                </a>
-            {% endif %}
-            <b class="artificial-intelligence-">
-                {{ submodule.parent_module.short_name }} - {{ submodule.name }}
-            </b>
-            {% if submodule.next_submodule %}
-                <a href="{% url 'lecture_view' submodule.next_submodule.id %}?complete_current={{ submodule.id }}"
-                   class="previous-wrapper">
-                    <b class="previous">Next</b>
-                </a>
-            {% else %}
-                <a href="{% url 'lecture_view' submodule.id %}?complete_current={{ submodule.id }}"
-                   class="previous-wrapper">
-                    <b class="previous">Complete Module</b>
-                </a>
-            {% endif %}
+        <div style="align-self: stretch;">
+            <div class="breadcrumb" style="padding-left: 15px; padding-bottom: 10px">
+                <a href="{% url 'module_handler' %}">My courses</a> /
+                <a href="{% url 'concept_module' submodule.parent_module.id %}">{{ submodule.parent_module.short_name }}</a>
+                /
+                <a href="{% url 'lecture_view' submodule.id %}">{{ submodule.name }}</a>
+            </div>
+            <div class="component-parent">
+                {% if submodule.prev_submodule %}
+                    <a href="{% url 'lecture_view' submodule.prev_submodule.id %}" class="previous-wrapper">
+                        <b class="previous">Previous</b>
+                    </a>
+                {% else %}
+                    <a href="{% url 'concept_module' submodule.parent_module.id %}" class="previous-wrapper">
+                        <b class="previous">Menu</b>
+                    </a>
+                {% endif %}
+                <b class="artificial-intelligence-">
+                    {{ submodule.parent_module.short_name }} - {{ submodule.name }}
+                </b>
+                {% if submodule.next_submodule %}
+                    <a href="{% url 'lecture_view' submodule.next_submodule.id %}?complete_current={{ submodule.id }}"
+                       class="previous-wrapper">
+                        <b class="previous">Next</b>
+                    </a>
+                {% else %}
+                    <a href="{% url 'lecture_view' submodule.id %}?complete_current={{ submodule.id }}"
+                       class="previous-wrapper">
+                        <b class="previous">Complete Module</b>
+                    </a>
+                {% endif %}
+            </div>
         </div>
         <iframe
                 class="dynamic-video"

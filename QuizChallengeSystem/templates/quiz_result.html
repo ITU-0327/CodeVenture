@@ -17,38 +17,48 @@
 
 {% block content %}
     <div class="container">
+        <div class="breadcrumb" style="background-color: #00000000">
+            <a href="{% url 'module_handler' %}">My courses</a> /
+            <a href="{% url 'concept_module' quiz.sub_module.parent_module.id %}">{{ quiz.sub_module.parent_module.short_name }}</a> /
+            <a href="{% url 'quiz_list' quiz.sub_module.id %}">Quiz</a> /
+            <a href="{% url 'quiz_summary' quiz.id %}">{{ quiz.name }}</a>
+        </div>
         <h1>Quiz Results</h1>
         <p>Score: {{ score }}/{{ total_questions }}</p>
 
         {% for result in results %}
-        <div class="card mb-4 {% if result.is_correct %}bg-success{% else %}bg-danger{% endif %}">
-            <div class="card-body">
-                <h5 class="card-title">{{ forloop.counter }}. {{ result.question }}</h5>
+            <div class="card mb-4 {% if result.is_correct %}bg-success{% else %}bg-danger{% endif %}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ forloop.counter }}. {{ result.question }}</h5>
 
-                {% for choice in result.choices %}
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" disabled {% if choice.text == result.answer %}checked{% endif %}>
-                    <label class="form-check-label">
-                        {{ choice.text }}
-                        {% if choice.text == result.answer and result.is_correct %}
-                            <i class="fa fa-check"></i>
-                        {% elif choice.text == result.answer %}
-                            <i class="fa fa-times"></i>
-                        {% endif %}
-                    </label>
+                    {% for choice in result.choices %}
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" disabled
+                                   {% if choice.text == result.answer %}checked{% endif %}>
+                            <label class="form-check-label">
+                                {{ choice.text }}
+                                {% if choice.text == result.answer and result.is_correct %}
+                                    <i class="fa fa-check"></i>
+                                {% elif choice.text == result.answer %}
+                                    <i class="fa fa-times"></i>
+                                {% endif %}
+                            </label>
+                        </div>
+                    {% endfor %}
                 </div>
-                {% endfor %}
             </div>
-        </div>
         {% endfor %}
 
-
-    {% if score <= less_than_40 %}
-    <p>Your score is less than 40%. You may want to review the material and retake the quiz.</p>
-    {% elif score >= less_than_40 and score < between_40_and_80 %}
-    <p>Your score is between 40% and 80%. You're making progress, but there is room for improvement.</p>
-    {% else %}
-    <p>Congratulations! Your score is greater than 80%. You've done a great job!</p>
-    {% endif %}
+        <h3>Feedback:</h3>
+        {% if score <= total_questions %}
+            <p style="padding-left: 15px; padding-bottom: 30px">Your score is less than 40%. You may want to review the material and retake the quiz.</p>
+        {% elif score >= less_than_40 and score < between_40_and_80 %}
+            <p style="padding-left: 15px; padding-bottom: 30px">Your score is between 40% and 80%. You're making progress, but there is room for improvement.</p>
+        {% else %}
+            <p style="padding-left: 15px; padding-bottom: 30px">Congratulations! Your score is greater than 80%. You've done a great job!</p>
+        {% endif %}
+        <a class="concept-modules-button" href="{% url 'quiz_summary' quiz.id %}">
+            <b class="concept-modules1">Finish Review</b>
+        </a>
     </div>
 {% endblock %}

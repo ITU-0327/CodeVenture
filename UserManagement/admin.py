@@ -1,4 +1,5 @@
 from django.contrib.auth.admin import UserAdmin as DefaultUserAdmin
+from django.utils.dateformat import DateFormat
 from django.contrib.auth.models import User
 from django.contrib import admin
 from .models import Student, Teacher, Parent
@@ -58,7 +59,8 @@ class TeacherAdmin(admin.ModelAdmin):
 
 
 class CustomUserAdmin(DefaultUserAdmin):
-    list_display = ('username', 'email', 'first_name', 'last_name', 'user_type')
+    list_display = ('username', 'email', 'full_name', 'user_type', 'date_joined')
+    ordering = ('-date_joined',)
 
     def user_type(self, obj):
         if Student.objects.filter(user=obj).exists():
@@ -73,6 +75,11 @@ class CustomUserAdmin(DefaultUserAdmin):
             return 'Unknown'
 
     user_type.short_description = 'User Type'
+
+    def full_name(self, obj):
+        return obj.first_name + ' ' + obj.last_name
+
+    full_name.short_description = 'Full Name'
 
 
 admin.site.unregister(User)

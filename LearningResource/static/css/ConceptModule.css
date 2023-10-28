@@ -125,7 +125,7 @@
 }
 .image-15-icon {
   position: relative;
-  width: 588.7px;
+  width: 590px;
   height: 400px;
   object-fit: cover;
 }
@@ -146,7 +146,7 @@
   overflow: hidden;
   flex-direction: column;
   justify-content: flex-start;
-  padding: 82px 104px;
+  padding: 80px 100px 30px;
   gap: 42px;
 }
 .round-child {
@@ -214,7 +214,7 @@
   background-color: var(--color-oldlace);
   overflow: hidden;
   justify-content: center;
-  padding: 75px 150px;
+  padding: 25px 150px 75px;
   text-align: center;
   font-size: var(--font-size-9xl);
   color: var(--color-steelblue-300);
