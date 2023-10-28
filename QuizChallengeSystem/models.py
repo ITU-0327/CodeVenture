@@ -38,7 +38,7 @@ class Choice(models.Model):
 
 class QuizResult(models.Model):
     session_id = models.UUIDField(default=uuid.uuid4, editable=False)
-    quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE)
+    quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE, related_name='quiz_result')
     user = models.ForeignKey(Student, on_delete=models.CASCADE)
     score = models.IntegerField()
     total_questions = models.IntegerField()
