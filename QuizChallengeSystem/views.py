@@ -4,6 +4,7 @@ from LearningResource.models import LearningModule, SubModule
 from .models import Quiz, Question, UserAnswer, Choice, QuizResult
 from .forms import QuizForm
 from django.contrib.auth.decorators import login_required
+from itertools import zip_longest
 
 from UserManagement.models import Student
 
@@ -102,31 +103,36 @@ def quiz_result_view(request, result_id):
 
 def modules_list(request):
     concept_modules = LearningModule.objects.all()
+
+    grouped_module = list(zip_longest(*[iter(concept_modules)] * 3))
+
     context = {
-        'concept_modules': concept_modules,
+        'grouped_module': grouped_module
     }
-    return render(request, 'modules_list.html', context)
+
+    return render(request, 'module_list_quiz.html', context)
 
 
-def concept_module_detail(request, concept_module_id):
-    concept_modules = get_object_or_404(LearningModule, id=concept_module_id)
-    sub_modules = concept_modules.sub_modules.all()
+def quiz_list(request, module_id):
+    module = get_object_or_404(LearningModule, id=module_id)
+    sub_modules = module.sub_modules.all()
 
     context = {
-        'concept_modules': concept_modules,
+        'module': module,
         'sub_modules': sub_modules,
     }
-    return render(request, 'submodules_list.html', context)
+    return render(request, 'quiz_list.html', context)
 
 
 def quiz_summary_view(request, quiz_id):
     quiz = get_object_or_404(Quiz, id=quiz_id)
     student = Student.objects.get(user=request.user)
     attempts = QuizResult.objects.filter(user=student, quiz=quiz)
-
+    module = quiz.sub_module.parent_module
     context = {
         'attempts': attempts,
-        'quiz': quiz
+        'quiz': quiz,
+        'module': module
     }
 
     return render(request, 'quiz_summary.html', context)
