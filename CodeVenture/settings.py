@@ -20,12 +20,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
+# SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
 SECRET_KEY = 'django-insecure-5w%^ylnn0$_(!bj5wtn86700&rdc=$$bj#+p*rf*37pzogl9)7'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['118.139.52.10', '118.138.196.78', 'localhost', '127.0.0.1', '6bad-118-139-52-10.ngrok-free.app']
+ALLOWED_HOSTS = [os.environ.get('DJANGO_HOST'), '127.0.0.1']
 
 # Application definition
 
@@ -113,6 +114,11 @@ WSGI_APPLICATION = 'CodeVenture.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
+        # 'NAME': os.environ.get('DJANGO_DB_NAME'),
+        # 'USER': os.environ.get('DJANGO_DB_USER'),
+        # 'PASSWORD': os.environ.get('DJANGO_DB_PASSWORD'),
+        # 'HOST': os.environ.get('DJANGO_DB_HOST'),
+        # 'PORT': os.environ.get('DJANGO_DB_PORT', '3306'),
         'NAME': 'codeventure-db',
         'USER': 'root',
         'PASSWORD': '7(YPQRqCHg]<V%zV',
@@ -157,7 +163,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = 'collected_static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
