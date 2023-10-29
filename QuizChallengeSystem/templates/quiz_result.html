@@ -50,7 +50,7 @@
         {% endfor %}
 
         <h3>Feedback:</h3>
-        {% if score <= total_questions %}
+        {% if score <= less_than_40 %}
             <p style="padding-left: 15px; padding-bottom: 30px">Your score is less than 40%. You may want to review the material and retake the quiz.</p>
         {% elif score >= less_than_40 and score < between_40_and_80 %}
             <p style="padding-left: 15px; padding-bottom: 30px">Your score is between 40% and 80%. You're making progress, but there is room for improvement.</p>
