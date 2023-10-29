@@ -1,9 +1,55 @@
 {% extends 'base_generic.html' %}
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/login_register.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/SelectRoleForm.css' %}"/>
+{% endblock %}
+
+{% block nav-bar %}
+    {% if user.is_authenticated %}
+        <nav class="login-nav" id="parent nav">
+            <a class="logo3" href="{% url 'home' %}">
+                <img class="logo-icon3" alt="" src="{% static 'public/logo@2x.png' %}"/>
+            </a>
+            <div class="btn4">
+                <button class="profile-pic2" id="profilePic">
+                    {% if user.socialaccount_set.all %}
+                        <img class="profile-pic-icon2"
+                             alt="Profile Picture"
+                             src="{{ user.socialaccount_set.all.0.get_avatar_url }}"
+                        >
+                    {% else %}
+                        <img
+                                class="profile-pic-icon2"
+                                alt="Profile Picture"
+                                src="{% static 'public/profilepic@2x.png' %}"
+                        />
+                    {% endif %}
+                </button>
+            </div>
+        </nav>
+    {% else %}
+        <nav class="welcome-nav1">
+            <a class="logo3" href="{% url 'home' %}">
+                <img class="logo-icon3" alt="" src="{% static 'public/logo@2x.png' %}"/>
+            </a>
+            <div class="btns1">
+                <a class="btn5" href="{% url 'login' %}">
+                    <div class="login1">Login</div>
+                </a>
+                <a class="btn5" href="{% url 'choose_user_type' %}">
+                    <div class="login1">Sign Up</div>
+                </a>
+            </div>
+        </nav>
+    {% endif %}
+{% endblock %}
 
 {% block content %}
     <div class="login-container">
         {% if page == 'login' %}
-        <h1 class="center-text">Sign In With</h1>
+        <h1 class="center-text">Log In With</h1>
         <form method="POST" action="" class="login-form">
             {% csrf_token %}
             <div class="social-login center-text">
@@ -21,7 +67,7 @@
             <div class="input-group">
                 <label for="password" class="label">Password</label>
                 <input type="password" id="password" name="password" placeholder="Enter Password">
-                <a href="/" class="forgot-password">Forgot?</a>
+                <a href="{% url 'choose_user_type' %}" class="forgot-password">Forgot?</a>
             </div>
 
             <input type="submit" value="Sign In" class="submit-button">
@@ -51,70 +97,4 @@
         </div>
         {% endif %}
     </div>
-
-    <style>
-        .login-container {
-            width: 100%;
-            max-width: 400px;
-            margin: 0 auto;
-            padding: 20px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .center-text {
-            text-align: center;
-        }
-
-        .no-underline {
-            text-decoration: none;
-        }
-
-        .login-form {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .social-login,
-        .input-group {
-            margin-bottom: 20px;
-        }
-
-        .label {
-            font-weight: bold;
-            display: block;
-            margin-bottom: 5px;
-        }
-
-        .btn-google {
-            display: inline-block;
-            padding: 10px;
-            background: #4285F4;
-            color: white;
-            border-radius: 5px;
-            margin-top: 5px;
-        }
-
-        .btn-google img {
-            width: 20px;
-            margin-right: 5px;
-        }
-
-        .forgot-password {
-            display: block;
-            margin-top: 5px;
-            text-align: right;
-        }
-
-        .submit-button {
-            padding: 10px;
-            background: #007BFF;
-            color: white;
-            border: none;
-            border-radius: 5px;
-        }
-
-        .signup-link {
-            margin-top: 10px;
-        }
-    </style>
 {% endblock %}
