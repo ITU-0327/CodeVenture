@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-5w%^ylnn0$_(!bj5wtn86700&rdc=$$bj#+p*rf*37pzogl9)7
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [os.environ.get('DJANGO_HOST'), '127.0.0.1']
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -104,8 +104,6 @@ WSGI_APPLICATION = 'CodeVenture.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
-
-
 if bool(int(os.environ.get('DJANGO_GITHUB_CI', '0'))):
     HOST = '127.0.0.1'
 else:
