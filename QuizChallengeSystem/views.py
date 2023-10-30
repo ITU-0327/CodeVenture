@@ -185,7 +185,6 @@ def start_new_attempt(request, sub_module_id):
 
 
 def challenge_view(request, challenge_id):
-    print(challenge_id)
     challenge = Challenge.objects.get(id=challenge_id)
     context = {
         "challenge": challenge
@@ -200,8 +199,6 @@ def challenge_run_code(request):
         body_data = json.loads(body_unicode)
         code = body_data.get('code', '')
         challenge_id = body_data.get('challenge_id', '')
-
-        print(code)
 
         encoded_code = base64.b64encode(code.encode()).decode('utf-8')
         challenge = Challenge.objects.get(id=challenge_id)
