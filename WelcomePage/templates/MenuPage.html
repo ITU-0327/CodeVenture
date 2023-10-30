@@ -45,11 +45,11 @@
                 </div>
             </div>
             <div class="learning-modules10">
-                <a>
+                <a href="{% url 'challenges_list' %}">
                     <img class="modulelearning-12" src="{% static 'public/modulelearning-12@3x.png' %}" alt="Thumbnail">
                 </a>
                 <div class="learning-modules-parent">
-                    <a class="learning-modules11">Challenges</a>
+                    <a class="learning-modules11" href="{% url 'challenges_list' %}">Challenges</a>
                     <b class="this-is-where"
                     >User chooses a challenge and the program shall present them
                         with a problem scenario that the user must solve by writing

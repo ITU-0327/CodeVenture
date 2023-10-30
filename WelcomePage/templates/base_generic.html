@@ -38,7 +38,7 @@
                     <a class="learning-modules8" href="{% url 'modules_list_quiz' %}">
                         <b class="learning-modules9">Quizzes</b>
                     </a>
-                    <a class="learning-modules8">
+                    <a class="learning-modules8" href="{% url 'challenges_list' %}">
                         <b class="learning-modules9">Challenges</b>
                     </a>
                     <a class="learning-modules8" href="{% url 'playground' %}">
@@ -70,77 +70,77 @@
     {% endblock %}
 
     {% block feedback-form %}
-    <div class="feedback">
-        <form class="contact-form" method="POST" action="{% url 'home' %}">
-            {% csrf_token %}
-            <div class="text1">
-                <b class="feedback1">Feedback</b>
-                <div class="send-us-a">Send us a message</div>
-            </div>
-            <div class="text-box">
-                <input
-                        class="fullname-textbox"
-                        name="{{ form.fullname.name }}"
-                        value="{{ form.fullname.value|default:'' }}"
-                        placeholder="Fullname"
-                        type="text"
-                />
-                {{ form.fullname.errors }}
-
-                <input
-                        class="fullname-textbox"
-                        name="{{ form.subject.name }}"
-                        value="{{ form.subject.value|default:'' }}"
-                        placeholder="Subject"
-                        type="text"
-                />
-                {{ form.subject.errors }}
-
-                <input
-                        class="message-textbook"
-                        name="{{ form.message.name }}"
-                        value="{{ form.message.value|default:'' }}"
-                        placeholder="Your message"
-                        type="text"
-                />
-                {{ form.message.errors }}
-            </div>
-            <button class="submit-btn">
-                <div class="submit">Submit</div>
-            </button>
-        </form>
-        <div class="site-map">
-            <b class="site-map1">Site Map</b>
-            <div class="text2">
-                <div class="all-our-pages">All our pages</div>
-            </div>
-            <div class="link">
-                <button class="about-us">- About us</button>
-                <button class="about-us">- Leaderboard</button>
-                <button class="about-us">- Contact us</button>
-            </div>
-        </div>
-        <div class="contact-info">
-            <img
-                    class="logo-feedback-icon"
-                    alt=""
-                    src="{% static 'public/logo-feedback@2x.png' %}"
-            />
-
-            <div class="info">
-                <div class="phone">
-                    <img class="vector-icon" alt="" src="{% static 'public/vector.svg' %}"/>
-
-                    <b class="mahissh">+61 984 588 580</b>
+        <div class="feedback">
+            <form class="contact-form" method="POST" action="{% url 'home' %}">
+                {% csrf_token %}
+                <div class="text1">
+                    <b class="feedback1">Feedback</b>
+                    <div class="send-us-a">Send us a message</div>
                 </div>
-                <div class="email">
-                    <img class="vector-icon1" alt="" src="{% static 'public/vector1.svg' %}"/>
+                <div class="text-box">
+                    <input
+                            class="fullname-textbox"
+                            name="{{ form.fullname.name }}"
+                            value="{{ form.fullname.value|default:'' }}"
+                            placeholder="Fullname"
+                            type="text"
+                    />
+                    {{ form.fullname.errors }}
 
-                    <b class="mahissh">hello@codeventure.com</b>
+                    <input
+                            class="fullname-textbox"
+                            name="{{ form.subject.name }}"
+                            value="{{ form.subject.value|default:'' }}"
+                            placeholder="Subject"
+                            type="text"
+                    />
+                    {{ form.subject.errors }}
+
+                    <input
+                            class="message-textbook"
+                            name="{{ form.message.name }}"
+                            value="{{ form.message.value|default:'' }}"
+                            placeholder="Your message"
+                            type="text"
+                    />
+                    {{ form.message.errors }}
+                </div>
+                <button class="submit-btn">
+                    <div class="submit">Submit</div>
+                </button>
+            </form>
+            <div class="site-map">
+                <b class="site-map1">Site Map</b>
+                <div class="text2">
+                    <div class="all-our-pages">All our pages</div>
+                </div>
+                <div class="link">
+                    <button class="about-us">- About us</button>
+                    <button class="about-us">- Leaderboard</button>
+                    <button class="about-us">- Contact us</button>
                 </div>
             </div>
+            <div class="contact-info">
+                <img
+                        class="logo-feedback-icon"
+                        alt=""
+                        src="{% static 'public/logo-feedback@2x.png' %}"
+                />
+
+                <div class="info">
+                    <div class="phone">
+                        <img class="vector-icon" alt="" src="{% static 'public/vector.svg' %}"/>
+
+                        <b class="mahissh">+61 984 588 580</b>
+                    </div>
+                    <div class="email">
+                        <img class="vector-icon1" alt="" src="{% static 'public/vector1.svg' %}"/>
+
+                        <b class="mahissh">hello@codeventure.com</b>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
     {% endblock %}
     <footer class="footer">
         <p class="copyright-2023-all">
@@ -178,11 +178,11 @@
             <b class="hello-user">Sign out</b>
         </a>
         {% if user.is_staff %}
-        <a class="btn10" href="{% url 'admin:index' %}">
-            <img class="vector-icon17" alt="" src="{% static 'public/vector4.svg' %}"/>
+            <a class="btn10" href="{% url 'admin:index' %}">
+                <img class="vector-icon17" alt="" src="{% static 'public/vector4.svg' %}"/>
 
-            <b class="hello-user">Admin</b>
-        </a>
+                <b class="hello-user">Admin</b>
+            </a>
         {% endif %}
     </div>
 </div>

@@ -7,8 +7,11 @@ import uuid
 class Challenge(models.Model):
     name = models.CharField(max_length=50)
     description = models.TextField()
-    hints = models.JSONField()
+    hints = models.TextField()
     solution_code = models.TextField()
+    std_in = models.TextField(null=True, blank=True)
+    expected_output = models.TextField(null=True, blank=True)
+    sample_output = models.TextField(null=True, blank=True)
 
 
 class Quiz(models.Model):

@@ -6,6 +6,10 @@ import base64
 import requests
 import time
 
+SUCCESS = 3
+WRONG_ANSWER = 4
+RUN_TIME_ERROR = 11
+
 
 def playground_view(request):
     return render(request, 'playground.html')
@@ -26,7 +30,8 @@ def run_code(request):
 
         payload = {
             "language_id": 71,
-            "source_code": encoded_code
+            "source_code": encoded_code,
+            "redirect_stderr_to_stdout": True
         }
         headers = {
             "content-type": "application/json",
@@ -64,7 +69,7 @@ def run_code(request):
             status_id = response_data.get('status_id')
             retry_count += 1
 
-        if status_id == 3:
+        if status_id in [SUCCESS, WRONG_ANSWER, RUN_TIME_ERROR]:
             decoded_output = base64.b64decode(response_data.get('stdout', '')).decode('utf-8')
             return JsonResponse({'result': decoded_output})
         else:
