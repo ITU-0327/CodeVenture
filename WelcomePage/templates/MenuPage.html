@@ -27,11 +27,11 @@
                 </div>
             </div>
             <div class="learning-modules10">
-                <a>
+                <a href="{% url 'modules_list_quiz' %}">
                     <img class="modulelearning-11" src="{% static 'public/modulelearning-11@3x.png' %}" alt="Thumbnail">
                 </a>
                 <div class="learning-modules-parent">
-                    <a class="learning-modules11" href="/quiz/1/">Quizzes</a>
+                    <a class="learning-modules11" href="{% url 'modules_list_quiz' %}">Quizzes</a>
                     <b class="this-is-where"
                     >This is where the tutorials and guides on Python can be
                         accessed. It will teach the user step by step on how to learn
@@ -58,7 +58,7 @@
                 </div>
             </div>
             <div class="learning-modules10">
-                <a>
+                <a href="{% url 'playground' %}">
                     <img class="modulelearning-13" src="{% static 'public/modulelearning-13@3x.png' %}" alt="Thumbnail">
                 </a>
                 <div class="learning-modules-parent">
