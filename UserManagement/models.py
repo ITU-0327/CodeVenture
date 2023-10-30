@@ -27,7 +27,9 @@ class Student(models.Model):
         return self.user.username
 
     def full_name(self):
-        return f"{self.user.first_name} {self.user.last_name}"
+        if self.user.first_name or self.user.last_name:
+            return f"{self.user.first_name} {self.user.last_name}".strip()
+        return self.user.username
 
 
 class Teacher(models.Model):
