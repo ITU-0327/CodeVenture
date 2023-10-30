@@ -1,0 +1,33 @@
+{% extends 'base_generic.html' %}
+{% load static %}
+
+{% block title %}
+    Challenge list
+{% endblock %}
+
+{% block css %}
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/ConceptModule.css' %}"/>
+    <style>
+    body {
+        background-color: var(--color-oldlace);
+    }
+    </style>
+{% endblock %}
+
+{% block css-container %}
+    concept-module
+{% endblock %}
+
+{% block content %}
+    <div class="container py-5">
+        <h2 class="text-center mb-4">Challenge List</h2>
+        <ul>
+            {% for challenge in challenges %}
+                <li><a href="{% url 'challenge' challenge.id %}">{{ challenge.name }}</a></li>
+            {% empty %}
+                <li>No challenges available.</li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

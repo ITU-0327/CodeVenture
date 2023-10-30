@@ -1,0 +1,157 @@
+{% extends 'base_generic.html' %}
+{% load static %}
+
+{% block title %}
+    {{ challenge.name }} - Challenge
+{% endblock %}
+
+{% block css %}
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="{% static 'package/min/vs/editor/editor.main.css' %}">
+    <link rel="stylesheet" href="{% static 'css/nav-bar.css' %}"/>
+    <style>
+        .description {
+            background-color: var(--color-gainsboro-100);
+            color: #1c1c1c;
+            border: 1px solid #333;
+            padding: 20px;
+            white-space: pre-wrap;
+            word-break: break-all;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+            font-size: 16px;
+            line-height: 1.4;
+            border-radius: 8px;
+        }
+        .sample-output-box {
+            background-color: #1c1c1c;
+            color: #cfcfcf;
+            border: 1px solid #333;
+            padding: 20px;
+            white-space: pre-wrap;
+            word-break: break-all;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+            font-size: 16px;
+            line-height: 1.6;
+            border-radius: 10px;
+            display: inline-block;
+            max-width: 100%;
+        }
+        .correct-output {
+            background-color: #d4edda !important;
+        }
+        .wrong-output {
+            background-color: #f8d7da !important;
+        }
+        .btn-secondary {
+            margin-right: 15px;
+        }
+    </style>
+{% endblock %}
+
+{% block css-container %}
+{% endblock %}
+
+{% block content %}
+    <div class="container py-5">
+        <h2 class="text-center mb-4">{{ challenge.name }}</h2>
+
+        <div class="row mb-4">
+            <div class="col-md-12">
+                <h4>Description:</h4>
+                <pre class="description">{{ challenge.description }}</pre>
+            </div>
+        </div>
+        <div class="row mb-4">
+            <div class="col-md-12">
+                <h4>Sample Output:</h4>
+                <pre class="sample-output-box">{{ challenge.sample_output }}</pre>
+            </div>
+        </div>
+
+
+        <div id="container" class="bg-dark rounded p-3" style="height:500px;"></div>
+
+        <div class="text-center mt-3">
+            <div class="d-inline-block">
+                <button class="btn btn-primary" onclick="runCode()">Run Code</button>
+            </div>
+            <div class="d-inline-block float-right">
+                <button class="btn btn-secondary" onclick="showSolution()">Show Solution</button>
+            </div>
+        </div>
+
+        <div class="mt-4">
+            <h4>Output:</h4>
+            <pre class="p-3 bg-white border" id="output"></pre>
+        </div>
+    </div>
+
+    <!-- Monaco Editor Scripts -->
+    <script src="{% static 'package/min/vs/loader.js' %}"></script>
+    <script>
+        require.config({paths: {'vs': '{% static 'package/min/vs' %}'}});
+    </script>
+    <script src="{% static 'package/min/vs/editor/editor.main.js' %}"></script>
+
+    <!-- Dummy form to hold the CSRF token -->
+    <form id="dummy_form" style="display:none;">
+        {% csrf_token %}
+    </form>
+
+    <script>
+        function getCsrfToken() {
+            return document.querySelector('#dummy_form [name="csrfmiddlewaretoken"]').value;
+        }
+
+        function runCode() {
+            var code = window.editor.getValue();
+
+            fetch("{% url 'challenge_run_code' %}", {
+                method: "POST",
+                headers: {
+                    'X-CSRFToken': getCsrfToken(),
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({code: code, challenge_id: {{ challenge.id }}})
+            })
+                .then(response => response.json())
+                .then(data => {
+                    const outputElement = document.getElementById("output");
+                    outputElement.innerText = data.stdout || "No Output";
+
+                    if (data.result) {
+                        outputElement.classList.add("correct-output");
+                        outputElement.classList.remove("wrong-output");
+                    } else {
+                        outputElement.classList.add("wrong-output");
+                        outputElement.classList.remove("correct-output");
+
+                        if (data.expected_output) {
+                            outputElement.innerText += "\n\nExpected Output:\n\n" + data.expected_output;
+                        }
+                    }
+                })
+                .catch(error => {
+                    console.error("Error executing code:", error);
+                });
+        }
+
+        const solutionCode = `{{ challenge.solution_code|escapejs }}`;
+
+        function showSolution() {
+            window.editor.setValue(solutionCode);
+        }
+
+        require(['vs/editor/editor.main'], function () {
+            window.editor = monaco.editor.create(document.getElementById('container'), {
+                value: "# Write your Python code here\nprint('Hello, World!')",
+                language: 'python',
+                theme: 'vs-dark',
+                automaticLayout: true
+            });
+        });
+    </script>
+{% endblock %}
