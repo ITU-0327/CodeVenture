@@ -144,7 +144,8 @@
   background-color: var(--color-gainsboro-100);
   overflow: hidden;
   flex-direction: column;
-  padding: 156.5px 0;
+  padding-top: calc(50vh - 295px);
+  padding-bottom: calc(50vh - 295px);
   gap: var(--gap-21xl);
 }
 .copyright-2023-all3 {

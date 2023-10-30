@@ -49,52 +49,52 @@
 {% block content %}
     <div class="login-container">
         {% if page == 'login' %}
-        <h1 class="center-text">Log In With</h1>
-        <form method="POST" action="" class="login-form">
-            {% csrf_token %}
-            <div class="social-login center-text">
-                <a href="{% url 'google_login' %}" class="btn-google no-underline">
-                    <img src="https://cdn-icons-png.flaticon.com/512/2504/2504739.png" alt="GOOGLE">
-                    Google
-                </a>
-            </div>
+            <h1 class="center-text">Log In With</h1>
+            <form method="POST" action="" class="login-form">
+                {% csrf_token %}
+                <div class="social-login center-text">
+                    <a href="{% url 'google_login' %}" class="btn-google no-underline">
+                        <img src="https://cdn-icons-png.flaticon.com/512/2504/2504739.png" alt="GOOGLE">
+                        Google
+                    </a>
+                </div>
 
-            <div class="input-group">
-                <label for="username" class="label">Username</label>
-                <input type="text" id="username" name="username" placeholder="Enter Username">
-            </div>
+                <div class="input-group">
+                    <label for="username" class="label">Username</label>
+                    <input type="text" id="username" name="username" placeholder="Enter Username">
+                </div>
 
-            <div class="input-group">
-                <label for="password" class="label">Password</label>
-                <input type="password" id="password" name="password" placeholder="Enter Password">
-                <a href="{% url 'choose_user_type' %}" class="forgot-password">Forgot?</a>
-            </div>
+                <div class="input-group">
+                    <label for="password" class="label">Password</label>
+                    <input type="password" id="password" name="password" placeholder="Enter Password">
+                    <a href="{% url 'choose_user_type' %}" class="forgot-password">Forgot?</a>
+                </div>
 
-            <input type="submit" value="Sign In" class="submit-button">
+                <input type="submit" value="Sign In" class="submit-button">
 
-            {% if messages %}
-                <ul class="messages">
-                    {% for message in messages %}
-                        <li>{{ message }}</li>
-                    {% endfor %}
-                </ul>
-            {% endif %}
+                {% if messages %}
+                    <ul class="messages">
+                        {% for message in messages %}
+                            <li>{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
 
-            <div class="signup-link">
-                <span>Don't have an account?</span>
-                <a href="{% url 'choose_user_type' %}">Sign up now</a>
-            </div>
-        </form>
+                <div class="signup-link">
+                    <span>Don't have an account?</span>
+                    <a href="{% url 'choose_user_type' %}">Sign up now</a>
+                </div>
+            </form>
         {% else %}
-        <form method="POST" action="" class="login-form">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <input type="submit" value="Sign Up" class="submit-button">
-        </form>
-        <div class="signup-link">
-            <span>Already have an account?</span>
-            <a href="{% url 'login' %}">Sign In</a>
-        </div>
+            <form method="POST" action="" class="login-form">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <input type="submit" value="Sign Up" class="submit-button">
+            </form>
+            <div class="signup-link">
+                <span>Already have an account?</span>
+                <a href="{% url 'login' %}">Sign In</a>
+            </div>
         {% endif %}
     </div>
 {% endblock %}
