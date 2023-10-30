@@ -94,7 +94,7 @@ To thoroughly test the platform, we've created four types of user accounts, each
 ### Teacher Account
 - **Username:** `teacheraccount`
 - **Password:** `Codeventure2023`
-- **Capabilities:** Access to classroom management tools, student progress tracking, and curriculum customization.
+- **Capabilities:** Access to student progress tracking, and curriculum customization.
 
 Feel free to explore these accounts to experience the platform from different user perspectives.
 
