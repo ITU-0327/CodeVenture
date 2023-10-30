@@ -8,10 +8,14 @@ from .models import SubModule, LearningModule
 
 from ProgressTracker.models import ProgressTracker, ModuleProgress
 from UserManagement.models import Student
+from QuizChallengeSystem.models import Quiz
 
 
 @login_required(login_url='/login/')
 def lecture_view(request, submodule_id):
+    submodule = get_object_or_404(SubModule, id=submodule_id)
+    module = SubModule.parent_module
+
     try:
         submodule = SubModule.objects.get(pk=submodule_id)
 
@@ -35,7 +39,8 @@ def lecture_view(request, submodule_id):
                 raise Http404("Completed submodule not found")
 
         context = {
-            'submodule': submodule
+            'submodule': submodule,
+            'module': module
         }
         return render(request, 'Submodules.html', context)
 
@@ -133,3 +138,5 @@ def module_handler(request):
         return redirect('concept_modules')
 
     return redirect('learning_modules')
+
+

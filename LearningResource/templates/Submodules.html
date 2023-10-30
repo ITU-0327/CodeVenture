@@ -12,6 +12,14 @@
             width: 64vw;
             height: 36vw;
         }
+        .button-style {
+            display: inline-block;
+            padding: 10px 20px; /* Adjust padding to your desired size */
+            background-color: #007bff; /* Change the background color to your preference */
+            color: #fff; /* Change the text color to your preference */
+            text-decoration: none;
+            border-radius: 5px; /* Rounded corners */
+        }
     </style>
 {% endblock %}
 
@@ -67,5 +75,7 @@
                 <div class="description-text">{{ submodule.description }}</div>
             </div>
         {% endif %}
+
+     <a class="quiz-button button-style" href="{% url 'quiz_view' submodule.quiz.id %}">Take Quiz</a>
     </div>
 {% endblock %}

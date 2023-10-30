@@ -8,4 +8,4 @@ urlpatterns = [
     path('basic_module/', basic_module_menu_view, name='learning_modules'),
     path('concept_module/', concept_module_menu_view, name='concept_modules'),
     path('concept_module/<int:module_id>/', concept_module_view, name='concept_module'),
-]
+   ]
