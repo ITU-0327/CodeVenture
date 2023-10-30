@@ -157,17 +157,9 @@
   position: relative;
   width: 369px;
   height: 246px;
-  background-image: url(./public/modulelearning-11@3x.png);
   background-size: cover;
   background-repeat: no-repeat;
   background-position: top;
-}
-.modulelearning-12,
-.modulelearning-13 {
-  background-image: url(./public/modulelearning-12@3x.png);
-}
-.modulelearning-13 {
-  background-image: url(./public/modulelearning-13@3x.png);
 }
 .if-the-user {
   margin: 0;

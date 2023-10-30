@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Progress Report</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            max-width: 600px;
+            margin: 0 auto;
+            border: 1px solid #e0e0e0;
+            border-radius: 5px;
+            box-shadow: 0 0 8px #aaa;
+        }
+
+        h1 {
+            border-bottom: 2px solid #555;
+            padding-bottom: 10px;
+            color: #333;
+        }
+
+        h2 {
+            margin-top: 20px;
+            color: #444;
+        }
+
+        p {
+            color: #666;
+        }
+
+        ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        li {
+            margin-bottom: 20px;
+        }
+
+        strong {
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+{% load custom_filters %}
+<h1>Progress Report for {{ data.student.full_name }}</h1>
+<p>Overall Progress: {{ data.overall_progress|multiply:100 }}%</p>
+<h2>Module Progress</h2>
+<ul>
+    {% for module_progress in data.modules_progress %}
+        <li>
+            <strong>Module:</strong> {{ module_progress.module.name }}<br>
+            <strong>Progress:</strong> {{ module_progress.progress|multiply:100 }}%<br>
+            <strong>Completed Submodules:</strong>
+            {% for submodule in module_progress.completed_submodules.all %}
+                {{ submodule.name }},
+            {% endfor %}
+        </li>
+    {% empty %}
+        <li>No modules progress available.</li>
+    {% endfor %}
+</ul>
+</body>
+</html>
