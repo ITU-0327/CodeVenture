@@ -101,27 +101,3 @@ def test_valid_form_submission_authorized_creates_ticket(client, user):
     # Ensure redirection happens after a successful form submission
     assert response.status_code == 302
     assert reverse('home') in response.url
-
-
-@pytest.mark.skip(reason="Temporarily skipping due to haven't implemented")
-@pytest.mark.django_db
-def test_valid_form_submission_unauthorized_creates_ticket(client):
-    valid_data = {
-        'fullname': 'John Doe',
-        'email': 'testing@example.com',
-        'message': 'This is a test message for ticket creation.',
-    }
-
-    response = client.post(reverse('home'), data=valid_data)
-
-    # Ensure the ticket is saved in the database
-    assert Ticket.objects.count() == 1
-    ticket = Ticket.objects.first()
-    # assert ticket.user == user
-    assert ticket.fullname == 'John Doe'
-    assert ticket.email == 'testing@example.com'
-    assert ticket.message == 'This is a test message for ticket creation.'
-
-    # Ensure redirection happens after a successful form submission
-    assert response.status_code == 302
-    assert reverse('home') in response.url

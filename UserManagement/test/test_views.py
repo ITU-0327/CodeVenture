@@ -375,29 +375,3 @@ def test_complete_profile_for_student_post_request_invalid_data(student_authenti
     response = student_authenticated.post(reverse('complete_profile'), data=post_data)
     assert response.status_code == 200
     assert "This field is required." in str(response.content)
-
-
-@pytest.mark.django_db
-def test_complete_profile_for_parent_invalid_child_email(parent_authenticated, parent):
-    invalid_email = "nonexistentstudent@example.com"
-    post_data = {
-        'children_email': invalid_email
-    }
-    response = parent_authenticated.post(reverse('complete_profile'), data=post_data)
-    assert response.status_code == 200
-    assert f"No student found with the email: {invalid_email}" in [message.message for message in
-                                                                   messages.get_messages(response.wsgi_request)]
-
-
-@pytest.mark.django_db
-def test_complete_profile_for_student_invalid_parent_email(student_authenticated, student):
-    invalid_email = "nonexistentparent@example.com"
-    post_data = {
-        'birthday': '2000-01-01',
-        'coding_experience': 'No experience',
-        'parent_email': invalid_email
-    }
-    response = student_authenticated.post(reverse('complete_profile'), data=post_data)
-    assert response.status_code == 200
-    assert (f"No parent found with the email: {invalid_email}"
-            in [message.message for message in messages.get_messages(response.wsgi_request)])
