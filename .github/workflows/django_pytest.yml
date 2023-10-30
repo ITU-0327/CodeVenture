@@ -7,6 +7,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      DJANGO_GITHUB_CI: '1'
     strategy:
       max-parallel: 4
       matrix:
