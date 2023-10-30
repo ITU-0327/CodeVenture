@@ -2,7 +2,6 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.http import Http404
 from django.core.exceptions import ObjectDoesNotExist
@@ -10,9 +9,10 @@ from django.core.exceptions import ObjectDoesNotExist
 from .models import Student, Teacher, Parent
 from .forms import StudentCreationForm, ParentCreationForm, BasicRegistrationForm
 
-
+'''This function handles login and redirection.'''
 def login_view(request):
     page = 'login'
+    # Check if the user is already authenticated and redirect to the home page.
     if request.user.is_authenticated:
         return redirect('home')
 
@@ -21,10 +21,12 @@ def login_view(request):
         password = request.POST.get('password')
 
         if not username or not password:
+            # Ensure both username and password are provided.
             messages.error(request, 'Both username and password must be provided.')
             return render(request, 'login_register.html', {'page': page})
 
         try:
+            # Check if the user exists.
             User.objects.get(username=username)
         except User.DoesNotExist:
             messages.error(request, 'User does not exist')
@@ -32,6 +34,7 @@ def login_view(request):
 
         user = authenticate(request, username=username, password=password)
         if user:
+            # If authentication is successful, log in and redirect to the home page.
             login(request, user)
             return redirect('home')
         else:
@@ -41,6 +44,7 @@ def login_view(request):
 
 
 def logout_user(request):
+    # Log out the user and redirect to the home page.
     storage = messages.get_messages(request)
     for _ in storage:
         pass
@@ -50,6 +54,7 @@ def logout_user(request):
 
 
 def register_user(request, user_type=None):
+    # Register a new user based on the user type (student, parent, teacher).
     if user_type not in ['student', 'parent', 'teacher']:
         raise Http404("User Type not found")
 
@@ -62,10 +67,13 @@ def register_user(request, user_type=None):
             user.save()
 
             if user_type == 'student':
+                # Create a Student instance for the user.
                 Student.objects.create(user=user)
             elif user_type == 'parent':
+                # Create a Parent instance for the user.
                 Parent.objects.create(user=user)
             elif user_type == 'teacher':
+                # Create a Teacher instance for the user.
                 Teacher.objects.create(user=user)
 
             login(request, user)
@@ -76,6 +84,7 @@ def register_user(request, user_type=None):
 
 @login_required(login_url='/login/')
 def complete_profile(request):
+    # Allow users to fill in their profiles based on their role (student, parent).
     user = request.user
 
     if hasattr(user, 'student'):
@@ -93,6 +102,7 @@ def complete_profile(request):
         form = form_class(request.POST)
         if form.is_valid():
             if user_type == 'student':
+                # Update Student information with form data.
                 user.student.birthday = form.cleaned_data.get('birthday')
                 user.student.coding_experience = form.cleaned_data.get('coding_experience')
                 user.student.parent_email = form.cleaned_data.get('parent_email', None)
@@ -101,6 +111,7 @@ def complete_profile(request):
                 parent_email = form.cleaned_data.get('parent_email', None)
                 if parent_email:
                     try:
+                        # Link the student to a parent if the parent's email is provided.
                         parent = Parent.objects.get(user__email=parent_email)
                         user.student.parent = parent
                     except ObjectDoesNotExist:
@@ -112,6 +123,7 @@ def complete_profile(request):
                 user.parent.profile_completed = True
                 children_email = form.cleaned_data.get('children_email')
                 try:
+                    # Link the parent to a student based on the child's email.
                     student = Student.objects.get(user__email=children_email)
                     student.parent = user.parent
                     student.save()
@@ -127,7 +139,9 @@ def complete_profile(request):
     return render(request, 'login_register.html', {'form': form})
 
 
+''' This function allows the user to choose their role (student, parent, teacher) if not already set.'''
 def choose_user_type(request):
+    # Allow users to choose their role (student, parent, teacher) if not already set.
     if request.method != 'POST':
         return render(request, 'SelectRoleForm.html')
 

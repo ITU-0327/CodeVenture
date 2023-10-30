@@ -18,6 +18,7 @@ from itertools import zip_longest
 
 from UserManagement.models import Student
 
+# Define constants for quiz result status
 SUCCESS = 3
 WRONG_ANSWER = 4
 RUN_TIME_ERROR = 11
@@ -25,6 +26,7 @@ RUN_TIME_ERROR = 11
 
 @login_required
 def quiz_view(request, quiz_id):
+    # View for taking a quiz and recording the results.
     quiz = get_object_or_404(Quiz, id=quiz_id)
     questions = quiz.questions.all()
 
@@ -73,6 +75,10 @@ def quiz_view(request, quiz_id):
 
 @login_required
 def quiz_result_view(request, result_id):
+    # View for displaying quiz results.
+
+
+
     quiz_result = get_object_or_404(QuizResult, id=result_id)
 
     user_answers = quiz_result.user_answers.all()
@@ -148,6 +154,7 @@ def quiz_list(request, module_id):
 
 
 def quiz_summary_view(request, quiz_id):
+    # View for displaying a summary of quiz attempts.
     quiz = get_object_or_404(Quiz, id=quiz_id)
     if hasattr(request.user, 'student'):
         student = Student.objects.get(user=request.user)

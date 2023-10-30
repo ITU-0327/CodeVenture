@@ -5,6 +5,7 @@ from .models import Student, Parent, Teacher
 
 
 class BasicRegistrationForm(UserCreationForm):
+    # Extend UserCreationForm to include additional fields (email, first_name, last_name).
     email = forms.EmailField()
     first_name = forms.CharField(max_length=30)
     last_name = forms.CharField(max_length=30)
@@ -15,6 +16,7 @@ class BasicRegistrationForm(UserCreationForm):
 
 
 class StudentCreationForm(forms.ModelForm):
+    # Form for creating or updating student profiles.
     birthday = forms.DateField(help_text='Required. Format: YYYY-MM-DD')
     coding_experience = forms.ChoiceField(choices=Student.EXPERIENCE_CHOICES)
     parent_email = forms.EmailField(required=False)
@@ -25,6 +27,7 @@ class StudentCreationForm(forms.ModelForm):
 
 
 class ParentCreationForm(forms.ModelForm):
+    # Form for creating or updating parent profiles.
     children_email = forms.EmailField(required=False)
 
     class Meta:
