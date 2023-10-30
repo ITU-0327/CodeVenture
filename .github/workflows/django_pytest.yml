@@ -3,13 +3,12 @@ name: Django CI
 on:
   push:
     branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
+    env:
+      DJANGO_GITHUB_CI: '1'
     strategy:
       max-parallel: 4
       matrix:
@@ -17,14 +16,28 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+    
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v3
       with:
         python-version: ${{ matrix.python-version }}
+
     - name: Install Dependencies
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
+
+    - name: Set up Cloud SQL Proxy
+      env:
+        CLOUD_SQL_CONNECTION_NAME: "codeventure-399214:australia-southeast2:codeventure-db2023"
+        GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}
+      run: |
+        echo "$GCP_SA_KEY" | base64 -d > /tmp/gcp-key.json
+        wget https://dl.google.com/cloudsql/cloud_sql_proxy.linux.amd64 -O cloud_sql_proxy
+        chmod +x cloud_sql_proxy
+        ./cloud_sql_proxy -instances=$CLOUD_SQL_CONNECTION_NAME=tcp:3306 -credential_file=/tmp/gcp-key.json &
+        sleep 5
+
     - name: Run Tests
       run: |
         pytest

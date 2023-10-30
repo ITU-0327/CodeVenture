@@ -26,6 +26,9 @@ class Student(models.Model):
     def __str__(self):
         return self.user.username
 
+    def full_name(self):
+        return f"{self.user.first_name} {self.user.last_name}"
+
 
 class Teacher(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)

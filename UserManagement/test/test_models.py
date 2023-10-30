@@ -93,13 +93,6 @@ def test_invalid_student_birthday(user):
         Student.objects.create(user=user, birthday="invalid_date")
 
 
-@pytest.mark.skip(reason="Temporarily skipping due to haven't implemented")
-@pytest.mark.django_db
-def test_invalid_parent_email(user):
-    with pytest.raises(ValidationError):
-        Student.objects.create(user=user, parent_email="invalid_email")
-
-
 @pytest.mark.django_db
 def test_student_str_representation(student):
     assert str(student) == student.user.username

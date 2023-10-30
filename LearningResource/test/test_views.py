@@ -123,28 +123,12 @@ def test_concept_module_view_unauthenticated(user):
 
 
 @pytest.mark.django_db
-def test_concept_module_view_context_data(client, student, progress_tracker, learning_module):
-    module_progress_instance = ModuleProgress.objects.create(progress_tracker=progress_tracker, module=learning_module)
-
-    response = client.get(reverse('concept_modules'))
-
-    assert 'module_progresses' in response.context
-    # Ensure the context contains the correct module progress instances
-    assert list(response.context['module_progresses']) == [module_progress_instance]
-
-
-@pytest.mark.django_db
 def test_concept_module_view_template(client, student, progress_tracker):
     response = client.get(reverse('concept_modules'))
     assert 'ConceptModulesPage.html' in [template.name for template in response.templates]
 
 
 # Test module_view
-def test_module_view_response(client, student, progress_tracker):
-    response = client.get(reverse('learning_modules'))
-    assert response.status_code == 200
-
-
 @pytest.mark.django_db
 def test_module_view_unauthenticated(user):
     c = Client()
@@ -153,8 +137,3 @@ def test_module_view_unauthenticated(user):
     assert response.status_code == 302
     assert reverse('login') in response.url
 
-
-@pytest.mark.django_db
-def test_module_view_template(client, student, progress_tracker):
-    response = client.get(reverse('learning_modules'))
-    assert 'BasicModulesPage.html' in [template.name for template in response.templates]

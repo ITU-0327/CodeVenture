@@ -105,12 +105,12 @@ WSGI_APPLICATION = 'CodeVenture.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
+
+if bool(int(os.environ.get('DJANGO_GITHUB_CI', '0'))):
+    HOST = '127.0.0.1'
+else:
+    HOST = '34.129.128.151'
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
@@ -122,7 +122,7 @@ DATABASES = {
         'NAME': 'codeventure-db',
         'USER': 'root',
         'PASSWORD': '7(YPQRqCHg]<V%zV',
-        'HOST': '34.129.128.151',
+        'HOST': HOST,
         'PORT': '3306',
         'OPTIONS': {
             'charset': 'utf8mb4',
