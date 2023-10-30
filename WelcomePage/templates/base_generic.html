@@ -177,6 +177,12 @@
 
             <b class="hello-user">Sign out</b>
         </a>
+        {% if user.student %}
+            <a class="btn10" href="{% url 'download_report' user.student.id %}">
+                <img class="vector-icon17" alt="" src="{% static 'public/download_icon.svg' %}"/>
+                <b class="hello-user">Download Report</b>
+            </a>
+        {% endif %}
         {% if user.is_staff %}
             <a class="btn10" href="{% url 'admin:index' %}">
                 <img class="vector-icon17" alt="" src="{% static 'public/vector4.svg' %}"/>
