@@ -16,4 +16,5 @@ urlpatterns = [
     path('quiz/',       include('QuizChallengeSystem.urls')),
     path('playground/', include('PythonPlayground.urls')),
     path('progress_tracker/', include('ProgressTracker.urls')),
+    path('parent_trackerprogress/'), include('ParentTracker.urls')
 ]

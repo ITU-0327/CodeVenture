@@ -151,3 +151,4 @@ def choose_user_type(request):
     elif selected_role == 'teacher':
         Teacher.objects.get_or_create(user=request.user)
         return redirect('home')
+
