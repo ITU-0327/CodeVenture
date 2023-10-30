@@ -13,7 +13,7 @@
 - **Google OAuth Integration**: Swiftly login using your Google account for a seamless experience.
 
 ### Learning Modules
-- Interactive lessons tailored to enhance the Python programming skills of learners.
+- Lessons tailored to enhance the Python programming skills of learners.
 
 ### Quizzes
 - Test your knowledge after each module with comprehensive quizzes.
@@ -38,15 +38,11 @@
 ### Database Access
 - Progress tracking for parents, teacher, and student. Track and analyze performance metrics over time.
 
+###
 
-
+#### **For a detailed list of main requirements,** please refer to the [Main Features Implemented for Code Venture.pdf](Main%20features%20implemented%20for%20Code%20Venture.pdf).
 ## Getting Started 🚀
 
-### Clone the Repository
-
-```bash
-git clone https://github.com/matthewchungkaishing/CodeVenture.git
-```
 
 ### Install Dependencies
 Navigate to the project directory and run:
