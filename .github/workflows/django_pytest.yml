@@ -30,7 +30,7 @@ jobs:
         CLOUD_SQL_CONNECTION_NAME: "codeventure-399214:australia-southeast2:codeventure-db2023"
         GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}
       run: |
-        echo "$GCP_SA_KEY" > /tmp/gcp-key.json
+        echo "$GCP_SA_KEY" | base64 -d > /tmp/gcp-key.json
         wget https://dl.google.com/cloudsql/cloud_sql_proxy.linux.amd64 -O cloud_sql_proxy
         chmod +x cloud_sql_proxy
         ./cloud_sql_proxy -instances=$CLOUD_SQL_CONNECTION_NAME=tcp:3306 -credential_file=/tmp/gcp-key.json &
