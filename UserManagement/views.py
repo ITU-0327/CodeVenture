@@ -40,7 +40,7 @@ def login_view(request):
     return render(request, 'login_register.html', context)
 
 
-def logoutUser(request):
+def logout_user(request):
     storage = messages.get_messages(request)
     for _ in storage:
         pass
