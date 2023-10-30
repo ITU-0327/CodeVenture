@@ -1,0 +1,64 @@
+{% extends 'base_generic.html' %}
+{% load static %}
+{% load custom_filters %}
+
+{% block title %}
+    Progress Tracker
+{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/ConceptModulesPage.css' %}"/>
+    <style>
+        h1,
+        h2 {
+            margin-block-start: 0;
+            margin-block-end: 0;
+        }
+
+        .concept-modules-parent {
+            gap: var(--gap-xl) !important;
+        }
+    </style>
+{% endblock %}
+
+{% block css-container %}
+    concept-modules-page
+{% endblock %}
+
+{% block content %}
+    <div class="concept-modules-parent">
+        <h1>Concept modules for your children</h1>
+        {% for child_data in children_data %}
+            <h2>{{ child_data.student.full_name }}</h2>
+            <b class="concept-modules">Concept modules</b>
+            <div class="frame-parent2">
+                {% for group in child_data.grouped_module_progresses %}
+                    <div class="component-group">
+                        {% for module_progress in group %}
+                            {% if module_progress %}
+                                <div class="frame-parent3">
+                                    <a class="image-10-parent" style="cursor: default !important;">
+                                        <img class="image-10-icon" alt="Thumbnail"
+                                             src="{{ module_progress.module.thumbnail }}"
+                                             style="cursor: default !important;"/>
+                                        <b class="unit-functions" style="cursor: default !important;">{{ module_progress.module.short_name }}</b>
+                                    </a>
+                                    <div class="progress-bar"
+                                         {% if module_progress.progress == 0 %}style="background-color: #00000000"{% endif %}
+                                    >
+                                        {% if module_progress.progress > 0 %}
+                                            <div class="bar"
+                                                 style="width: {{ module_progress.progress|multiply:100 }}%;">
+                                                <b class="concept-modules">{{ module_progress.progress|multiply:100 }}%</b>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

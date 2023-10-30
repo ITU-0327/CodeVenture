@@ -4,7 +4,7 @@ from UserManagement.models import Student
 
 
 class ProgressTracker(models.Model):
-    student = models.OneToOneField(Student, on_delete=models.CASCADE)
+    student = models.OneToOneField(Student, related_name='progress_tracker', on_delete=models.CASCADE)
     overall_progress = models.FloatField(default=0.0)
     badges = models.ManyToManyField(Badge)
 

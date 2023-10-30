@@ -45,7 +45,7 @@ class ParentAdmin(admin.ModelAdmin):
 
 class TeacherAdmin(admin.ModelAdmin):
     list_display = ('user', 'email', 'fullname')
-    readonly_fields = ('fullname', 'email', 'course')
+    readonly_fields = ('fullname', 'email')
     fields = ('user', 'fullname', 'email', 'course')
 
     def fullname(self, obj):

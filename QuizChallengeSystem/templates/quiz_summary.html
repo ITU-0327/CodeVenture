@@ -50,12 +50,14 @@
             </table>
 
             <h3>Highest score: {{ best_score }}/{{ attempts.first.total_questions }}</h3>
-            {% if quiz.deadline > now %}
-                <div class="d-flex justify-content-center mt-3">
-                    <a href="{% url 'start_new_attempt' quiz.id %}" class="btn btn-primary">Re-attempt quiz</a>
-                </div>
-            {% else %}
-                <div style="text-align: center; font-size: 16px">No more attempts are allowed</div>
+            {% if user.student %}
+                {% if quiz.deadline > now %}
+                    <div class="d-flex justify-content-center mt-3">
+                        <a href="{% url 'start_new_attempt' quiz.id %}" class="btn btn-primary">Re-attempt quiz</a>
+                    </div>
+                {% else %}
+                    <div style="text-align: center; font-size: 16px">No more attempts are allowed</div>
+                {% endif %}
             {% endif %}
         </div>
     </div>

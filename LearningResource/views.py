@@ -13,7 +13,6 @@ from QuizChallengeSystem.models import Quiz
 
 @login_required(login_url='/login/')
 def lecture_view(request, submodule_id):
-    submodule = get_object_or_404(SubModule, id=submodule_id)
     module = SubModule.parent_module
 
     try:
