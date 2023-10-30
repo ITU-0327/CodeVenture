@@ -26,24 +26,34 @@
 <body>
 <div class="{% block css-container %}welcomepage{% endblock %}">
     {% block nav-bar %}
+
         <nav class="student-home-nav4" id="student nav">
             <a class="logo7" href="{% url 'home' %}">
                 <img class="logo-icon7" alt="" src="{% static 'public/logo@2x.png' %}"/>
             </a>
             <div class="btn9">
                 <div class="links5">
-                    <a class="learning-modules8" href="{% url 'module_handler' %}">
-                        <b class="learning-modules9">Learning Modules</b>
-                    </a>
-                    <a class="learning-modules8" href="{% url 'modules_list_quiz' %}">
-                        <b class="learning-modules9">Quizzes</b>
-                    </a>
-                    <a class="learning-modules8" href="{% url 'challenges_list' %}">
-                        <b class="learning-modules9">Challenges</b>
-                    </a>
-                    <a class="learning-modules8" href="{% url 'playground' %}">
-                        <b class="learning-modules9">Python Playground</b>
-                    </a>
+                    {% if user.parent or user.teacher %}
+                        <a class="learning-modules8" href="{% url 'parent_progress_tracker' %}">
+                            <b class="learning-modules9">Progress Tracker</b>
+                        </a>
+                        <a class="learning-modules8" href="{% url 'modules_list_quiz' %}">
+                            <b class="learning-modules9">Quiz Results</b>
+                        </a>
+                    {% else %}
+                        <a class="learning-modules8" href="{% url 'module_handler' %}">
+                            <b class="learning-modules9">Learning Modules</b>
+                        </a>
+                        <a class="learning-modules8" href="{% url 'modules_list_quiz' %}">
+                            <b class="learning-modules9">Quizzes</b>
+                        </a>
+                        <a class="learning-modules8" href="{% url 'challenges_list' %}">
+                            <b class="learning-modules9">Challenges</b>
+                        </a>
+                        <a class="learning-modules8" href="{% url 'playground' %}">
+                            <b class="learning-modules9">Python Playground</b>
+                        </a>
+                    {% endif %}
                 </div>
                 <button class="menu4">
                     <img class="vector-icon14" alt="" src="{% static 'public/vector2.svg' %}"/>
@@ -182,6 +192,20 @@
                 <img class="vector-icon17" alt="" src="{% static 'public/download_icon.svg' %}"/>
                 <b class="hello-user">Download Report</b>
             </a>
+        {% elif user.parent %}
+            {% for child in user.parent.get_children %}
+                <a class="btn10" href="{% url 'download_report' child.user.id %}">
+                    <img class="vector-icon17" alt="" src="{% static 'public/download_icon.svg' %}"/>
+                    <b class="hello-user">Download Report for {{ child.full_name }}</b>
+                </a>
+            {% endfor %}
+        {% elif user.teacher %}
+            {% for student in user.parent.get_student %}
+                <a class="btn10" href="{% url 'download_report' student.user.id %}">
+                    <img class="vector-icon17" alt="" src="{% static 'public/download_icon.svg' %}"/>
+                    <b class="hello-user">Download Report for {{ student.full_name }}</b>
+                </a>
+            {% endfor %}
         {% endif %}
         {% if user.is_staff %}
             <a class="btn10" href="{% url 'admin:index' %}">

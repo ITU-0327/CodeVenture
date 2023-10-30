@@ -74,10 +74,6 @@ def quiz_view(request, quiz_id):
 @login_required
 def quiz_result_view(request, result_id):
     quiz_result = get_object_or_404(QuizResult, id=result_id)
-    student = Student.objects.get(user=request.user)
-
-    if quiz_result.user != student:
-        return render(request, 'quiz_result.html', {'error': 'Quiz result does not belong to the current user'})
 
     user_answers = quiz_result.user_answers.all()
 
@@ -153,10 +149,16 @@ def quiz_list(request, module_id):
 
 def quiz_summary_view(request, quiz_id):
     quiz = get_object_or_404(Quiz, id=quiz_id)
-    student = Student.objects.get(user=request.user)
+    if hasattr(request.user, 'student'):
+        student = Student.objects.get(user=request.user)
+    elif hasattr(request.user, 'parent'):
+        student = request.user.parent.get_children().first()
+    elif hasattr(request.user, 'teacher'):
+        student = request.user.teacher.get_students().first()
+
     attempts = QuizResult.objects.filter(user=student, quiz=quiz)
     now = timezone.now()
-    if not attempts.exists() and quiz.deadline > now:
+    if not attempts.exists() and quiz.deadline > now and hasattr(request.user, 'student'):
         return redirect('start_new_attempt', quiz_id)
 
     module = quiz.sub_module.parent_module

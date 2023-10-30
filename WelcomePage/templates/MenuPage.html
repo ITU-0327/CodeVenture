@@ -13,17 +13,21 @@
                     <img class="modulelearning-1" src="{% static 'public/modulelearning-1@3x.png' %}" alt="Thumbnail">
                 </a>
                 <div class="learning-modules-parent">
+                    {% if user.parent or user.teacher %}
+                    <a class="learning-modules11" href="{% url 'parent_progress_tracker' %}">Progress Tracker</a>
+                    {% else %}
                     <a class="learning-modules11" href="{% url 'module_handler' %}">Learning modules</a>
-                    <b class="this-is-where"
-                    >This is where the tutorials and guides on Python can be
+                    {% endif %}
+                    <b class="this-is-where">
+                        This is where the tutorials and guides on Python can be
                         accessed. It will teach the user step by step on how to learn
                         different concepts in python. Each concept will be categorized
                         into separate learning modules. Once a learning module is
                         completed, it will acknowledge its completion in the Progress
                         tracker. The priority of this feature is high because this is
                         the main purpose of the program, to provide users with learning
-                        material for python.</b
-                    >
+                        material for python.
+                    </b>
                 </div>
             </div>
             <div class="learning-modules10">
@@ -44,38 +48,42 @@
                     >
                 </div>
             </div>
-            <div class="learning-modules10">
-                <a href="{% url 'challenges_list' %}">
-                    <img class="modulelearning-12" src="{% static 'public/modulelearning-12@3x.png' %}" alt="Thumbnail">
-                </a>
-                <div class="learning-modules-parent">
-                    <a class="learning-modules11" href="{% url 'challenges_list' %}">Challenges</a>
-                    <b class="this-is-where"
-                    >User chooses a challenge and the program shall present them
-                        with a problem scenario that the user must solve by writing
-                        Python code related to that concept.</b
-                    >
+            {% if user.student %}
+                <div class="learning-modules10">
+                    <a href="{% url 'challenges_list' %}">
+                        <img class="modulelearning-12" src="{% static 'public/modulelearning-12@3x.png' %}"
+                             alt="Thumbnail">
+                    </a>
+                    <div class="learning-modules-parent">
+                        <a class="learning-modules11" href="{% url 'challenges_list' %}">Challenges</a>
+                        <b class="this-is-where"
+                        >User chooses a challenge and the program shall present them
+                            with a problem scenario that the user must solve by writing
+                            Python code related to that concept.</b
+                        >
+                    </div>
                 </div>
-            </div>
-            <div class="learning-modules10">
-                <a href="{% url 'playground' %}">
-                    <img class="modulelearning-13" src="{% static 'public/modulelearning-13@3x.png' %}" alt="Thumbnail">
-                </a>
-                <div class="learning-modules-parent">
-                    <a class="learning-modules11" href="{% url 'playground' %}">Python Playground</a>
-                    <b class="this-is-where">
-                        <p class="if-the-user">
-                            If the user selects this option, the program will bring them
-                            to an empty project in
-                        </p>
-                        <p class="if-the-user">
-                            Python where users can experiment coding freely while
-                            practicing the concepts
-                        </p>
-                        <p class="if-the-user">they have learned.</p>
-                    </b>
+                <div class="learning-modules10">
+                    <a href="{% url 'playground' %}">
+                        <img class="modulelearning-13" src="{% static 'public/modulelearning-13@3x.png' %}"
+                             alt="Thumbnail">
+                    </a>
+                    <div class="learning-modules-parent">
+                        <a class="learning-modules11" href="{% url 'playground' %}">Python Playground</a>
+                        <b class="this-is-where">
+                            <p class="if-the-user">
+                                If the user selects this option, the program will bring them
+                                to an empty project in
+                            </p>
+                            <p class="if-the-user">
+                                Python where users can experiment coding freely while
+                                practicing the concepts
+                            </p>
+                            <p class="if-the-user">they have learned.</p>
+                        </b>
+                    </div>
                 </div>
-            </div>
+            {% endif %}
         </div>
     </div>
 {% endblock %}

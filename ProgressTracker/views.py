@@ -1,16 +1,17 @@
 from django.http import HttpResponse
 from django.template.loader import render_to_string
-from .models import ProgressTracker
+from django.shortcuts import render, get_object_or_404
 
 from reportlab.lib import colors
 from reportlab.lib.pagesizes import letter
 from reportlab.pdfgen import canvas
 from urllib.parse import quote
-from UserManagement.models import Parent
-from django.shortcuts import render, get_object_or_404
+from itertools import zip_longest
+
+from .models import ProgressTracker
+from UserManagement.models import Parent, Student, Teacher
 from LearningResource.models import LearningModule
 from ProgressTracker.models import ModuleProgress
-from itertools import zip_longest
 
 
 def download_report(request, student_id):
@@ -84,14 +85,20 @@ def download_report(request, student_id):
 
 
 def parent_concept_modules_view(request):
-    parent = Parent.objects.get(user=request.user)
+    if hasattr(request.user, 'parent'):
+        user = Parent.objects.get(user=request.user)
+        students = user.get_children()
+    elif hasattr(request.user, 'teacher'):
+        user = Teacher.objects.get(user=request.user)
+        students = user.get_students()
+    else:
+        students = request.user
 
-    children = parent.get_children()
     children_data = []
 
-    for child in children:
-        student = child
-        progress_tracker = ProgressTracker.objects.get(student=student)
+    for child in students:
+        student = Student.objects.get(id=child.id)
+        progress_tracker = student.progress_tracker
 
         all_modules = LearningModule.objects.all()
         user_module_progresses = progress_tracker.module_progress.all()
@@ -128,4 +135,4 @@ def parent_concept_modules_view(request):
     context = {
         'children_data': children_data,
     }
-    return render(request, 'parent_trakerprogress.html', context)
+    return render(request, 'parent_progress_tracker.html', context)
