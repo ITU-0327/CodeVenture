@@ -106,7 +106,7 @@ WSGI_APPLICATION = 'CodeVenture.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 
-if os.environ.get('DJANGO_GITHUB_CI'):
+if bool(int(os.environ.get('DJANGO_GITHUB_CI', '0'))):
     HOST = '127.0.0.1'
 else:
     HOST = '34.129.128.151'
